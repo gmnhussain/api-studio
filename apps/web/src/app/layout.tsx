@@ -9,6 +9,7 @@ import {
   DEFAULT_APPEARANCE_ATTRIBUTES,
   SettingsBootScript,
   SettingsProvider,
+  ThemedToaster,
 } from "@/features/settings";
 import { fontVariables } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
@@ -42,7 +43,10 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <body>
         <NextIntlClientProvider>
           <SettingsProvider>
-            <TooltipProvider>{children}</TooltipProvider>
+            <TooltipProvider>
+              {children}
+              <ThemedToaster />
+            </TooltipProvider>
           </SettingsProvider>
         </NextIntlClientProvider>
       </body>
