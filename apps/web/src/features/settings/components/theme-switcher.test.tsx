@@ -27,7 +27,8 @@ function renderThemeSwitcher() {
 
 describe("ThemeSwitcher", () => {
   it("cycles dark → light → system and applies each theme to <html>", async () => {
-    const user = userEvent.setup();
+    // Hovering would open the tooltip on every click; this test is about the theme, not the tooltip.
+    const user = userEvent.setup({ skipHover: true });
     renderThemeSwitcher();
 
     await user.click(screen.getByRole("button", { name: "Theme: Dark. Switch theme" }));

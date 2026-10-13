@@ -14,5 +14,8 @@ export default mergeConfig(vitestConfig, {
   test: {
     environment: "jsdom",
     setupFiles: ["./test/setup-tests.ts"],
+    // jsdom component tests slow down several times when Turborepo runs them beside `next build`;
+    // the timeout catches hangs, while speed is budgeted in the E2E suite.
+    testTimeout: 15_000,
   },
 });
