@@ -60,6 +60,8 @@ jobs:
       # Gate 4
       - name: Unit and integration tests
         run: pnpm test
+      - name: Coverage thresholds (packages/core)
+        run: pnpm --filter @api-studio/core test:coverage
       # Gate 5
       - name: Module boundaries (dependency-cruiser)
         run: pnpm depcruise

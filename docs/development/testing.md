@@ -16,7 +16,7 @@
 
 | Area | Target |
 | --- | --- |
-| `packages/core` | ≥ 90% lines, 100% branches for variable resolution, URL ⇄ params sync and migrations |
+| `packages/core` | Enforced in CI: ≥ 95% lines and statements, 100% functions, ≥ 90% branches. Every behaviour of variable resolution, URL ⇄ params sync and migrations has a test; the only uncovered branches are the fallbacks `noUncheckedIndexedAccess` requires and `assertNever` defaults, which cannot run |
 | `packages/runner` | Every `ExecutionError` code has a test that produces it |
 | Code generators | Golden files for every target × body type × auth scheme, plus escaping cases |
 | Importers | A fixture per supported format and version, including unsupported-feature warnings |
