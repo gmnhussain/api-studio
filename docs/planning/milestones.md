@@ -17,6 +17,8 @@
 
 ## M0 — Foundation and tooling
 
+> **Done** (2026-10-13). CI covers gates 1–6, 9 and 10 from [testing.md](../development/testing.md#ci-gates-every-push-and-pull-request); E2E (gate 7) arrives with the first screens in M1 and the bundle budget (gate 8) with the shell. The UI-text open question is still open; it must be decided before M1 adds UI strings.
+
 - pnpm workspace + catalog, Turborepo, Node 24 pin, `packageManager` field.
 - `packages/config`: TypeScript, ESLint (ADR-0007), Prettier, Vitest presets.
 - `apps/web`: Next.js 16 + React 19 + React Compiler, Tailwind v4, shadcn/ui init, `@/*` alias.
