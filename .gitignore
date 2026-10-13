@@ -1,0 +1,35 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Env files (.env.example is committed)
+.env
+.env.*
+!.env.example
+
+# Testing
+coverage
+playwright-report
+test-results
+blob-report
+
+# Turbo
+.turbo
+
+# Build outputs
+.next/
+out/
+build
+dist
+*.tsbuildinfo
+next-env.d.ts
+
+# Debug
+npm-debug.log*
+pnpm-debug.log*
+
+# Misc
+.DS_Store
+Thumbs.db
+*.pem
