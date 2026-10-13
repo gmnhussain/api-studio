@@ -1,8 +1,10 @@
 "use client";
 
-import { MotionConfig } from "motion/react";
+import { LazyMotion, MotionConfig } from "motion/react";
 import { useEffect, useState, type ReactNode } from "react";
 import { useStore } from "zustand";
+
+import { loadMotionFeatures } from "@/lib/motion/load-motion-features";
 
 import { applyAppearance, subscribeToSystemTheme } from "../lib/apply-appearance";
 import { SettingsStoreContext } from "../stores/settings-store-context";
@@ -13,7 +15,8 @@ import { createSettingsStore } from "../stores/settings.store";
  * `<html>` in step with the appearance: on every change, and on OS theme changes while the
  * theme is `system`. The boot script already applied the saved values before the first paint,
  * so rehydration causes no visible change. Motion animations follow the same motion setting:
- * `reduce` always reduces them, `system` follows the OS.
+ * `reduce` always reduces them, `system` follows the OS. Motion's features load lazily, and
+ * `strict` makes any component that bypasses `m.*` fail loudly instead of growing the bundle.
  */
 export function SettingsProvider({ children }: { children: ReactNode }) {
   const [store] = useState(createSettingsStore);
@@ -54,9 +57,11 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
 
   return (
     <SettingsStoreContext.Provider value={store}>
-      <MotionConfig reducedMotion={motion === "reduce" ? "always" : "user"}>
-        {children}
-      </MotionConfig>
+      <LazyMotion features={loadMotionFeatures} strict>
+        <MotionConfig reducedMotion={motion === "reduce" ? "always" : "user"}>
+          {children}
+        </MotionConfig>
+      </LazyMotion>
     </SettingsStoreContext.Provider>
   );
 }

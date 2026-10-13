@@ -1,11 +1,10 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
 import { useState, type RefObject } from "react";
 import { usePanelRef, type PanelImperativeHandle } from "react-resizable-panels";
 
-import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { KEYMAP } from "@/config/keymap";
 import { routes } from "@/config/routes";
 import { MEDIA_QUERIES } from "@/constants/breakpoints";
@@ -13,13 +12,15 @@ import { useHotkey } from "@/hooks/use-hotkey";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 import { useUi } from "../hooks/use-ui";
-import { PANELS, SHELL_REGION_IDS, type SidebarSectionId } from "../shell.constants";
+import { PANELS, type SidebarSectionId } from "../shell.constants";
 import { ActivityRail } from "./activity-rail";
-import { SidebarContent } from "./sidebar-content";
 import { StatusBar } from "./status-bar";
 import { TopBar, type RegionToggles } from "./top-bar";
 import { Workbench } from "./workbench";
 import { isPanelCollapsed } from "../stores/ui.store";
+
+/** The overlay sidebar is only used below 1024 px, so its dialog code loads on demand. */
+const SidebarSheet = dynamic(() => import("./sidebar-sheet").then((module) => module.SidebarSheet));
 
 /** Collapses an expanded panel or expands a collapsed one. */
 function togglePanel(panelRef: RefObject<PanelImperativeHandle | null>): void {
@@ -39,7 +40,6 @@ function togglePanel(panelRef: RefObject<PanelImperativeHandle | null>): void {
  * so buttons, the rail and `aria-expanded` always agree with what is on screen.
  */
 export function AppShell() {
-  const t = useTranslations("shell");
   const router = useRouter();
   const hasOverlaySidebar = useMediaQuery(MEDIA_QUERIES.overlaySidebar);
   const isStacked = useMediaQuery(MEDIA_QUERIES.stackedEditors);
@@ -112,17 +112,7 @@ export function AppShell() {
       <StatusBar />
 
       {hasOverlaySidebar ? (
-        <Sheet open={isSidebarSheetOpen} onOpenChange={setSidebarSheetOpen}>
-          <SheetContent
-            id={SHELL_REGION_IDS.sidebar}
-            side="left"
-            closeLabel={t("actions.closeSidebar")}
-            className="w-80 gap-0 p-0"
-          >
-            <SheetTitle className="sr-only">{t("regions.sidebar")}</SheetTitle>
-            <SidebarContent />
-          </SheetContent>
-        </Sheet>
+        <SidebarSheet isOpen={isSidebarSheetOpen} onOpenChange={setSidebarSheetOpen} />
       ) : null}
     </div>
   );

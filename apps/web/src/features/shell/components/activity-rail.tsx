@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import * as m from "motion/react-m";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 
@@ -63,7 +63,7 @@ export function ActivityRail({ activeSection, isSidebarOpen, onSelectSection }: 
               }
             >
               {isSelected ? (
-                <motion.span
+                <m.span
                   layoutId="activity-rail-indicator"
                   transition={INDICATOR_TRANSITION}
                   className="absolute top-1.5 -left-2 h-5 w-0.5 rounded-full bg-primary"

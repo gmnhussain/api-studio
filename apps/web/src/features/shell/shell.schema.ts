@@ -1,18 +1,20 @@
-import { z } from "zod";
+// zod/mini: this schema ships to the browser, where the full Zod API costs ~50 KB (performance.md).
+import * as z from "zod/mini";
 
 import { DEFAULT_SIDEBAR_SECTION, PANEL_GROUPS, SIDEBAR_SECTIONS } from "./shell.constants";
 import type { PanelLayouts, UiState } from "./stores/ui.store";
 
 /** A panel group layout: panel id → percentage of the group (0–100). */
-const layoutSchema = z.record(z.string(), z.number().min(0).max(100));
+const layoutSchema = z.record(z.string(), z.number().check(z.gte(0), z.lte(100)));
 
 /** The outer shape of the layout cookie; each layout is validated on its own below. */
-const uiStateSchema = z
-  .object({
-    sidebarSection: z.enum(SIDEBAR_SECTIONS).catch(DEFAULT_SIDEBAR_SECTION),
-    layouts: z.record(z.string(), z.unknown()).catch({}),
-  })
-  .catch({ sidebarSection: DEFAULT_SIDEBAR_SECTION, layouts: {} });
+const uiStateSchema = z.catch(
+  z.object({
+    sidebarSection: z.catch(z.enum(SIDEBAR_SECTIONS), DEFAULT_SIDEBAR_SECTION),
+    layouts: z.catch(z.record(z.string(), z.unknown()), {}),
+  }),
+  { sidebarSection: DEFAULT_SIDEBAR_SECTION, layouts: {} },
+);
 
 /** The UI state before anything was saved. */
 export const DEFAULT_UI_STATE: UiState = { sidebarSection: DEFAULT_SIDEBAR_SECTION, layouts: {} };

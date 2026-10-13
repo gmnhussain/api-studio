@@ -1,4 +1,5 @@
-import { z } from "zod";
+// zod/mini: this schema ships to the browser, where the full Zod API costs ~50 KB (performance.md).
+import * as z from "zod/mini";
 
 import {
   ACCENTS,
@@ -13,14 +14,15 @@ import {
  * Appearance as read from a cookie. Each field falls back to its default on its own, so one
  * stale or tampered value never resets the others.
  */
-export const appearanceSchema = z
-  .object({
-    theme: z.enum(THEME_MODES).catch(DEFAULT_APPEARANCE.theme),
-    accent: z.enum(ACCENTS).catch(DEFAULT_APPEARANCE.accent),
-    density: z.enum(DENSITIES).catch(DEFAULT_APPEARANCE.density),
-    motion: z.enum(MOTION_PREFERENCES).catch(DEFAULT_APPEARANCE.motion),
-  })
-  .catch(DEFAULT_APPEARANCE);
+export const appearanceSchema = z.catch(
+  z.object({
+    theme: z.catch(z.enum(THEME_MODES), DEFAULT_APPEARANCE.theme),
+    accent: z.catch(z.enum(ACCENTS), DEFAULT_APPEARANCE.accent),
+    density: z.catch(z.enum(DENSITIES), DEFAULT_APPEARANCE.density),
+    motion: z.catch(z.enum(MOTION_PREFERENCES), DEFAULT_APPEARANCE.motion),
+  }),
+  DEFAULT_APPEARANCE,
+);
 
 /**
  * Turns any persisted value into a valid {@link Appearance}.
