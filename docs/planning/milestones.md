@@ -17,8 +17,7 @@
 
 ## M0 — Foundation and tooling
 
-> **Done** (2026-10-13). CI covers gates 1–6, 9 and 10 from [testing.md](../development/testing.md#ci-gates-every-push-and-pull-request); E2E (gate 7) arrives with the first screens in M1 and the bundle budget (gate 8) with the shell. The UI-text open question is still open; it must be decided before M1 adds UI strings.
-
+> **Done** (2026-10-13). CI covers gates 1–6, 9 and 10 from [testing.md](../development/testing.md#ci-gates-every-push-and-pull-request); E2E (gate 7) arrives with the first screens in M1 and the bundle budget (gate 8) with the shell.
 - pnpm workspace + catalog, Turborepo, Node 24 pin, `packageManager` field.
 - `packages/config`: TypeScript, ESLint (ADR-0007), Prettier, Vitest presets.
 - `apps/web`: Next.js 16 + React 19 + React Compiler, Tailwind v4, shadcn/ui init, `@/*` alias.
@@ -31,11 +30,12 @@
 
 ## M1 — Design system and app shell
 
-- Tokens (`tokens.css`), Tailwind `@theme` mapping, fonts, theme provider, accent and density attributes, token contrast test.
-- shadcn primitives added and themed; `components/common` basics (`Panel`, `EmptyState`, `ShortcutHint`, `ThemeSwitcher`, `SearchInput`, illustrations).
+- Tokens (`tokens.css`), Tailwind `@theme` mapping, fonts, cookie-backed appearance settings with a pre-paint boot script, accent and density attributes, token contrast test.
+- shadcn primitives added and themed; `components/common` basics (`Panel`, `EmptyState`, `ShortcutHint`, `ThemeSwitcher`, illustrations). `SearchInput` arrives with sidebar search in M6.
 - `AppShell`: activity rail, resizable sidebar, tab strip area, editor / response split, console, status bar, all collapsible with persisted sizes (UI store).
 - Responsive breakpoints; reduced motion and transparency.
-- Route skeleton: `(studio)`, `(standalone)`, settings route, `loading.tsx` / `error.tsx`.
+- Route skeleton: `(studio)` with the workspace and settings routes, `loading.tsx` / `error.tsx` / `not-found.tsx`. The `(standalone)` group arrives with onboarding in M8.
+- Message catalog (next-intl), first Playwright + axe E2E suite and the initial-JS budget check.
 
 **Exit:** the full shell with empty states in dark and light, keyboard-resizable panels, axe-clean.
 
@@ -112,14 +112,14 @@
 
 v0.2 request comparison (F-48), OpenAPI import, OAuth 2.0 flows, form-data files and binary bodies · v0.3 GraphQL (F-60) · v0.4 WebSocket and SSE (F-61, F-62) · then CLI (F-69), scripts and tests (F-65), plugins (F-68), sync (F-66).
 
-## Open questions (decide before M0 starts)
+## Decisions (2026-10-13)
 
-> **Open question — UI text.** Put all UI strings in a message catalog (next-intl, English only at first) from day one, or hard-code English for now? Recommended: catalog from day one. It costs little now, and retrofitting it later touches every component.
+The open questions from planning were settled with the recommended options:
 
-> **Open question — licence.** MIT is assumed (simplest and most common for portfolio and developer tools). Apache-2.0 is the alternative if an explicit patent grant matters.
-
-> **Open question — accent.** "Ion" blue is proposed as the brand accent. Confirm, or pick one of the presets (Iris, Ember, Moss, Graphite) as the default.
-
-> **Open question — hosting.** Vercel is assumed for the demo and previews. The proxy hardening in [request-execution.md](../architecture/request-execution.md#security) applies wherever it is hosted.
-
-> **Open question — component catalogue.** Add Storybook in M1 for a browsable component library (a strong portfolio signal), or rely on tests and the app only?
+| Question | Decision |
+| --- | --- |
+| UI text | Message catalog from day one: next-intl, English first ([ADR-0010](../architecture/adr/0010-ui-text-in-message-catalog.md)) |
+| Licence | MIT |
+| Accent | "Ion" blue is the default; Iris, Ember, Moss and Graphite are presets |
+| Hosting | Vercel for the demo and previews; proxy hardening applies wherever it is hosted |
+| Component catalogue | No Storybook in M1. Components are covered by tests and visible in the app; revisit after M3, when the request builder makes a catalogue worth its upkeep |
