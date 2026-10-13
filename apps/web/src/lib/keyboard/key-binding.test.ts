@@ -4,6 +4,7 @@ import {
   formatKeyBinding,
   matchesKeyBinding,
   parseKeyBinding,
+  toAriaKeyShortcuts,
   type KeyboardEventLike,
 } from "./key-binding";
 
@@ -82,5 +83,12 @@ describe("formatKeyBinding", () => {
     expect(formatKeyBinding(parseKeyBinding("Mod+Shift+k"), true)).toEqual(["⌘", "⇧", "K"]);
     expect(formatKeyBinding(parseKeyBinding("Mod+Alt+R"), false)).toEqual(["Ctrl", "Alt", "R"]);
     expect(formatKeyBinding(parseKeyBinding("Mod+Enter"), true)).toEqual(["⌘", "↵"]);
+  });
+});
+
+describe("toAriaKeyShortcuts", () => {
+  it("uses Meta on Apple platforms and Control elsewhere", () => {
+    expect(toAriaKeyShortcuts(parseKeyBinding("Mod+Alt+r"), true)).toBe("Meta+Alt+R");
+    expect(toAriaKeyShortcuts(parseKeyBinding("Mod+B"), false)).toBe("Control+B");
   });
 });

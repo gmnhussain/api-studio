@@ -75,6 +75,20 @@ function codeForCharacter(character: string): string | undefined {
   return undefined;
 }
 
+/**
+ * The binding in `aria-keyshortcuts` syntax: `Mod` becomes `Meta` on Apple platforms and
+ * `Control` elsewhere (WAI-ARIA 1.2).
+ */
+export function toAriaKeyShortcuts(binding: ParsedKeyBinding, isApplePlatform: boolean): string {
+  const modifiers = [
+    binding.mod ? (isApplePlatform ? "Meta" : "Control") : null,
+    binding.alt ? "Alt" : null,
+    binding.shift ? "Shift" : null,
+  ].filter((modifier) => modifier !== null);
+  const key = binding.key.length === 1 ? binding.key.toUpperCase() : binding.key;
+  return [...modifiers, key].join("+");
+}
+
 const APPLE_SYMBOLS: Readonly<Record<string, string>> = { mod: "⌘", alt: "⌥", shift: "⇧" };
 const OTHER_LABELS: Readonly<Record<string, string>> = { mod: "Ctrl", alt: "Alt", shift: "Shift" };
 const KEY_LABELS: Readonly<Record<string, string>> = {

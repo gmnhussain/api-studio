@@ -4,6 +4,7 @@ import { getLocale } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { APP_NAME } from "@/config/app";
 import {
   DEFAULT_APPEARANCE_ATTRIBUTES,
   SettingsBootScript,
@@ -15,7 +16,7 @@ import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
-  title: "API Studio",
+  title: { default: APP_NAME, template: `%s · ${APP_NAME}` },
   description:
     "A local-first, keyboard-driven workspace for designing, sending and understanding HTTP requests.",
 };

@@ -44,6 +44,13 @@
   --method-options: oklch(0.52 0.1 200);
   --method-head: oklch(0.5 0.01 265);
 
+  /* Accent swatches for the accent picker: one mid-tone per preset, readable in both themes. */
+  --swatch-ion: oklch(0.64 0.16 240);
+  --swatch-iris: oklch(0.62 0.18 285);
+  --swatch-ember: oklch(0.68 0.17 50);
+  --swatch-moss: oklch(0.64 0.14 150);
+  --swatch-graphite: oklch(0.55 0.01 265);
+
   /* Elevation */
   --shadow-popover:
     0 8px 24px -6px oklch(0.25 0.02 265 / 12%), 0 2px 6px -2px oklch(0.25 0.02 265 / 8%);

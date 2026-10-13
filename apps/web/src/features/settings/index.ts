@@ -1,4 +1,7 @@
+export { AboutSettings } from "./components/about-settings";
+export { AppearanceSettings } from "./components/appearance-settings";
 export { SettingsBootScript } from "./components/settings-boot-script";
+export { SettingsNavigation } from "./components/settings-navigation";
 export { SettingsProvider } from "./components/settings-provider";
 export { ThemeSwitcher } from "./components/theme-switcher";
 export { useSettings } from "./hooks/use-settings";

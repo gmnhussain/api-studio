@@ -1,8 +1,4 @@
 {
-  "home": {
-    "title": "API Studio",
-    "status": "Foundation ready. Supported methods: {methods}."
-  },
   "settings": {
     "themes": {
       "dark": "Dark",
@@ -11,6 +7,141 @@
     },
     "themeSwitcher": {
       "label": "Theme: {theme}. Switch theme"
+    },
+    "title": "Settings",
+    "backToStudio": "Back to the studio",
+    "navigation": "Settings sections",
+    "sections": {
+      "appearance": {
+        "title": "Appearance",
+        "description": "Theme, accent colour, density and motion. Saved in this browser."
+      },
+      "about": {
+        "title": "About",
+        "description": "Version, licence and where your data lives."
+      }
+    },
+    "appearance": {
+      "theme": {
+        "label": "Theme",
+        "description": "System follows your operating system."
+      },
+      "accent": {
+        "label": "Accent",
+        "description": "Used for focus, selection and primary actions."
+      },
+      "density": {
+        "label": "Density",
+        "description": "Compact fits more on screen."
+      },
+      "motion": {
+        "label": "Motion",
+        "description": "Reduce turns animations into simple fades. Your system setting always applies."
+      },
+      "preview": {
+        "label": "Preview",
+        "primaryAction": "Send",
+        "secondaryAction": "Save"
+      },
+      "reset": "Reset to defaults"
+    },
+    "accents": {
+      "ion": "Ion",
+      "iris": "Iris",
+      "ember": "Ember",
+      "moss": "Moss",
+      "graphite": "Graphite"
+    },
+    "densities": {
+      "comfortable": "Comfortable",
+      "compact": "Compact"
+    },
+    "motionPreferences": {
+      "system": "System",
+      "reduce": "Reduce"
+    },
+    "about": {
+      "tagline": "A local-first, keyboard-driven workspace for designing, sending and understanding HTTP requests.",
+      "version": "Version",
+      "license": "Licence",
+      "licenseValue": "MIT",
+      "storage": "Your data",
+      "storageValue": "Stored only in this browser. API Studio has no account and sends no telemetry."
     }
+  },
+  "shell": {
+    "regions": {
+      "activityRail": "Views",
+      "sidebar": "Sidebar",
+      "editor": "Editor",
+      "statusBar": "Status",
+      "workspace": "Workspace"
+    },
+    "sections": {
+      "collections": {
+        "title": "Collections",
+        "emptyTitle": "No collections yet",
+        "emptyDescription": "Collections group related requests into folders you can share and export."
+      },
+      "history": {
+        "title": "History",
+        "emptyTitle": "No history yet",
+        "emptyDescription": "Every request you send is recorded here, grouped by day."
+      },
+      "environments": {
+        "title": "Environments",
+        "emptyTitle": "No environments yet",
+        "emptyDescription": "Environments hold values such as a base URL or a token for each stage, like local, staging and production."
+      },
+      "variables": {
+        "title": "Variables",
+        "emptyTitle": "No variables yet",
+        "emptyDescription": "Variables are reusable values you can insert into any request field."
+      }
+    },
+    "actions": {
+      "showSidebar": "Show sidebar",
+      "hideSidebar": "Hide sidebar",
+      "showConsole": "Show console",
+      "hideConsole": "Hide console",
+      "showResponse": "Show response panel",
+      "hideResponse": "Hide response panel",
+      "openSettings": "Settings",
+      "closeSidebar": "Close sidebar",
+      "resizeSidebar": "Resize sidebar",
+      "resizeConsole": "Resize console",
+      "resizeResponse": "Resize response panel",
+      "toggleSidebar": "Toggle sidebar",
+      "toggleConsole": "Toggle console",
+      "toggleResponse": "Toggle response panel"
+    },
+    "editor": {
+      "emptyTitle": "No request open",
+      "emptyDescription": "Requests open here in tabs. Browse your collections and history from the sidebar.",
+      "shortcutsHeading": "Shortcuts"
+    },
+    "response": {
+      "title": "Response",
+      "emptyTitle": "No response yet",
+      "emptyDescription": "Send a request to see its status, timing, headers and body here."
+    },
+    "console": {
+      "title": "Console",
+      "emptyTitle": "No logs yet",
+      "emptyDescription": "Requests and app events are logged here as they happen."
+    },
+    "statusBar": {
+      "online": "Online",
+      "offline": "Offline",
+      "version": "Version {version}"
+    }
+  },
+  "errors": {
+    "title": "Something went wrong",
+    "description": "This part of API Studio failed to load. Your saved data is safe in this browser.",
+    "retry": "Try again",
+    "notFoundTitle": "Page not found",
+    "notFoundDescription": "This page does not exist. It may have moved, or the link is incomplete.",
+    "backToStudio": "Back to the studio"
   }
 }

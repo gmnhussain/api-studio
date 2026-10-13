@@ -42,6 +42,11 @@
   --color-method-delete: var(--method-delete);
   --color-method-options: var(--method-options);
   --color-method-head: var(--method-head);
+  --color-swatch-ion: var(--swatch-ion);
+  --color-swatch-iris: var(--swatch-iris);
+  --color-swatch-ember: var(--swatch-ember);
+  --color-swatch-moss: var(--swatch-moss);
+  --color-swatch-graphite: var(--swatch-graphite);
 
   /* shadcn/ui token names, mapped onto the product tokens so its components share one palette. */
   --color-card: var(--surface);
