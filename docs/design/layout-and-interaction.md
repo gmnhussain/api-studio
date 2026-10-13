@@ -41,7 +41,7 @@ Panel sizes and collapsed states persist per workspace (UI store).
 | ≥ 1280 px | Full layout, response side by side |
 | 1024–1279 px | Response stacks under the editor |
 | 768–1023 px | Sidebar becomes an overlay sheet; rail stays |
-| < 768 px | Single column: rail becomes a bottom bar; a segmented control switches Request / Response; console in a sheet. Usable, not the primary target |
+| < 768 px | Single column: rail becomes a bottom bar; a segmented control switches Request / Response; console in a sheet. Usable, not the primary target. Until M8 these widths use the 768–1023 px layout |
 
 ## Keyboard shortcuts
 

@@ -177,16 +177,17 @@ Button, Input, Textarea, Label, Select, Checkbox, Switch, Toggle Group, Tabs, To
 | `CopyButton` | Copy with confirmation micro-interaction |
 | `InlineRename` | Label that turns into an input (F2 / double-click), commits on Enter, cancels on Esc |
 | `ConfirmDialog` | Destructive confirmation naming the item |
-| `SearchInput` | Input with icon, clear button and shortcut hint |
+| `SearchInput` | Input with icon, clear button and shortcut hint (with sidebar search, M6) |
 | `VirtualList` | TanStack Virtual wrapper with keyboard navigation |
 | `SegmentedControl` | Compact exclusive switch (Pretty / Raw / Preview) |
-| `ThemeSwitcher` | Dark / light / system toggle |
+| `AppLogo` | The product mark, drawn in the accent colour |
+| `ErrorView` | Full-height failure message with a retry, for route error boundaries |
 
 ### Feature components (owned by their feature)
 
 | Component | Feature |
 | --- | --- |
-| `AppShell`, `ActivityRail`, `SidebarPanel`, `SidebarItem`, `StatusBar`, `TopBar` | `shell` |
+| `AppShell`, `TopBar`, `ActivityRail`, `Workbench`, `SidebarContent`, `SidebarSheet`, `PanelToggleButton`, `EditorWelcome`, `StatusBar` | `shell` |
 | `WorkspaceSwitcher` | `workspace` |
 | `CollectionTree`, `CollectionTreeItem` | `collections` |
 | `EditorTabs`, `EditorTab` | `tabs` |
@@ -194,11 +195,11 @@ Button, Input, Textarea, Label, Select, Checkbox, Switch, Toggle Group, Tabs, To
 | `ResponseViewer`, `ResponseStatusBar`, `JsonTree`, `ResponseTimeline`, `ResponsePreview` | `response-viewer` |
 | `EnvironmentSelector`, `EnvironmentEditor` | `environments` |
 | `HistoryList` | `history` |
-| `ConsolePanel` | `console` |
+| `ConsolePanel` | `console` (empty state lives in `shell` until M4) |
 | `CommandPalette` (search command) | `command-palette` |
 | `CodeSnippetDialog` | `code-generation` |
 | `ImportDialog` | `import-export` |
-| `SettingsLayout`, settings sections | `settings` |
+| `ThemeSwitcher`, `SettingsNavigation`, `AppearanceSettings`, `AboutSettings` | `settings` (the switcher changes a setting, so it lives with the feature, not in shared code) |
 | `OnboardingFlow` | `onboarding` |
 
 Every exported component has a TSDoc block (purpose, notable props, accessibility notes); complex ones (tree, tables, editor, tabs) also explain their interaction model at the top of the file.
