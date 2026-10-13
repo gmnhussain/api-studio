@@ -187,5 +187,11 @@
       "description": "It may have been deleted in another tab, or the link comes from another browser.",
       "action": "Open my workspaces"
     }
+  },
+  "requestBuilder": {
+    "toasts": {
+      "autoSaveFailed": "Your open tabs could not be saved in this browser. Changes stay here until the next attempt.",
+      "restoreFailed": "Your open tabs could not be restored. Check that this browser allows site storage, then reload."
+    }
   }
 }
