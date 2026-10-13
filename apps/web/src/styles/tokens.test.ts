@@ -82,7 +82,8 @@ const RULES: readonly ContrastRule[] = [
   { foreground: "primary-foreground", backgrounds: ["primary"], minimum: TEXT_CONTRAST },
   {
     foreground: "primary",
-    backgrounds: [...TEXT_ON_PANELS, "primary-muted/surface"],
+    // Defined `{{variables}}` are accent text on an accent tint, in inputs on either panel.
+    backgrounds: [...TEXT_ON_PANELS, "primary-muted/background", "primary-muted/surface"],
     minimum: TEXT_CONTRAST,
   },
   { foreground: "subtle-foreground", backgrounds: TEXT_ON_PANELS, minimum: NON_TEXT_CONTRAST },
