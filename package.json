@@ -18,6 +18,8 @@
   },
   "devDependencies": {
     "@api-studio/config": "workspace:*",
+    "@commitlint/cli": "catalog:",
+    "@commitlint/config-conventional": "catalog:",
     "dependency-cruiser": "catalog:",
     "prettier": "catalog:",
     "prettier-plugin-tailwindcss": "catalog:",
