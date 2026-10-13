@@ -4,17 +4,20 @@
   "agentGuidance": false,
   "globalEnv": ["NODE_ENV"],
   "tasks": {
+    "typegen": {
+      "outputs": [".next/types/**", ".next/dev/types/**", "next-env.d.ts"]
+    },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "typegen"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "env": ["NEXT_PUBLIC_*", "PROXY_*"],
       "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**", "out/**", "dist/**"]
     },
     "lint": {
-      "dependsOn": ["^typecheck"]
+      "dependsOn": ["^typecheck", "typegen"]
     },
     "typecheck": {
-      "dependsOn": ["^typecheck"]
+      "dependsOn": ["^typecheck", "typegen"]
     },
     "test:unit": {
       "outputs": []
