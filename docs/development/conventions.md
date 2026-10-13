@@ -61,7 +61,7 @@ How code is written in this repository. Lint rules enforce what they can; review
 - Components aim for **≤ 250 lines**; split by extracting subcomponents and hooks. Longer only with a stated reason in review.
 - Each feature exposes a public API in `index.ts`; nothing else in a feature may be imported from outside it.
 - No barrel files except a feature's or package's `index.ts`.
-- Imports ordered by `import-x/order` (builtin → external → `@api-studio/*` → `@/*` → relative); type-only imports use `import type`.
+- Imports ordered by `import-x/order` (builtin → external → `@api-studio/*` → `@/*` → relative, a blank line between groups, alphabetical within); type-only imports use `import type` and stay in their source's group.
 - Path aliases: `@/*` → `apps/web/src/*`; packages through their names (`@api-studio/core`).
 
 ## TypeScript
@@ -88,7 +88,7 @@ How code is written in this repository. Lint rules enforce what they can; review
 - Tailwind utility classes only, using token utilities (`bg-surface`, `text-muted-foreground`); no raw colour values, no arbitrary values unless a token can't express it.
 - No CSS modules, no inline `style` objects (except dynamic values that can't be classes, e.g. a virtual list offset).
 - Variants with `class-variance-authority`; class merging with `cn()` (`clsx` + `tailwind-merge`).
-- shadcn/ui components are added with the CLI (`pnpm dlx shadcn@latest add <component>` from `apps/web`), never by hand, then adjusted to our tokens.
+- shadcn/ui components are added with the pinned CLI (`pnpm shadcn add <component>` from `apps/web`), never by hand, then adjusted to our tokens. `pnpm dlx shadcn` does not work under pnpm 11.
 - No other UI library unless agreed in an ADR.
 
 ## State, forms and validation
