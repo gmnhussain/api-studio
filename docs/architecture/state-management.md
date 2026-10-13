@@ -19,7 +19,7 @@
 
 | Store | File | Owns | Persistence |
 | --- | --- | --- | --- |
-| Workspace | `features/workspace/stores/workspace.store.ts` | Workspaces, `activeWorkspaceId` | IndexedDB (service) |
+| Workspace | `features/workspace/stores/workspace.store.ts` | Workspaces, `activeWorkspaceId` (from the route) | IndexedDB (service); the last opened workspace in a cookie, so `/` redirects on the server |
 | Collection | `features/collections/stores/collection.store.ts` | Collections + normalized items of the active workspace, expanded folders | IndexedDB (service); expanded state in `localStorage` |
 | Request | `features/request-builder/stores/request.store.ts` | Drafts by `tabId`, active editor section per tab | IndexedDB, debounced auto-save |
 | Tabs | `features/tabs/stores/tabs.store.ts` | Tab order, active tab, pinned flags, recently closed | `localStorage` (tab restore) |
@@ -62,7 +62,7 @@ Rules:
 
 ## Services: write-through and optimistic updates
 
-A service is the only place that touches both a store and a repository:
+A service is the only place that touches both a store and a repository. The apply, persist and roll-back steps are one helper, `runOptimisticWrite` (`lib/services/`):
 
 ```text
 renameItem(itemId, name)

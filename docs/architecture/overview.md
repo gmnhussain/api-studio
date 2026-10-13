@@ -125,7 +125,8 @@ features/collections/
 ├── repositories/      collection.repository.ts   IndexedDB access only
 ├── commands/          collection.commands.ts     palette commands + shortcuts it contributes
 ├── collections.constants.ts
-└── index.ts           public API — the only file other features may import
+├── index.ts           public API — the only file other features may import
+└── server.ts          server-only public API (cookie readers), for routes only
 ```
 
 Features: `workspace`, `shell`, `collections`, `request-builder`, `response-viewer`, `execution`, `tabs`, `history`, `environments`, `console`, `command-palette`, `search`, `code-generation`, `import-export`, `settings`, `onboarding`.

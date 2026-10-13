@@ -14,7 +14,7 @@ The snippets below are the design contract, not final code.
 | Ordering | Siblings carry a fractional-index `sortKey` string, so a drag-and-drop move rewrites one record, not the whole list |
 | Trees | Stored flat and normalized (`parentId`), assembled into a tree by selectors |
 | Optional vs empty | Lists default to `[]`, never `undefined` |
-| Versioning | Persisted records and exported documents carry `schemaVersion`; migrations are pure functions `vN → vN+1` |
+| Versioning | IndexedDB is versioned as a whole: each schema change is a new Dexie version with an upgrade function, and every record is parsed with its schema on read. Exported documents carry `schemaVersion`, migrated by pure functions `vN → vN+1` on import |
 
 ## Entity map
 
@@ -274,16 +274,16 @@ The JSON is written with stable key order and 2-space indentation so exported co
 
 ## IndexedDB schema (Dexie)
 
-| Table | Key | Indexes |
-| --- | --- | --- |
-| `workspaces` | `id` | — |
-| `collections` | `id` | `workspaceId` |
-| `collectionItems` | `id` | `collectionId`, `[collectionId+parentId]` |
-| `environments` | `id` | `workspaceId` |
-| `history` | `id` | `[workspaceId+executedAt]` |
-| `responseBodies` | `id` | — |
-| `savedResponses` | `id` | `requestItemId` |
-| `drafts` | `tabId` | — |
-| `cookieJars` | `workspaceId` | — |
+| Table | Since | Key | Indexes |
+| --- | --- | --- | --- |
+| `workspaces` | v1 (M2) | `id` | — |
+| `collections` | v1 (M2) | `id` | `workspaceId` |
+| `collectionItems` | v1 (M2) | `id` | `collectionId`, `[collectionId+parentId]` |
+| `environments` | v1 (M2) | `id` | `workspaceId` |
+| `drafts` | planned (M3) | `tabId` | — |
+| `history` | planned (M4) | `id` | `[workspaceId+executedAt]` |
+| `responseBodies` | planned (M4) | `id` | — |
+| `cookieJars` | planned (M4) | `workspaceId` | — |
+| `savedResponses` | planned (M8) | `id` | `requestItemId` |
 
-Database version bumps go with a Dexie upgrade function and a test that opens a fixture of the previous version.
+Versions are declared in one list (`apps/web/src/lib/db/database.ts`); a released version is never edited. Each new version comes with its upgrade function and a test that opens data written by the previous version.

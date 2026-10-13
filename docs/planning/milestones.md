@@ -43,6 +43,8 @@
 
 ## M2 — Core domain and persistence
 
+> **Done** (2026-10-14). Core holds the domain models, variable resolution, URL and request building and the collection tree rules, at 98% line coverage enforced in CI. Workspaces persist in IndexedDB, stay in step across tabs and are managed from the top bar; `/` reopens the last one, redirecting on the server. Collections and environments have their repositories, stores and services; their UI is M6 as planned. Initial JavaScript is 283 KB against a 290 KB budget.
+
 - `core/models` schemas and types, branded ids, `Result`, registries, fractional-index sort keys.
 - `core/variables` (tokenizer, scope merge, resolver) and `core/http` (URL ⇄ params, path variables, headers, auth application, body serialization, sizes) with full unit tests.
 - Dexie database, repositories, migrations, `BroadcastChannel` sync.
