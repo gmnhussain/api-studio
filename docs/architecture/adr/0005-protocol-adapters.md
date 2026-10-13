@@ -1,6 +1,6 @@
 # ADR-0005: Protocol adapters and contribution registries
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-13
 
 ## Context

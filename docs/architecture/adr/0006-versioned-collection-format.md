@@ -1,6 +1,6 @@
 # ADR-0006: Native, versioned collection document
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-13
 
 ## Context

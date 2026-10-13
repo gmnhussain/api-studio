@@ -1,6 +1,6 @@
 # ADR-0003: Execute requests through a server-side proxy by default
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-13
 
 ## Context

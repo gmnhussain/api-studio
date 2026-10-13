@@ -1,6 +1,6 @@
 # ADR-0007: ESLint + Prettier for lint and format
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-13
 
 ## Context

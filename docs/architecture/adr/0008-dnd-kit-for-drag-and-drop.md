@@ -1,6 +1,6 @@
 # ADR-0008: dnd-kit for drag and drop
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-13
 
 ## Context

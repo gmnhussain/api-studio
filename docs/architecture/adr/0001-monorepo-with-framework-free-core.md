@@ -1,6 +1,6 @@
 # ADR-0001: pnpm + Turborepo monorepo with a framework-free core
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-13
 
 ## Context

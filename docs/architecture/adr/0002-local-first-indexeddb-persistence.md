@@ -1,6 +1,6 @@
 # ADR-0002: Local-first persistence in IndexedDB behind repositories
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-13
 
 ## Context

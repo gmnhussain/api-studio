@@ -1,6 +1,6 @@
 # ADR-0004: Zustand stores per domain, TanStack Query for async I/O
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-13
 
 ## Context
