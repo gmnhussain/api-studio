@@ -9,15 +9,21 @@
     "start": "next start",
     "lint": "next typegen && eslint .",
     "typecheck": "next typegen && tsc --noEmit",
+    "shadcn": "shadcn",
     "test:unit": "vitest run --project unit",
     "test:integration": "vitest run --project integration",
     "test:coverage": "vitest run --project unit --coverage"
   },
   "dependencies": {
     "@api-studio/core": "workspace:*",
+    "@base-ui/react": "catalog:",
+    "class-variance-authority": "catalog:",
+    "cn": "catalog:",
+    "lucide-react": "catalog:",
     "next": "catalog:",
     "react": "catalog:",
-    "react-dom": "catalog:"
+    "react-dom": "catalog:",
+    "tw-animate-css": "catalog:"
   },
   "devDependencies": {
     "@api-studio/config": "workspace:*",
@@ -28,6 +34,7 @@
     "@vitest/coverage-v8": "catalog:",
     "babel-plugin-react-compiler": "catalog:",
     "eslint": "catalog:",
+    "shadcn": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
