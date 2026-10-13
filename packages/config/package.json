@@ -5,14 +5,29 @@
   "type": "module",
   "exports": {
     "./tsconfig/*.json": "./tsconfig/*.json",
+    "./eslint/base": "./eslint/base.js",
+    "./eslint/isomorphic": "./eslint/isomorphic.js",
+    "./eslint/node": "./eslint/node.js",
+    "./eslint/next": "./eslint/next.js",
     "./prettier": "./prettier.js"
   },
-  "scripts": {},
+  "scripts": {
+    "lint": "eslint ."
+  },
   "devDependencies": {
+    "@eslint/js": "catalog:",
+    "eslint": "catalog:",
+    "eslint-config-next": "catalog:",
+    "eslint-config-prettier": "catalog:",
+    "eslint-plugin-import-x": "catalog:",
+    "eslint-plugin-jsx-a11y": "catalog:",
+    "globals": "catalog:",
     "prettier": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:"
   },
   "peerDependencies": {
+    "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
   }
