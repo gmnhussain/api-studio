@@ -88,3 +88,32 @@ export type {
 } from "./models/request.schema";
 export { workspaceSchema } from "./models/workspace.schema";
 export type { Workspace } from "./models/workspace.schema";
+export {
+  hasUndefinedVariables,
+  MAX_VARIABLE_NESTING_DEPTH,
+  resolveVariables,
+} from "./variables/resolve-variables";
+export type {
+  UnresolvedReason,
+  UnresolvedVariable,
+  VariableResolution,
+} from "./variables/resolve-variables";
+export { getVariableCompletion } from "./variables/variable-completion";
+export type { VariableCompletion } from "./variables/variable-completion";
+export { mergeVariableScopes, VARIABLE_SCOPES } from "./variables/variable-scopes";
+export type {
+  ScopedVariable,
+  VariableMap,
+  VariableScope,
+  VariableSources,
+} from "./variables/variable-scopes";
+export {
+  findVariableReferences,
+  replaceVariableReferences,
+  tokenizeTemplate,
+} from "./variables/variable-template";
+export type {
+  TemplateTextToken,
+  TemplateToken,
+  TemplateVariableToken,
+} from "./variables/variable-template";
