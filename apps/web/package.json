@@ -25,6 +25,7 @@
     "next-intl": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
+    "react-resizable-panels": "catalog:",
     "tw-animate-css": "catalog:",
     "zod": "catalog:",
     "zustand": "catalog:"

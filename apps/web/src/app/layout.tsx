@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
 import type { ReactNode } from "react";
 
+import { TooltipProvider } from "@/components/ui/tooltip";
 import {
   DEFAULT_APPEARANCE_ATTRIBUTES,
   SettingsBootScript,
@@ -39,7 +40,9 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       </head>
       <body>
         <NextIntlClientProvider>
-          <SettingsProvider>{children}</SettingsProvider>
+          <SettingsProvider>
+            <TooltipProvider>{children}</TooltipProvider>
+          </SettingsProvider>
         </NextIntlClientProvider>
       </body>
     </html>
