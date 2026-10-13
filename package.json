@@ -1,0 +1,18 @@
+{
+  "name": "api-studio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@api-studio/config": "workspace:*",
+    "prettier": "catalog:",
+    "typescript": "catalog:"
+  },
+  "packageManager": "pnpm@11.5.0",
+  "engines": {
+    "node": ">=24 <25"
+  }
+}

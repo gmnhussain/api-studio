@@ -1,0 +1,19 @@
+{
+  "name": "@api-studio/config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./tsconfig/*.json": "./tsconfig/*.json",
+    "./prettier": "./prettier.js"
+  },
+  "scripts": {},
+  "devDependencies": {
+    "prettier": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "prettier": "catalog:",
+    "typescript": "catalog:"
+  }
+}

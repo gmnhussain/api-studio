@@ -1,0 +1,47 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# One version per dependency across the repo. Reference with "catalog:".
+# Add an entry only when a package needs it, and say why in the commit body.
+catalog:
+  # TypeScript stays on 6.0.x: typescript-eslint (ADR-0007) supports TypeScript < 6.1.
+  typescript: 6.0.3
+  # ESLint stays on 9.x: eslint-config-next's plugins (react, import, jsx-a11y) do not support ESLint 10 yet.
+  eslint: 9.39.5
+  "@eslint/js": 9.39.5
+  typescript-eslint: 8.71.0
+  eslint-config-next: 16.3.8
+  eslint-config-prettier: 10.1.8
+  eslint-plugin-import-x: 4.17.1
+  eslint-plugin-jsx-a11y: 6.10.2
+  eslint-plugin-react-hooks: 7.1.1
+  eslint-plugin-turbo: 2.11.7
+  globals: 17.13.0
+  prettier: 3.9.9
+  dependency-cruiser: 18.5.0
+  "@commitlint/cli": 21.2.3
+  "@commitlint/config-conventional": 21.2.3
+  turbo: 2.11.7
+  vitest: 5.0.3
+  "@vitest/coverage-v8": 5.0.3
+  "@types/node": 24.19.1
+
+  # Frontend
+  next: 16.3.8
+  react: 19.3.0
+  react-dom: 19.3.0
+  "@types/react": 19.3.0
+  "@types/react-dom": 19.3.0
+  babel-plugin-react-compiler: 1.0.0
+  tailwindcss: 4.3.3
+  "@tailwindcss/postcss": 4.3.3
+
+# Packages allowed to run install scripts (pnpm 11 blocks them by default).
+# Prebuilt binaries cover all of these; esbuild's script only verifies its binary.
+allowBuilds:
+  "@parcel/watcher": false
+  "@swc/core": false
+  esbuild: true
+  sharp: false
+  unrs-resolver: false
