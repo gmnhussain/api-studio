@@ -6,6 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   createCollection,
   createEnvironment,
+  createId,
   createRequestItem,
   createWorkspace,
   sortKeyBetween,
@@ -178,6 +179,20 @@ describe("workspace service", () => {
     await service.deleteWorkspace(second.value.id);
     expect(storage.getItem(LAST_WORKSPACE_COOKIE)).toBeNull();
     expect(service.pickWorkspaceToOpen()?.name).toBe("Default");
+  });
+
+  it("sets and clears the active environment", async () => {
+    const { service, repository } = setUp();
+    await service.loadWorkspaces("Default");
+    const [workspace] = useWorkspaceStore.getState().workspaces;
+    if (!workspace) throw new Error("expected a workspace");
+    const environmentId = createId<"EnvironmentId">();
+
+    await service.setActiveEnvironment(workspace.id, environmentId);
+    expect((await repository.get(workspace.id))?.activeEnvironmentId).toBe(environmentId);
+
+    await service.setActiveEnvironment(workspace.id, null);
+    expect(useWorkspaceStore.getState().workspaces[0]?.activeEnvironmentId).toBeNull();
   });
 
   it("picks up changes made in another tab", async () => {

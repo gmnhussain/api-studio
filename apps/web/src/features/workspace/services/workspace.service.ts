@@ -5,6 +5,7 @@ import {
   err,
   nameSchema,
   ok,
+  type EnvironmentId,
   type IsoDateTime,
   type Result,
   type Workspace,
@@ -135,6 +136,25 @@ export function createWorkspaceService({
           storage.removeItem(LAST_WORKSPACE_COOKIE);
         }
         return ok(null);
+      } catch {
+        actions().upsertWorkspace(previous);
+        return err("storage");
+      }
+    },
+
+    /** Sets (or clears, with `null`) the environment a workspace's requests resolve against. */
+    setActiveEnvironment: async (
+      workspaceId: WorkspaceId,
+      environmentId: EnvironmentId | null,
+    ): Promise<Result<Workspace, WorkspaceError>> => {
+      const previous = findWorkspace(workspaceId);
+      if (!previous) return err("not_found");
+      if (previous.activeEnvironmentId === environmentId) return ok(previous);
+      const updated = { ...previous, activeEnvironmentId: environmentId, updatedAt: now() };
+      actions().upsertWorkspace(updated);
+      try {
+        await repository.put(updated);
+        return ok(updated);
       } catch {
         actions().upsertWorkspace(previous);
         return err("storage");
