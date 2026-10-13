@@ -45,6 +45,9 @@ catalog:
   babel-plugin-react-compiler: 1.0.0
   tailwindcss: 4.3.3
   "@tailwindcss/postcss": 4.3.3
+  # Client state (ADR-0004) and validation at trust boundaries.
+  zustand: 5.0.15
+  zod: 4.6.5
   # UI text catalog (ADR-0010).
   next-intl: 4.14.9
 
