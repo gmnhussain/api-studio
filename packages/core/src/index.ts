@@ -117,3 +117,43 @@ export type {
   TemplateToken,
   TemplateVariableToken,
 } from "./variables/variable-template";
+export {
+  formPartSchema,
+  headerPairSchema,
+  resolvedRequestSchema,
+  serializedBodySchema,
+} from "./execution/resolved-request.schema";
+export type {
+  FormPart,
+  HeaderPair,
+  ResolvedRequest,
+  SerializedBody,
+} from "./execution/resolved-request.schema";
+export { applyAuth, resolveInheritedAuth } from "./http/apply-auth";
+export type { AuthTarget } from "./http/apply-auth";
+export { formatBytes, formatDuration } from "./http/format";
+export {
+  addHeaderIfMissing,
+  COMMON_REQUEST_HEADERS,
+  getHeader,
+  hasHeader,
+  isValidHeaderName,
+} from "./http/headers";
+export {
+  findPathVariableNames,
+  replacePathVariables,
+  syncPathVariablesFromUrl,
+} from "./http/path-variables";
+export {
+  buildUrlFromQueryParameters,
+  formatQueryString,
+  parseQueryString,
+  syncQueryParametersFromUrl,
+} from "./http/query-parameters";
+export type { QueryPair } from "./http/query-parameters";
+export { measureBodyBytes, measureRequestBytes } from "./http/request-size";
+export { defaultContentType, serializeBody } from "./http/serialize-body";
+export { getStatusClass } from "./http/status";
+export type { StatusClass } from "./http/status";
+export { joinUrl, splitUrl } from "./http/url-parts";
+export type { UrlParts } from "./http/url-parts";
