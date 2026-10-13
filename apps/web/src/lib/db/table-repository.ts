@@ -19,6 +19,8 @@ export type TableRepository<Entity extends { id: string }> = {
   get: (id: Entity["id"]) => Promise<Entity | undefined>;
   /** Records whose `index` equals `value`; `index` must be declared in the table's schema. */
   findBy: (index: string, value: IndexableType) => Promise<Entity[]>;
+  /** Records whose `index` equals any of `values`. */
+  findByAnyOf: (index: string, values: readonly IndexableType[]) => Promise<Entity[]>;
   put: (record: Entity) => Promise<void>;
   bulkPut: (records: readonly Entity[]) => Promise<void>;
   delete: (id: Entity["id"]) => Promise<void>;
@@ -70,6 +72,15 @@ export function createTableRepository<Entity extends { id: string }>({
       return raw === undefined ? undefined : parse(raw);
     },
     findBy: async (index, value) => parseAll(await table.where(index).equals(value).toArray()),
+    findByAnyOf: async (index, values) =>
+      values.length === 0
+        ? []
+        : parseAll(
+            await table
+              .where(index)
+              .anyOf([...values])
+              .toArray(),
+          ),
     put: async (record) => {
       await table.put(record);
       publish([record.id]);
