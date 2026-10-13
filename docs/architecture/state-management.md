@@ -26,7 +26,7 @@
 | History | `features/history/stores/history.store.ts` | Entry summaries (bodies load lazily) | IndexedDB (service) |
 | Environment | `features/environments/stores/environment.store.ts` | Environments, active environment | IndexedDB (service) |
 | Settings | `features/settings/stores/settings.store.ts` | `Settings` (appearance first; editor and request settings join later) | Cookie, applied before first paint by a boot script ([ADR-0011](./adr/0011-cookie-backed-preferences-and-layout.md)) |
-| UI | `features/shell/stores/ui.store.ts` | Active sidebar section, panel layout (sizes and collapsed panels), palette open | Cookie, read by the studio layout on the server ([ADR-0011](./adr/0011-cookie-backed-preferences-and-layout.md)) |
+| UI | `features/shell/stores/ui.store.ts` | Active sidebar section, panel layout (sizes and collapsed panels), palette open | Cookie, read by the workspace route on the server ([ADR-0011](./adr/0011-cookie-backed-preferences-and-layout.md)) |
 | Console | `features/console/stores/console.store.ts` | Ring buffer of console entries (max 1,000) | Memory only |
 
 The console store is an addition to the original eight: logs change at a different rate and lifetime from everything else, so they get their own store.

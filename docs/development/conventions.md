@@ -75,7 +75,7 @@ How code is written in this repository. Lint rules enforce what they can; review
 
 ## React and Next.js
 
-- Server Components by default for layouts and static pages; the studio itself is a client island under `(studio)/layout.tsx`. `"use client"` goes as deep as possible.
+- Server Components by default for layouts and static pages; the studio itself is a client island rendered by `app/workspaces/[workspaceId]/page.tsx`. `"use client"` goes as deep as possible.
 - Components receive data through props or selectors; they never call repositories, executors or `fetch` directly.
 - No `useEffect` for derived state or event handling; effects only to sync with something outside React (Monaco, `BroadcastChannel`, keyboard listeners), always cleaned up.
 - The React Compiler handles memoisation; add `memo` / `useMemo` / `useCallback` only when profiling shows a need, with a comment saying why.
