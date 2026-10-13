@@ -52,7 +52,13 @@ During the foundation phase, work is committed directly on `develop` in small co
 | `chore` | Repository maintenance |
 | `revert` | Reverts a previous commit |
 
-Scopes are feature or package names: `core`, `runner`, `config`, `web`, `shell`, `collections`, `request-builder`, `response-viewer`, `execution`, `tabs`, `history`, `environments`, `console`, `command-palette`, `search`, `code-generation`, `import-export`, `settings`, `onboarding`, `design`, `architecture`, `adr`, `product`, `deps`, `ci`.
+Scopes are optional; when used, they must be one of the following (enforced by `scope-enum` in `commitlint.config.js`, which is the source of truth):
+
+| Group | Scopes |
+| --- | --- |
+| Packages and apps | `core`, `runner`, `config`, `web` |
+| Features | `shell`, `workspace`, `collections`, `request-builder`, `response-viewer`, `execution`, `tabs`, `history`, `environments`, `console`, `command-palette`, `search`, `code-generation`, `import-export`, `settings`, `onboarding` |
+| Docs and repository | `design`, `architecture`, `adr`, `product`, `development`, `planning`, `deps`, `ci`, `github` |
 
 Examples:
 
