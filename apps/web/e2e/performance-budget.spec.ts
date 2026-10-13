@@ -1,5 +1,9 @@
 import { expect, test } from "@playwright/test";
 
+import {
+  readLargestContentfulPaint,
+  recordLargestContentfulPaint,
+} from "./support/largest-contentful-paint";
 import { readCumulativeLayoutShift, recordLayoutShifts } from "./support/layout-shift";
 import { openStudio, WORKSPACE_PATH } from "./support/studio";
 
@@ -10,6 +14,7 @@ import { openStudio, WORKSPACE_PATH } from "./support/studio";
  */
 const INITIAL_JAVASCRIPT_BUDGET_BYTES = 280 * 1024;
 const CUMULATIVE_LAYOUT_SHIFT_BUDGET = 0.02;
+const LARGEST_CONTENTFUL_PAINT_BUDGET_MILLISECONDS = 1500;
 
 /** Script URLs a modern browser loads from the server HTML. */
 function readInitialScriptPaths(html: string): string[] {
@@ -49,6 +54,23 @@ test.describe("performance budget", () => {
       description: `${(transferredBytes / 1024).toFixed(1)} KB compressed in ${String(initialScripts.size)} scripts`,
     });
     expect(transferredBytes).toBeLessThanOrEqual(INITIAL_JAVASCRIPT_BUDGET_BYTES);
+  });
+
+  test("the studio paints its largest content within 1.5 s", async ({ page }) => {
+    await page.addInitScript(recordLargestContentfulPaint);
+
+    await openStudio(page);
+    await page.waitForLoadState("networkidle");
+
+    const largestContentfulPaint = await page.evaluate(readLargestContentfulPaint);
+    test.info().annotations.push({
+      type: "largest contentful paint",
+      description: `${String(Math.round(largestContentfulPaint ?? 0))} ms`,
+    });
+    expect(largestContentfulPaint).toBeDefined();
+    expect(largestContentfulPaint ?? Number.POSITIVE_INFINITY).toBeLessThanOrEqual(
+      LARGEST_CONTENTFUL_PAINT_BUDGET_MILLISECONDS,
+    );
   });
 
   test("the studio does not shift its layout while loading", async ({ page }) => {
