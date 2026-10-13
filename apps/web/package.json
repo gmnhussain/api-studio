@@ -30,6 +30,10 @@
   "devDependencies": {
     "@api-studio/config": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
+    "@testing-library/dom": "catalog:",
+    "@testing-library/jest-dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@testing-library/user-event": "catalog:",
     "@types/culori": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
@@ -38,6 +42,7 @@
     "babel-plugin-react-compiler": "catalog:",
     "culori": "catalog:",
     "eslint": "catalog:",
+    "jsdom": "catalog:",
     "shadcn": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
