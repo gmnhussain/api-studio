@@ -28,6 +28,7 @@
     "eslint-plugin-turbo": "catalog:",
     "globals": "catalog:",
     "prettier": "catalog:",
+    "prettier-plugin-tailwindcss": "catalog:",
     "typescript": "catalog:",
     "typescript-eslint": "catalog:",
     "vitest": "catalog:"
@@ -35,6 +36,7 @@
   "peerDependencies": {
     "eslint": "catalog:",
     "prettier": "catalog:",
+    "prettier-plugin-tailwindcss": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }
