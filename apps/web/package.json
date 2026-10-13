@@ -21,11 +21,13 @@
     "class-variance-authority": "catalog:",
     "cn": "catalog:",
     "lucide-react": "catalog:",
+    "motion": "catalog:",
     "next": "catalog:",
     "next-intl": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-resizable-panels": "catalog:",
+    "server-only": "catalog:",
     "tw-animate-css": "catalog:",
     "zod": "catalog:",
     "zustand": "catalog:"

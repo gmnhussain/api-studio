@@ -1,6 +1,8 @@
 "use client";
 
+import { MotionConfig } from "motion/react";
 import { useEffect, useState, type ReactNode } from "react";
+import { useStore } from "zustand";
 
 import { applyAppearance, subscribeToSystemTheme } from "../lib/apply-appearance";
 import { SettingsStoreContext } from "../stores/settings-store-context";
@@ -10,10 +12,12 @@ import { createSettingsStore } from "../stores/settings.store";
  * Creates the page's settings store, rehydrates it from the cookie after mount and keeps
  * `<html>` in step with the appearance: on every change, and on OS theme changes while the
  * theme is `system`. The boot script already applied the saved values before the first paint,
- * so rehydration causes no visible change.
+ * so rehydration causes no visible change. Motion animations follow the same motion setting:
+ * `reduce` always reduces them, `system` follows the OS.
  */
 export function SettingsProvider({ children }: { children: ReactNode }) {
   const [store] = useState(createSettingsStore);
+  const motion = useStore(store, (state) => state.appearance.motion);
 
   useEffect(() => {
     let stopFollowingSystemTheme: (() => void) | undefined;
@@ -48,5 +52,11 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     };
   }, [store]);
 
-  return <SettingsStoreContext.Provider value={store}>{children}</SettingsStoreContext.Provider>;
+  return (
+    <SettingsStoreContext.Provider value={store}>
+      <MotionConfig reducedMotion={motion === "reduce" ? "always" : "user"}>
+        {children}
+      </MotionConfig>
+    </SettingsStoreContext.Provider>
+  );
 }
