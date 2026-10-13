@@ -34,6 +34,9 @@ catalog:
   "@testing-library/dom": 10.4.2
   "@testing-library/user-event": 14.6.8
   "@testing-library/jest-dom": 7.0.1
+  # End-to-end tests in real browsers, with axe accessibility checks.
+  "@playwright/test": 1.64.0
+  "@axe-core/playwright": 4.13.0
   "@types/node": 24.19.1
 
   # Frontend

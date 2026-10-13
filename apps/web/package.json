@@ -13,7 +13,8 @@
     "shadcn": "shadcn",
     "test:unit": "vitest run --project unit",
     "test:integration": "vitest run --project integration",
-    "test:coverage": "vitest run --project unit --coverage"
+    "test:coverage": "vitest run --project unit --coverage",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@api-studio/core": "workspace:*",
@@ -34,6 +35,8 @@
   },
   "devDependencies": {
     "@api-studio/config": "workspace:*",
+    "@axe-core/playwright": "catalog:",
+    "@playwright/test": "catalog:",
     "@tailwindcss/postcss": "catalog:",
     "@testing-library/dom": "catalog:",
     "@testing-library/jest-dom": "catalog:",

@@ -14,7 +14,8 @@
     "test:integration": "turbo run test:integration",
     "test:watch": "turbo watch test:unit",
     "test:coverage": "turbo run test:coverage",
-    "depcruise": "depcruise packages --config .dependency-cruiser.cjs && depcruise apps/web --config apps/web/.dependency-cruiser.cjs"
+    "depcruise": "depcruise packages --config .dependency-cruiser.cjs && depcruise apps/web --config apps/web/.dependency-cruiser.cjs",
+    "test:e2e": "turbo run test:e2e"
   },
   "devDependencies": {
     "@api-studio/config": "workspace:*",
