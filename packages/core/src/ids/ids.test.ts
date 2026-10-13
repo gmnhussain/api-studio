@@ -3,12 +3,14 @@ import { describe, expect, it } from "vitest";
 import { asId, createId, type CollectionId, type WorkspaceId } from "./ids";
 
 describe("ids", () => {
-  it("creates distinct, time-sortable ids", () => {
+  // Ordering across milliseconds is covered in uuid-v7.test.ts; within one millisecond the random
+  // bits are unordered (RFC 9562 makes a monotonic counter optional), so it is not asserted here.
+  it("creates distinct UUID v7 ids", () => {
     const first = createId<"WorkspaceId">();
     const second = createId<"WorkspaceId">();
 
     expect(first).not.toBe(second);
-    expect(first <= second).toBe(true);
+    expect(first).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-7/);
   });
 
   it("keeps id kinds apart at the type level", () => {

@@ -51,6 +51,8 @@ catalog:
   # Client state (ADR-0004) and validation at trust boundaries.
   zustand: 5.0.15
   zod: 4.6.5
+  # Sibling order that a move rewrites in one record (data-model.md#conventions).
+  fractional-indexing: 4.0.0
   # UI text catalog (ADR-0010).
   next-intl: 4.14.9
 

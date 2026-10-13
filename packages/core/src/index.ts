@@ -14,6 +14,15 @@ export type {
   TabId,
   WorkspaceId,
 } from "./ids/ids";
+export {
+  compareSortKeys,
+  sortBySortKey,
+  sortKeyBetween,
+  sortKeysBetween,
+} from "./ordering/sort-key";
+export type { SortKey } from "./ordering/sort-key";
+export { createRegistry } from "./registry/registry";
+export type { Contribution, Disposable, Registry } from "./registry/registry";
 export { createUuidV7 } from "./ids/uuid-v7";
 export type { UuidV7Sources } from "./ids/uuid-v7";
 export { assertNever } from "./result/assert-never";

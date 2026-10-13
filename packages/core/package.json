@@ -14,6 +14,10 @@
     "test:unit": "vitest run --project unit",
     "test:coverage": "vitest run --project unit --coverage"
   },
+  "dependencies": {
+    "fractional-indexing": "catalog:",
+    "zod": "catalog:"
+  },
   "devDependencies": {
     "@api-studio/config": "workspace:*",
     "@vitest/coverage-v8": "catalog:",
