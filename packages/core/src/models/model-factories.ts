@@ -1,4 +1,5 @@
 import type { Collection, FolderItem, RequestItem } from "./collection.schema";
+import type { EditorTab, TabKind, TabLayout } from "./editor-tab.schema";
 import type { Environment, EnvironmentColor } from "./environment.schema";
 import type { KeyValueEntry, Variable } from "./key-value-entry.schema";
 import { DEFAULT_MAX_REDIRECTS, DEFAULT_TIMEOUT_MILLISECONDS } from "./models.constants";
@@ -179,4 +180,37 @@ export function createEnvironment({
     createdAt: now,
     updatedAt: now,
   };
+}
+
+/** A new, unpinned editor tab; by default an unsaved request. */
+export function createEditorTab({
+  workspaceId,
+  kind = "request",
+  entityId = null,
+  now = currentTimestamp(),
+}: {
+  workspaceId: WorkspaceId;
+  kind?: TabKind;
+  entityId?: string | null;
+  now?: IsoDateTime;
+}): EditorTab {
+  return {
+    id: createId<"TabId">(),
+    workspaceId,
+    kind,
+    entityId,
+    isPinned: false,
+    openedAt: now,
+  };
+}
+
+/** The tab layout of a workspace with no open tabs. */
+export function createTabLayout({
+  workspaceId,
+  now = currentTimestamp(),
+}: {
+  workspaceId: WorkspaceId;
+  now?: IsoDateTime;
+}): TabLayout {
+  return { workspaceId, tabs: [], activeTabId: null, recentlyClosed: [], updatedAt: now };
 }

@@ -2,20 +2,24 @@ import { describe, expect, it } from "vitest";
 
 import { authConfigSchema } from "./auth.schema";
 import { collectionItemSchema, collectionSchema } from "./collection.schema";
+import { editorTabSchema, tabLayoutSchema } from "./editor-tab.schema";
 import { environmentSchema } from "./environment.schema";
 import { variableSchema } from "./key-value-entry.schema";
 import {
   createCollection,
+  createEditorTab,
   createEnvironment,
   createFolderItem,
   createHttpRequestDefinition,
   createKeyValueEntry,
   createRequestItem,
+  createTabLayout,
   createVariable,
   createWorkspace,
 } from "./model-factories";
-import { NAME_MAX_LENGTH } from "./models.constants";
+import { NAME_MAX_LENGTH, RECENTLY_CLOSED_TABS_LIMIT } from "./models.constants";
 import { requestBodySchema } from "./request-body.schema";
+import { requestDraftSchema } from "./request-draft.schema";
 import { requestDefinitionSchema } from "./request.schema";
 import { workspaceSchema } from "./workspace.schema";
 import { sortKeyBetween } from "../ordering/sort-key";
@@ -168,5 +172,43 @@ describe("model schemas", () => {
     const folder = createFolderItem({ ...placement, name: "Auth" });
 
     expect(collectionItemSchema.safeParse({ ...folder, type: "request" }).success).toBe(false);
+  });
+});
+
+describe("editor tabs and drafts", () => {
+  const workspace = createWorkspace({ name: "Acme" });
+
+  it("build tabs, layouts and drafts that their schemas accept", () => {
+    const tab = createEditorTab({ workspaceId: workspace.id, now: NOW });
+    const layout = {
+      ...createTabLayout({ workspaceId: workspace.id, now: NOW }),
+      tabs: [tab],
+      activeTabId: tab.id,
+    };
+    const draft = {
+      tabId: tab.id,
+      workspaceId: workspace.id,
+      baseUpdatedAt: null,
+      name: "Untitled request",
+      request: createHttpRequestDefinition(),
+    };
+
+    expect(tab).toMatchObject({ kind: "request", entityId: null, isPinned: false, openedAt: NOW });
+    expect(tabLayoutSchema.parse(layout)).toEqual(layout);
+    expect(requestDraftSchema.parse(draft)).toEqual(draft);
+  });
+
+  it("reject tabs of unknown kinds, empty entity ids and too many closed tabs", () => {
+    const tab = createEditorTab({ workspaceId: workspace.id });
+    const layout = createTabLayout({ workspaceId: workspace.id });
+
+    expect(editorTabSchema.safeParse({ ...tab, kind: "terminal" }).success).toBe(false);
+    expect(editorTabSchema.safeParse({ ...tab, entityId: "" }).success).toBe(false);
+    expect(
+      tabLayoutSchema.safeParse({
+        ...layout,
+        recentlyClosed: Array.from({ length: RECENTLY_CLOSED_TABS_LIMIT + 1 }, () => tab),
+      }).success,
+    ).toBe(false);
   });
 });

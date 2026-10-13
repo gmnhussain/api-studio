@@ -42,17 +42,21 @@ export type {
   FolderItem,
   RequestItem,
 } from "./models/collection.schema";
+export { editorTabSchema, tabLayoutSchema } from "./models/editor-tab.schema";
+export type { EditorTab, TabKind, TabLayout } from "./models/editor-tab.schema";
 export { environmentSchema } from "./models/environment.schema";
 export type { Environment, EnvironmentColor } from "./models/environment.schema";
 export { keyValueEntrySchema, variableSchema } from "./models/key-value-entry.schema";
 export type { KeyValueEntry, Variable } from "./models/key-value-entry.schema";
 export {
   createCollection,
+  createEditorTab,
   createEnvironment,
   createFolderItem,
   createHttpRequestDefinition,
   createKeyValueEntry,
   createRequestItem,
+  createTabLayout,
   createVariable,
   createWorkspace,
   currentTimestamp,
@@ -70,11 +74,15 @@ export {
   MAX_TIMEOUT_MILLISECONDS,
   NAME_MAX_LENGTH,
   OAUTH2_GRANT_TYPES,
+  RECENTLY_CLOSED_TABS_LIMIT,
+  TAB_KINDS,
 } from "./models/models.constants";
 export { idSchema, isoDateTimeSchema, nameSchema, sortKeySchema } from "./models/primitives.schema";
 export type { IsoDateTime } from "./models/primitives.schema";
 export { formDataEntrySchema, requestBodySchema } from "./models/request-body.schema";
 export type { BodyType, FormDataEntry, RequestBody } from "./models/request-body.schema";
+export { requestDraftSchema } from "./models/request-draft.schema";
+export type { RequestDraft } from "./models/request-draft.schema";
 export {
   httpRequestDefinitionSchema,
   requestDefinitionSchema,
@@ -131,7 +139,14 @@ export type {
 } from "./execution/resolved-request.schema";
 export { applyAuth, resolveInheritedAuth } from "./http/apply-auth";
 export type { AuthTarget } from "./http/apply-auth";
+export { isDeepEqual } from "./equality/deep-equal";
 export { formatBytes, formatDuration } from "./http/format";
+export { generatedHeaders } from "./http/generated-headers";
+export type {
+  GeneratedHeader,
+  GeneratedHeaderInput,
+  GeneratedHeaderSource,
+} from "./http/generated-headers";
 export {
   addHeaderIfMissing,
   COMMON_REQUEST_HEADERS,
@@ -151,6 +166,7 @@ export {
   syncQueryParametersFromUrl,
 } from "./http/query-parameters";
 export type { QueryPair } from "./http/query-parameters";
+export { withPathVariables, withQueryParameters, withUrl } from "./http/request-editing";
 export { measureBodyBytes, measureRequestBytes } from "./http/request-size";
 export { defaultContentType, serializeBody } from "./http/serialize-body";
 export { getStatusClass } from "./http/status";

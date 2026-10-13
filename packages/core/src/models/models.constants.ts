@@ -29,3 +29,9 @@ export const BODY_TYPES = [
 
 /** Auth schemes (F-07). */
 export const AUTH_TYPES = ["none", "inherit", "basic", "bearer", "api_key", "oauth2"] as const;
+
+/** What an editor tab shows (glossary: Tab). */
+export const TAB_KINDS = ["request", "environment", "collection"] as const;
+
+/** How many closed tabs "reopen closed tab" remembers per workspace. */
+export const RECENTLY_CLOSED_TABS_LIMIT = 20;
