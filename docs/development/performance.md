@@ -6,7 +6,7 @@
 
 | Metric | Budget | Checked by |
 | --- | --- | --- |
-| Initial JS for `/workspaces/[id]` (compressed, modern browsers) | ≤ 280 KB | `e2e/performance-budget.spec.ts` in CI |
+| Initial JS for `/workspaces/[id]` (compressed, modern browsers) | ≤ 290 KB | `e2e/performance-budget.spec.ts` in CI |
 | Largest Contentful Paint (production build) | ≤ 1.5 s | `e2e/performance-budget.spec.ts` in CI |
 | Cumulative Layout Shift, including a restored layout | < 0.02 | `e2e/performance-budget.spec.ts`, `e2e/shell.spec.ts` in CI |
 | Interaction to Next Paint | < 100 ms | Playwright traces, automated with the request editor (M3) |
@@ -20,6 +20,13 @@ The target user is a developer on a laptop or desktop, so the budget is set for 
 - **Measured, not guessed.** The planning estimate of 200 KB did not survive measurement: React DOM and the Next.js runtime alone are about 120 KB compressed, a fixed cost of the stack. After the M1 trims (`zod/mini` in the browser, lazy Motion features, a lazy overlay sheet) the studio loads about 272 KB: ~120 KB framework, ~150 KB app.
 - **A ratchet.** The budget sits just above the measured size, so any new eager dependency fails CI. When the size drops, the budget is lowered to match; it is never raised to make a change pass. A change that needs more up front is a design discussion recorded in its pull request.
 - **What counts.** Scripts referenced by the server HTML, as a modern browser downloads them: `nomodule` legacy polyfills and chunks loaded on demand afterwards are excluded. Monaco and other heavy features must load on demand.
+- **Budget history.** Every change to the budget is recorded here with its reason:
+
+  | Milestone | Budget | Measured | Why it moved |
+  | --- | --- | --- | --- |
+  | M1 | 280 KB | 272 KB | First measured budget, after trimming Zod, Motion and the overlay sheet |
+  | M2 | 290 KB | 283 KB | The workspace gate, its store and loader must run on every studio page (+11 KB). The switcher and its menu library load after hydration instead, which kept 32 KB out |
+
 - **Bytes are a proxy.** LCP, layout shift and, from M3, interaction latency are what users feel, and they are budgeted alongside.
 
 ## Strategies

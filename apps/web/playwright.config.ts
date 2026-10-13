@@ -14,6 +14,8 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: isContinuousIntegration,
   retries: isContinuousIntegration ? 2 : 0,
+  // CI runners have two cores; more workers only make every test slower.
+  workers: isContinuousIntegration ? 2 : undefined,
   reporter: isContinuousIntegration ? [["github"], ["html", { open: "never" }]] : "list",
   use: {
     baseURL: `http://localhost:${String(E2E_PORT)}`,

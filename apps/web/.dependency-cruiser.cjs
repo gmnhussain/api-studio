@@ -7,22 +7,33 @@ module.exports = {
     {
       name: "features-through-index",
       severity: "error",
-      comment: "A feature imports another feature only through its index.ts (its public API).",
+      comment:
+        "A feature imports another feature only through its public API: index.ts, or server.ts for server-only exports.",
       from: { path: "^apps/web/src/features/([^/]+)/" },
       to: {
         path: "^apps/web/src/features/[^/]+/",
-        pathNot: ["^apps/web/src/features/$1/", "^apps/web/src/features/[^/]+/index\\.tsx?$"],
+        pathNot: [
+          "^apps/web/src/features/$1/",
+          "^apps/web/src/features/[^/]+/(index|server)\\.tsx?$",
+        ],
       },
     },
     {
       name: "outside-features-through-index",
       severity: "error",
-      comment: "Routes and other code use a feature only through its index.ts.",
+      comment: "Routes and other code use a feature only through index.ts or server.ts.",
       from: { path: "^apps/web/src/", pathNot: "^apps/web/src/features/" },
       to: {
         path: "^apps/web/src/features/[^/]+/",
-        pathNot: "^apps/web/src/features/[^/]+/index\\.tsx?$",
+        pathNot: "^apps/web/src/features/[^/]+/(index|server)\\.tsx?$",
       },
+    },
+    {
+      name: "server-entry-only-on-the-server",
+      severity: "error",
+      comment: "A feature's server.ts reaches only routes (app/), never client components.",
+      from: { path: "^apps/web/src/", pathNot: "^apps/web/src/app/" },
+      to: { path: "^apps/web/src/features/[^/]+/server\\.ts$" },
     },
     {
       name: "shared-code-not-to-features",

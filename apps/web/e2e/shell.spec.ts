@@ -1,13 +1,13 @@
 import { expect, test } from "@playwright/test";
 
 import { readCumulativeLayoutShift, recordLayoutShifts } from "./support/layout-shift";
-import { LAYOUT_COOKIE, openStudio, WORKSPACE_PATH } from "./support/studio";
+import { LAYOUT_COOKIE, openStudio, WORKSPACE_URL_PATTERN } from "./support/studio";
 
 test.describe("studio shell", () => {
   test("opens the workspace from / with every region in place", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page).toHaveURL(WORKSPACE_PATH);
+    await expect(page).toHaveURL(WORKSPACE_URL_PATTERN);
     await expect(page).toHaveTitle("Workspace · API Studio");
     await expect(page.getByRole("navigation", { name: "Views" })).toBeVisible();
     await expect(page.getByRole("region", { name: "Collections" })).toBeVisible();

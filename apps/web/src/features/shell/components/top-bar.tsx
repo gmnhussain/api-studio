@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { APP_NAME } from "@/config/app";
 import { KEYMAP } from "@/config/keymap";
 import { ThemeSwitcher } from "@/features/settings";
+import { WorkspaceSwitcher } from "@/features/workspace";
 
 import { SHELL_REGION_IDS } from "../shell.constants";
 import { PanelToggleButton } from "./panel-toggle-button";
@@ -23,9 +24,9 @@ export type RegionToggles = {
 };
 
 /**
- * The 44 px bar above the studio: the product mark on the left, and on the right the layout
- * toggles (sidebar, console, response) and the theme switcher. The command palette and the
- * environment selector join it in later milestones.
+ * The 44 px bar above the studio: the product mark and the workspace switcher on the left, and
+ * on the right the layout toggles (sidebar, console, response) and the theme switcher. The
+ * command palette and the environment selector join it in later milestones.
  */
 export function TopBar({ regions }: { regions: RegionToggles }) {
   const t = useTranslations("shell.actions");
@@ -35,6 +36,8 @@ export function TopBar({ regions }: { regions: RegionToggles }) {
       <div className="flex items-center gap-2">
         <AppLogo className="size-5" />
         <span className="text-sm font-semibold tracking-tight">{APP_NAME}</span>
+        <Separator orientation="vertical" className="mx-1.5 h-4" />
+        <WorkspaceSwitcher />
       </div>
 
       <div className="ml-auto flex items-center gap-0.5">

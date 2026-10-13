@@ -4,7 +4,6 @@ import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
-import { DEFAULT_WORKSPACE_ID } from "@/config/app";
 import { routes } from "@/config/routes";
 import { SettingsNavigation } from "@/features/settings";
 
@@ -20,7 +19,7 @@ export default async function SettingsLayout({ children }: { children: ReactNode
             variant="ghost"
             size="sm"
             nativeButton={false}
-            render={<Link href={routes.workspace(DEFAULT_WORKSPACE_ID)} />}
+            render={<Link href={routes.home()} />}
           >
             <ArrowLeft data-icon="inline-start" />
             {t("backToStudio")}

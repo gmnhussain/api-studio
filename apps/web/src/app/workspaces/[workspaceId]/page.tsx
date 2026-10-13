@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-import { AppShell, readUiState, UiStoreProvider } from "@/features/shell";
-
 /** Page title for the studio. */
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("shell.regions");
@@ -10,15 +8,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 /**
- * The studio. Reads the saved panel layout from its cookie on the server, so the first frame
- * already has the saved shape (ADR-0011); everything inside is a client island.
+ * The `[workspaceId]` segment only names the workspace; the studio itself is the parent layout,
+ * which reads the id from the URL. Renders nothing of its own.
  */
-export default async function WorkspacePage() {
-  const initialUiState = await readUiState();
-
-  return (
-    <UiStoreProvider initialState={initialUiState}>
-      <AppShell />
-    </UiStoreProvider>
-  );
+export default function WorkspacePage() {
+  return null;
 }

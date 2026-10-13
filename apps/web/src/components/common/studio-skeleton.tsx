@@ -1,11 +1,18 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
+/** Props for {@link StudioSkeleton}. */
+export type StudioSkeletonProps = {
+  /** Announced to screen readers while the studio loads. */
+  label: string;
+};
+
 /**
- * Skeleton of the studio frame, shaped like the shell so the swap to content causes no shift.
+ * Placeholder of the studio frame, shaped like the shell so the swap to content causes no
+ * layout shift. Used while a route streams and while `/` picks the workspace to open.
  */
-export default function WorkspaceLoading() {
+export function StudioSkeleton({ label }: StudioSkeletonProps) {
   return (
-    <div aria-busy className="flex h-dvh flex-col bg-background">
+    <div role="status" aria-label={label} className="flex h-dvh flex-col bg-background">
       <div className="flex h-11 shrink-0 items-center gap-2 border-b bg-surface px-3">
         <Skeleton className="size-5 rounded-md" />
         <Skeleton className="h-3 w-24" />

@@ -11,11 +11,12 @@ import {
   type WorkspaceId,
 } from "@api-studio/core";
 
+import type { KeyValueStorage } from "@/lib/cookies/browser-cookie-storage";
 import type { ChangeFeed } from "@/lib/db/change-feed";
 
 import type { WorkspaceRepository } from "../repositories/workspace.repository";
 import type { WorkspaceActions, WorkspaceState } from "../stores/workspace.store";
-import { LAST_WORKSPACE_STORAGE_KEY, type WorkspaceError } from "../workspace.constants";
+import { LAST_WORKSPACE_COOKIE, type WorkspaceError } from "../workspace.constants";
 
 /** The store as the service uses it: read the state and call its actions. */
 export type WorkspaceStoreApi = { getState: () => WorkspaceState & WorkspaceActions };
@@ -24,8 +25,8 @@ export type WorkspaceStoreApi = { getState: () => WorkspaceState & WorkspaceActi
 export type WorkspaceServiceDependencies = {
   repository: WorkspaceRepository;
   store: WorkspaceStoreApi;
-  /** Where the last opened workspace is remembered; `localStorage` in the browser. */
-  storage?: Pick<Storage, "getItem" | "setItem" | "removeItem">;
+  /** Where the last opened workspace is remembered; a cookie in the browser. */
+  storage?: KeyValueStorage;
   changeFeed?: ChangeFeed;
   /** The current time; injectable so tests are deterministic. */
   now?: () => IsoDateTime;
@@ -130,8 +131,8 @@ export function createWorkspaceService({
       actions().removeWorkspace(workspaceId);
       try {
         await repository.deleteWithContents(workspaceId);
-        if (storage?.getItem(LAST_WORKSPACE_STORAGE_KEY) === workspaceId) {
-          storage.removeItem(LAST_WORKSPACE_STORAGE_KEY);
+        if (storage?.getItem(LAST_WORKSPACE_COOKIE) === workspaceId) {
+          storage.removeItem(LAST_WORKSPACE_COOKIE);
         }
         return ok(null);
       } catch {
@@ -143,13 +144,20 @@ export function createWorkspaceService({
     /** Marks the workspace the studio shows and remembers it for the next visit to `/`. */
     openWorkspace: (workspaceId: WorkspaceId) => {
       actions().setActiveWorkspaceId(workspaceId);
-      storage?.setItem(LAST_WORKSPACE_STORAGE_KEY, workspaceId);
+      storage?.setItem(LAST_WORKSPACE_COOKIE, workspaceId);
+    },
+
+    /** Forgets the remembered workspace if it is this one, so `/` stops redirecting to it. */
+    forgetWorkspace: (workspaceId: WorkspaceId) => {
+      if (storage?.getItem(LAST_WORKSPACE_COOKIE) === workspaceId) {
+        storage.removeItem(LAST_WORKSPACE_COOKIE);
+      }
     },
 
     /** The workspace `/` should open: the last one opened here if it still exists, else the first. */
     pickWorkspaceToOpen: (): Workspace | undefined => {
       const { workspaces } = actions();
-      const lastId = storage?.getItem(LAST_WORKSPACE_STORAGE_KEY);
+      const lastId = storage?.getItem(LAST_WORKSPACE_COOKIE);
       return workspaces.find((workspace) => workspace.id === lastId) ?? workspaces[0];
     },
 

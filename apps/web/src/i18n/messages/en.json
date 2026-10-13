@@ -143,5 +143,49 @@
     "notFoundTitle": "Page not found",
     "notFoundDescription": "This page does not exist. It may have moved, or the link is incomplete.",
     "backToStudio": "Back to the studio"
+  },
+  "workspace": {
+    "defaultName": "My workspace",
+    "opening": "Opening your workspace",
+    "switcher": {
+      "label": "Workspace: {name}. Switch workspace",
+      "loading": "Loading workspaces",
+      "heading": "Workspaces",
+      "create": "New workspace…",
+      "rename": "Rename workspace…",
+      "delete": "Delete workspace…"
+    },
+    "nameDialog": {
+      "createTitle": "New workspace",
+      "createDescription": "A workspace holds its own collections, environments and history.",
+      "renameTitle": "Rename workspace",
+      "renameDescription": "The new name shows everywhere this workspace appears.",
+      "nameLabel": "Name",
+      "namePlaceholder": "Acme API",
+      "create": "Create workspace",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close"
+    },
+    "deleteDialog": {
+      "title": "Delete “{name}”?",
+      "description": "Its collections, requests and environments are deleted from this browser. This cannot be undone.",
+      "confirm": "Delete workspace",
+      "cancel": "Cancel"
+    },
+    "errors": {
+      "invalid_name": "Enter a name of 1 to {max} characters.",
+      "not_found": "That workspace no longer exists.",
+      "last_workspace": "You need at least one workspace.",
+      "storage": "Your change could not be saved. Check that this browser allows site storage, then try again."
+    },
+    "toasts": {
+      "deleted": "Deleted “{name}”"
+    },
+    "notFound": {
+      "title": "Workspace not found",
+      "description": "It may have been deleted in another tab, or the link comes from another browser.",
+      "action": "Open my workspaces"
+    }
   }
 }

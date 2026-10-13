@@ -12,16 +12,17 @@ import {
   type Workspace,
 } from "@api-studio/core";
 
+import type { KeyValueStorage } from "@/lib/cookies/browser-cookie-storage";
 import { createChangeFeed, type ChangeFeed } from "@/lib/db/change-feed";
 import { createDatabase, type ApiStudioDatabase } from "@/lib/db/database";
 
 import { createWorkspaceRepository } from "../repositories/workspace.repository";
 import { getInitialWorkspaceState, useWorkspaceStore } from "../stores/workspace.store";
-import { LAST_WORKSPACE_STORAGE_KEY } from "../workspace.constants";
+import { LAST_WORKSPACE_COOKIE } from "../workspace.constants";
 import { createWorkspaceService } from "./workspace.service";
 
-/** An in-memory stand-in for localStorage. */
-function createMemoryStorage(): Pick<Storage, "getItem" | "setItem" | "removeItem"> {
+/** An in-memory stand-in for the last-workspace cookie. */
+function createMemoryStorage(): KeyValueStorage {
   const values = new Map<string, string>();
   return {
     getItem: (key) => values.get(key) ?? null,
@@ -171,11 +172,11 @@ describe("workspace service", () => {
 
     expect(service.pickWorkspaceToOpen()?.name).toBe("Default");
     service.openWorkspace(second.value.id);
-    expect(storage.getItem(LAST_WORKSPACE_STORAGE_KEY)).toBe(second.value.id);
+    expect(storage.getItem(LAST_WORKSPACE_COOKIE)).toBe(second.value.id);
     expect(service.pickWorkspaceToOpen()?.id).toBe(second.value.id);
 
     await service.deleteWorkspace(second.value.id);
-    expect(storage.getItem(LAST_WORKSPACE_STORAGE_KEY)).toBeNull();
+    expect(storage.getItem(LAST_WORKSPACE_COOKIE)).toBeNull();
     expect(service.pickWorkspaceToOpen()?.name).toBe("Default");
   });
 
