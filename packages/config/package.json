@@ -9,7 +9,11 @@
     "./eslint/isomorphic": "./eslint/isomorphic.js",
     "./eslint/node": "./eslint/node.js",
     "./eslint/next": "./eslint/next.js",
-    "./prettier": "./prettier.js"
+    "./prettier": "./prettier.js",
+    "./vitest": {
+      "types": "./vitest.d.ts",
+      "default": "./vitest.js"
+    }
   },
   "scripts": {
     "lint": "eslint ."
@@ -24,11 +28,13 @@
     "globals": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:",
-    "typescript-eslint": "catalog:"
+    "typescript-eslint": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "eslint": "catalog:",
     "prettier": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }
