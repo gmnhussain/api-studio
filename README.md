@@ -13,7 +13,7 @@
 
 </div>
 
-> **Status:** the foundation (milestone M0) is in place: workspace, tooling, CI and the app skeleton. The design system and app shell (M1) are next. See the [milestone plan](./docs/planning/milestones.md).
+> **Status:** the foundation (M0) and the design system and app shell (M1) are in place: tokens with a contrast test, light and dark themes, a resizable studio shell, settings, and E2E, accessibility and performance gates in CI. The core domain and persistence (M2) are next. See the [milestone plan](./docs/planning/milestones.md).
 
 <!-- Screenshots and a short demo GIF are added in milestone M9. -->
 

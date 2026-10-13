@@ -30,6 +30,8 @@
 
 ## M1 — Design system and app shell
 
+> **Done** (2026-10-14). The shell is axe-clean in both themes and passes the E2E suite in Chromium, Firefox and WebKit. Initial JavaScript is 272 KB against a 280 KB budget set from measurement ([performance.md](../development/performance.md#how-the-javascript-budget-is-set)). The phone-width layout (bottom bar, request / response switch) moved to M8; those widths use the tablet layout until then.
+
 - Tokens (`tokens.css`), Tailwind `@theme` mapping, fonts, cookie-backed appearance settings with a pre-paint boot script, accent and density attributes, token contrast test.
 - shadcn primitives added and themed; `components/common` basics (`Panel`, `EmptyState`, `ShortcutHint`, `ThemeSwitcher`, illustrations). `SearchInput` arrives with sidebar search in M6.
 - `AppShell`: activity rail, resizable sidebar, tab strip area, editor / response split, console, status bar, all collapsible with persisted sizes (UI store).
@@ -93,7 +95,8 @@
 
 ## M8 — Settings, onboarding and polish
 
-- Settings page (appearance, editor, requests, shortcuts, data, about) with React Hook Form + Zod.
+- Settings sections for editor, requests, shortcuts and data (appearance and about shipped in M1), with React Hook Form + Zod.
+- Phone-width layout (< 768 px): rail as a bottom bar, request / response switch, console in a sheet.
 - Onboarding flow; recent requests; saved responses; accent presets.
 - Motion pass (signature micro-interactions), empty-state illustrations, copywriting pass.
 - Accessibility audit (axe + NVDA / VoiceOver), performance audit against budgets.
