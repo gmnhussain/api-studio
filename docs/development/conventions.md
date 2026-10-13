@@ -81,7 +81,7 @@ How code is written in this repository. Lint rules enforce what they can; review
 - The React Compiler handles memoisation; add `memo` / `useMemo` / `useCallback` only when profiling shows a need, with a comment saying why.
 - Lists use stable ids as keys, never the index.
 - Heavy or rarely used UI (Monaco, previews, code generation dialog, import dialog, settings sections, onboarding) is loaded with `next/dynamic` or `React.lazy` behind `Suspense` with a skeleton.
-- Every route segment has an `error.tsx`; dynamic segments also have a `loading.tsx` skeleton shaped like the page (static pages have nothing to wait for).
+- Every route segment has an `error.tsx`, and the app a `global-error.tsx` for failures in layouts. A segment that awaits slow data gets a `loading.tsx` skeleton shaped like the page; a segment that renders at once does not, since a skeleton would only flash.
 - Animations use `m.*` from `motion/react-m`, never `motion.*`: the app runs under `LazyMotion strict`, which throws on the full component so it cannot grow the bundle. Durations and easings come from the motion tokens.
 - Media queries come from `constants/breakpoints.ts` through `useMediaQuery`, which renders the wide layout on the server and corrects without a hydration mismatch.
 
