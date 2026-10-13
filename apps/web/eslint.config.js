@@ -10,13 +10,17 @@ export default defineConfig([
     rules: {
       "jsx-a11y/label-has-associated-control": [
         "error",
-        { labelComponents: ["Label"], controlComponents: ["Input", "Switch"], assert: "either" },
+        {
+          labelComponents: ["Label", "FieldLabel"],
+          controlComponents: ["Input", "Switch"],
+          assert: "either",
+        },
       ],
     },
   },
   {
-    // The Label primitive only forwards htmlFor from its call sites, which the rule checks.
-    files: ["src/components/ui/label.tsx"],
+    // Label primitives only forward htmlFor from their call sites, which the rule checks.
+    files: ["src/components/ui/label.tsx", "src/components/ui/field.tsx"],
     rules: { "jsx-a11y/label-has-associated-control": "off" },
   },
 ]);

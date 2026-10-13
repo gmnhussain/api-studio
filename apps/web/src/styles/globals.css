@@ -186,3 +186,12 @@
     transition: none !important;
   }
 }
+
+/* Toasts (shadcn/ui Sonner) on a raised surface, with token colours and radius. */
+[data-sonner-toaster] {
+  --normal-bg: var(--surface-raised);
+  --normal-text: var(--foreground);
+  --normal-border: var(--border);
+  --border-radius: var(--radius-lg);
+  font-family: var(--font-sans);
+}
