@@ -3,12 +3,22 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test:unit test:integration",
+    "test:unit": "turbo run test:unit",
+    "test:integration": "turbo run test:integration",
+    "test:watch": "turbo watch test:unit",
+    "test:coverage": "turbo run test:coverage"
   },
   "devDependencies": {
     "@api-studio/config": "workspace:*",
     "prettier": "catalog:",
+    "turbo": "catalog:",
     "typescript": "catalog:"
   },
   "packageManager": "pnpm@11.5.0",

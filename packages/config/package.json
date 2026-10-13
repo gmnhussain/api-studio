@@ -25,6 +25,7 @@
     "eslint-config-prettier": "catalog:",
     "eslint-plugin-import-x": "catalog:",
     "eslint-plugin-jsx-a11y": "catalog:",
+    "eslint-plugin-turbo": "catalog:",
     "globals": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:",
