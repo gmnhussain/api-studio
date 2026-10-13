@@ -4,7 +4,7 @@
 
 **A local-first, keyboard-driven workspace for designing, sending and understanding HTTP requests.**
 
-![Status](https://img.shields.io/badge/status-architecture%20review-0ea5e9)
+![Status](https://img.shields.io/badge/status-in%20development-0ea5e9)
 ![License](https://img.shields.io/badge/license-MIT-22c55e)
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white)
@@ -13,7 +13,7 @@
 
 </div>
 
-> **Status:** the architecture and design are documented and under review; implementation starts with milestone M0. See the [milestone plan](./docs/planning/milestones.md).
+> **Status:** the foundation (milestone M0) is in place: workspace, tooling, CI and the app skeleton. The design system and app shell (M1) are next. See the [milestone plan](./docs/planning/milestones.md).
 
 <!-- Screenshots and a short demo GIF are added in milestone M9. -->
 
@@ -100,11 +100,19 @@ api-studio/
 
 ## Getting started
 
-Setup instructions arrive with milestone M0 (`docs/development/setup.md`). Requirements: Node 24 and pnpm 11.
+Requirements: Node 24 and pnpm 11.
+
+```bash
+corepack enable
+pnpm install
+pnpm dev
+```
+
+Then open http://localhost:3000. All commands are in the [setup guide](./docs/development/setup.md).
 
 ## Contributing
 
-Contributions are welcome once the foundation lands. Please read the [conventions](./docs/development/conventions.md) and the [git workflow](./docs/development/git-workflow.md) first: Conventional Commits, small focused changes, and docs updated alongside behaviour.
+Contributions are welcome. Please read [CONTRIBUTING.md](./CONTRIBUTING.md), the [conventions](./docs/development/conventions.md) and the [git workflow](./docs/development/git-workflow.md) first: Conventional Commits, small focused changes, and docs updated alongside behaviour. Report security issues privately as described in [SECURITY.md](./SECURITY.md).
 
 ## License
 
