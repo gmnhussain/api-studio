@@ -32,6 +32,7 @@ describe("createTableRepository", () => {
     const database = openTestDatabase();
     const repository = createTableRepository({
       tableName: "workspaces",
+      key: "id",
       table: database.workspaces,
       schema: workspaceSchema,
     });
@@ -47,6 +48,7 @@ describe("createTableRepository", () => {
     const database = openTestDatabase();
     const repository = createTableRepository({
       tableName: "environments",
+      key: "id",
       table: database.environments,
       schema: environmentSchema,
     });
@@ -68,6 +70,7 @@ describe("createTableRepository", () => {
     const onInvalidRecord = vi.fn<(record: InvalidRecord) => void>();
     const repository = createTableRepository({
       tableName: "workspaces",
+      key: "id",
       table: database.workspaces,
       schema: workspaceSchema,
       onInvalidRecord,
@@ -88,6 +91,7 @@ describe("createTableRepository", () => {
     const database = openTestDatabase();
     const repository = createTableRepository({
       tableName: "workspaces",
+      key: "id",
       table: database.workspaces,
       schema: workspaceSchema,
     });
@@ -114,6 +118,7 @@ describe("createTableRepository", () => {
     thisTab.subscribe(ownChanges);
     const repository = createTableRepository({
       tableName: "workspaces",
+      key: "id",
       table: database.workspaces,
       schema: workspaceSchema,
       changeFeed: thisTab,

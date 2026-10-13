@@ -12,26 +12,29 @@ export type InvalidRecordReporter = (record: InvalidRecord) => void;
 
 /**
  * Persistence for one table: reads are validated, writes notify other tabs. Feature
- * repositories build on it and add their own queries.
+ * repositories build on it and add their own queries. Records are keyed by `Key`, `id` unless
+ * the table says otherwise.
  */
-export type TableRepository<Entity extends { id: string }> = {
+export type TableRepository<Entity extends Record<Key, string>, Key extends string = "id"> = {
   getAll: () => Promise<Entity[]>;
-  get: (id: Entity["id"]) => Promise<Entity | undefined>;
+  get: (key: Entity[Key]) => Promise<Entity | undefined>;
   /** Records whose `index` equals `value`; `index` must be declared in the table's schema. */
   findBy: (index: string, value: IndexableType) => Promise<Entity[]>;
   /** Records whose `index` equals any of `values`. */
   findByAnyOf: (index: string, values: readonly IndexableType[]) => Promise<Entity[]>;
   put: (record: Entity) => Promise<void>;
   bulkPut: (records: readonly Entity[]) => Promise<void>;
-  delete: (id: Entity["id"]) => Promise<void>;
-  bulkDelete: (ids: readonly Entity["id"][]) => Promise<void>;
+  delete: (key: Entity[Key]) => Promise<void>;
+  bulkDelete: (keys: readonly Entity[Key][]) => Promise<void>;
 };
 
 /** What {@link createTableRepository} needs. */
-export type TableRepositoryOptions<Entity extends { id: string }> = {
+export type TableRepositoryOptions<Entity extends Record<Key, string>, Key extends string> = {
   tableName: TableName;
+  /** The property that is the table's primary key. */
+  key: Key;
   /** The entity type comes from `schema`; the table is checked against it. */
-  table: NoInfer<Table<Entity, Entity["id"]>>;
+  table: NoInfer<Table<Entity, Entity[Key]>>;
   schema: z.ZodMiniType<Entity>;
   changeFeed?: ChangeFeed;
   onInvalidRecord?: InvalidRecordReporter;
@@ -42,19 +45,20 @@ export type TableRepositoryOptions<Entity extends { id: string }> = {
  * because the database can hold data from older versions or another tab's bug; invalid records
  * are skipped and reported. Writes are not re-validated: they come from typed domain code.
  */
-export function createTableRepository<Entity extends { id: string }>({
+export function createTableRepository<Entity extends Record<Key, string>, Key extends string>({
   tableName,
+  key,
   table,
   schema,
   changeFeed,
   onInvalidRecord,
-}: TableRepositoryOptions<Entity>): TableRepository<Entity> {
+}: TableRepositoryOptions<Entity, Key>): TableRepository<Entity, Key> {
   const parse = (raw: unknown): Entity | undefined => {
     const result = schema.safeParse(raw);
     if (result.success) return result.data;
     onInvalidRecord?.({
       table: tableName,
-      id: typeof raw === "object" && raw !== null && "id" in raw ? raw.id : undefined,
+      id: typeof raw === "object" && raw !== null && key in raw ? Reflect.get(raw, key) : undefined,
       issues: result.error.issues.map((issue) => `${issue.path.join(".")}: ${issue.message}`),
     });
     return undefined;
@@ -67,8 +71,8 @@ export function createTableRepository<Entity extends { id: string }>({
 
   return {
     getAll: async () => parseAll(await table.toArray()),
-    get: async (id) => {
-      const raw = await table.get(id);
+    get: async (recordKey) => {
+      const raw = await table.get(recordKey);
       return raw === undefined ? undefined : parse(raw);
     },
     findBy: async (index, value) => parseAll(await table.where(index).equals(value).toArray()),
@@ -83,19 +87,19 @@ export function createTableRepository<Entity extends { id: string }>({
           ),
     put: async (record) => {
       await table.put(record);
-      publish([record.id]);
+      publish([record[key]]);
     },
     bulkPut: async (records) => {
       await table.bulkPut([...records]);
-      publish(records.map((record) => record.id));
+      publish(records.map((record) => record[key]));
     },
-    delete: async (id) => {
-      await table.delete(id);
-      publish([id]);
+    delete: async (recordKey) => {
+      await table.delete(recordKey);
+      publish([recordKey]);
     },
-    bulkDelete: async (ids) => {
-      await table.bulkDelete([...ids]);
-      publish(ids);
+    bulkDelete: async (keys) => {
+      await table.bulkDelete([...keys]);
+      publish(keys);
     },
   };
 }

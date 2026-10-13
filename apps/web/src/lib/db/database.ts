@@ -1,6 +1,13 @@
 import { Dexie, type Table } from "dexie";
 
-import type { Collection, CollectionItem, Environment, Workspace } from "@api-studio/core";
+import type {
+  Collection,
+  CollectionItem,
+  Environment,
+  RequestDraft,
+  TabLayout,
+  Workspace,
+} from "@api-studio/core";
 
 /** Name of the IndexedDB database (ADR-0002). */
 export const DATABASE_NAME = "api-studio";
@@ -20,17 +27,28 @@ export const DATABASE_VERSIONS = [
       environments: "id, workspaceId",
     },
   },
+  {
+    // M3: open tabs and their drafts, restored after a reload (F-24, F-25). Only new tables, so
+    // no upgrade function is needed.
+    version: 2,
+    stores: {
+      drafts: "tabId, workspaceId",
+      tabLayouts: "workspaceId",
+    },
+  },
 ] as const;
 
 /**
  * The tables of the database, each typed with its domain record. Keys are always provided (UUID
- * v7, never auto-incremented), so tables are typed by their record and its id.
+ * v7, never auto-incremented), so tables are typed by their record and its key.
  */
 export type DatabaseTables = {
   workspaces: Table<Workspace, Workspace["id"]>;
   collections: Table<Collection, Collection["id"]>;
   collectionItems: Table<CollectionItem, CollectionItem["id"]>;
   environments: Table<Environment, Environment["id"]>;
+  drafts: Table<RequestDraft, RequestDraft["tabId"]>;
+  tabLayouts: Table<TabLayout, TabLayout["workspaceId"]>;
 };
 
 /** A table name, used by repositories and the change feed. */

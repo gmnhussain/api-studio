@@ -5,9 +5,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
   createCollection,
+  createEditorTab,
   createEnvironment,
+  createHttpRequestDefinition,
   createId,
   createRequestItem,
+  createTabLayout,
   createWorkspace,
   sortKeyBetween,
   type Workspace,
@@ -133,7 +136,7 @@ describe("workspace service", () => {
     expect(useWorkspaceStore.getState().workspaces[0]?.name).toBe(first.name);
   });
 
-  it("deletes a workspace with its collections, items and environments", async () => {
+  it("deletes a workspace with its collections, items, environments, tabs and drafts", async () => {
     const { service } = setUp();
     await service.loadWorkspaces("Default");
     const created = await service.createWorkspace("Disposable");
@@ -148,8 +151,22 @@ describe("workspace service", () => {
     await database.environments.put(
       createEnvironment({ workspaceId: workspace.id, name: "Local", sortKey }),
     );
+    const tab = createEditorTab({ workspaceId: workspace.id });
+    await database.tabLayouts.put({
+      ...createTabLayout({ workspaceId: workspace.id }),
+      tabs: [tab],
+    });
+    await database.drafts.put({
+      tabId: tab.id,
+      workspaceId: workspace.id,
+      baseUpdatedAt: null,
+      name: "Untitled",
+      request: createHttpRequestDefinition(),
+    });
 
     expect(await service.deleteWorkspace(workspace.id)).toEqual({ ok: true, value: null });
+    expect(await database.tabLayouts.count()).toBe(0);
+    expect(await database.drafts.count()).toBe(0);
     expect(await database.collections.count()).toBe(0);
     expect(await database.collectionItems.count()).toBe(0);
     expect(await database.environments.count()).toBe(0);

@@ -41,6 +41,7 @@ export function createCollectionRepository(
 ): CollectionRepository {
   const collections = createTableRepository({
     tableName: "collections",
+    key: "id",
     table: database.collections,
     schema: collectionSchema,
     changeFeed,
@@ -48,6 +49,7 @@ export function createCollectionRepository(
   });
   const items = createTableRepository({
     tableName: "collectionItems",
+    key: "id",
     table: database.collectionItems,
     schema: collectionItemSchema,
     changeFeed,

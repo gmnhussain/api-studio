@@ -18,6 +18,7 @@ export function createEnvironmentRepository(
 ): EnvironmentRepository {
   return createTableRepository({
     tableName: "environments",
+    key: "id",
     table: database.environments,
     schema: environmentSchema,
     ...options,
