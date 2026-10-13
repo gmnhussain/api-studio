@@ -1,5 +1,6 @@
 export { SettingsBootScript } from "./components/settings-boot-script";
 export { SettingsProvider } from "./components/settings-provider";
+export { ThemeSwitcher } from "./components/theme-switcher";
 export { useSettings } from "./hooks/use-settings";
 export {
   ACCENTS,

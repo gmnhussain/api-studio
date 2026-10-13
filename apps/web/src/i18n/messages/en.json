@@ -2,5 +2,15 @@
   "home": {
     "title": "API Studio",
     "status": "Foundation ready. Supported methods: {methods}."
+  },
+  "settings": {
+    "themes": {
+      "dark": "Dark",
+      "light": "Light",
+      "system": "System"
+    },
+    "themeSwitcher": {
+      "label": "Theme: {theme}. Switch theme"
+    }
   }
 }
