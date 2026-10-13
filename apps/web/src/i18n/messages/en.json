@@ -1,0 +1,6 @@
+{
+  "home": {
+    "title": "API Studio",
+    "status": "Foundation ready. Supported methods: {methods}."
+  }
+}

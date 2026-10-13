@@ -8,8 +8,9 @@ import { base } from "./base.js";
 /** Files eslint-config-next lints (and registers its React and jsx-a11y plugins for). */
 const NEXT_SCRIPT_FILES = ["**/*.{js,jsx,mjs,ts,tsx,mts,cts}"];
 
-/** Files where Next.js requires a default export. */
+/** Files where Next.js (or next-intl, for its request config) requires a default export. */
 const NEXT_DEFAULT_EXPORT_FILES = [
+  "src/i18n/request.ts",
   "src/app/**/{page,layout,template,loading,error,global-error,not-found,default}.tsx",
   "src/app/**/{opengraph-image,twitter-image,icon,apple-icon,sitemap,robots,manifest}.{ts,tsx}",
 ];

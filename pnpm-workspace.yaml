@@ -36,6 +36,8 @@ catalog:
   babel-plugin-react-compiler: 1.0.0
   tailwindcss: 4.3.3
   "@tailwindcss/postcss": 4.3.3
+  # UI text catalog (ADR-0010).
+  next-intl: 4.14.9
 
   # UI (shadcn/ui, base-nova style on Base UI primitives).
   # The CLI is a pinned dev dependency (`pnpm shadcn add …`): `pnpm dlx shadcn` fails under pnpm 11.
