@@ -20,28 +20,28 @@
   --subtle-foreground: oklch(0.6 0.01 265);
 
   /* Accent: Ion */
-  --primary: oklch(0.53 0.17 245);
+  --primary: oklch(0.5 0.17 245);
   --primary-foreground: oklch(0.99 0.005 245);
-  --primary-muted: oklch(0.53 0.17 245 / 10%);
-  --ring: oklch(0.53 0.17 245);
+  --primary-muted: oklch(0.5 0.17 245 / 10%);
+  --ring: oklch(0.5 0.17 245);
 
   /* Semantic */
-  --success: oklch(0.52 0.15 155);
-  --success-muted: oklch(0.52 0.15 155 / 12%);
-  --warning: oklch(0.54 0.13 65);
-  --warning-muted: oklch(0.54 0.13 65 / 14%);
-  --danger: oklch(0.56 0.21 25);
-  --danger-muted: oklch(0.56 0.21 25 / 12%);
-  --info: oklch(0.53 0.13 235);
-  --info-muted: oklch(0.53 0.13 235 / 12%);
+  --success: oklch(0.48 0.15 155);
+  --success-muted: oklch(0.48 0.15 155 / 12%);
+  --warning: oklch(0.5 0.13 65);
+  --warning-muted: oklch(0.5 0.13 65 / 14%);
+  --danger: oklch(0.52 0.21 25);
+  --danger-muted: oklch(0.52 0.21 25 / 12%);
+  --info: oklch(0.49 0.13 235);
+  --info-muted: oklch(0.49 0.13 235 / 12%);
 
   /* HTTP methods */
-  --method-get: oklch(0.52 0.14 155);
-  --method-post: oklch(0.55 0.14 65);
-  --method-put: oklch(0.52 0.16 250);
+  --method-get: oklch(0.5 0.14 155);
+  --method-post: oklch(0.53 0.14 65);
+  --method-put: oklch(0.51 0.16 250);
   --method-patch: oklch(0.52 0.18 295);
-  --method-delete: oklch(0.54 0.2 25);
-  --method-options: oklch(0.52 0.1 200);
+  --method-delete: oklch(0.53 0.2 25);
+  --method-options: oklch(0.5 0.1 200);
   --method-head: oklch(0.5 0.01 265);
 
   /* Accent swatches for the accent picker: one mid-tone per preset, readable in both themes. */
@@ -114,10 +114,10 @@
 }
 
 :root[data-accent="ember"] {
-  --primary: oklch(0.56 0.18 45);
+  --primary: oklch(0.52 0.18 45);
   --primary-foreground: oklch(0.99 0.005 45);
-  --primary-muted: oklch(0.56 0.18 45 / 10%);
-  --ring: oklch(0.56 0.18 45);
+  --primary-muted: oklch(0.52 0.18 45 / 10%);
+  --ring: oklch(0.52 0.18 45);
 }
 
 :root[data-accent="ember"].dark {
@@ -128,10 +128,10 @@
 }
 
 :root[data-accent="moss"] {
-  --primary: oklch(0.52 0.13 150);
+  --primary: oklch(0.49 0.13 150);
   --primary-foreground: oklch(0.99 0.005 150);
-  --primary-muted: oklch(0.52 0.13 150 / 10%);
-  --ring: oklch(0.52 0.13 150);
+  --primary-muted: oklch(0.49 0.13 150 / 10%);
+  --ring: oklch(0.49 0.13 150);
 }
 
 :root[data-accent="moss"].dark {

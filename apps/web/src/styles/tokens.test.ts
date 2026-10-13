@@ -51,11 +51,20 @@ function color(tokens: TokenMap, name: string): Color {
   return parsed;
 }
 
-/** Contrast of a possibly translucent foreground drawn over an opaque background. */
+/**
+ * A background token, or `layer/base` for a translucent layer over a panel (a status badge tint
+ * such as `success-muted/surface`).
+ */
+function backgroundColor(tokens: TokenMap, background: string): Color {
+  const [layer = "", base] = background.split("/");
+  return base ? blend([color(tokens, base), color(tokens, layer)]) : color(tokens, layer);
+}
+
+/** Contrast of a possibly translucent foreground drawn over a background. */
 function contrast(tokens: TokenMap, foreground: string, background: string): number {
-  const backgroundColor = color(tokens, background);
-  const composited = blend([backgroundColor, color(tokens, foreground)]);
-  return wcagContrast(composited, backgroundColor);
+  const resolvedBackground = backgroundColor(tokens, background);
+  const composited = blend([resolvedBackground, color(tokens, foreground)]);
+  return wcagContrast(composited, resolvedBackground);
 }
 
 type ContrastRule = { foreground: string; backgrounds: readonly string[]; minimum: number };
@@ -71,17 +80,23 @@ const RULES: readonly ContrastRule[] = [
   },
   { foreground: "muted-foreground", backgrounds: SURFACES, minimum: TEXT_CONTRAST },
   { foreground: "primary-foreground", backgrounds: ["primary"], minimum: TEXT_CONTRAST },
-  { foreground: "primary", backgrounds: TEXT_ON_PANELS, minimum: TEXT_CONTRAST },
+  {
+    foreground: "primary",
+    backgrounds: [...TEXT_ON_PANELS, "primary-muted/surface"],
+    minimum: TEXT_CONTRAST,
+  },
   { foreground: "subtle-foreground", backgrounds: TEXT_ON_PANELS, minimum: NON_TEXT_CONTRAST },
   { foreground: "ring", backgrounds: TEXT_ON_PANELS, minimum: NON_TEXT_CONTRAST },
+  // Status text also sits on its own tint, as in a "200 OK" badge.
   ...["success", "warning", "danger", "info"].map((name) => ({
     foreground: name,
-    backgrounds: TEXT_ON_PANELS,
+    backgrounds: [...TEXT_ON_PANELS, `${name}-muted/background`, `${name}-muted/surface`],
     minimum: TEXT_CONTRAST,
   })),
+  // Method labels also sit on the selected row of the collection tree.
   ...["get", "post", "put", "patch", "delete", "options", "head"].map((method) => ({
     foreground: `method-${method}`,
-    backgrounds: TEXT_ON_PANELS,
+    backgrounds: [...TEXT_ON_PANELS, "surface-selected"],
     minimum: TEXT_CONTRAST,
   })),
 ];
