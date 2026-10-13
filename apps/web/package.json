@@ -30,11 +30,13 @@
   "devDependencies": {
     "@api-studio/config": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
+    "@types/culori": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vitest/coverage-v8": "catalog:",
     "babel-plugin-react-compiler": "catalog:",
+    "culori": "catalog:",
     "eslint": "catalog:",
     "shadcn": "catalog:",
     "tailwindcss": "catalog:",

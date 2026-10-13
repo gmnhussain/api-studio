@@ -1,0 +1,149 @@
+/*
+ * Design tokens from docs/design/design-system.md. Light values on :root, dark values on .dark,
+ * accent presets on [data-accent]. Keep every value a literal oklch() so tokens.test.ts can check
+ * contrast; globals.css maps these tokens onto Tailwind and onto shadcn/ui's token names.
+ */
+
+:root {
+  /* Surfaces */
+  --background: oklch(0.99 0.002 265);
+  --surface: oklch(0.975 0.003 265);
+  --surface-raised: oklch(1 0 0);
+  --surface-hover: oklch(0.955 0.004 265);
+  --surface-selected: oklch(0.94 0.012 245);
+  --border: oklch(0.91 0.005 265);
+  --border-strong: oklch(0.84 0.008 265);
+
+  /* Text */
+  --foreground: oklch(0.2 0.01 265);
+  --muted-foreground: oklch(0.47 0.012 265);
+  --subtle-foreground: oklch(0.6 0.01 265);
+
+  /* Accent: Ion */
+  --primary: oklch(0.53 0.17 245);
+  --primary-foreground: oklch(0.99 0.005 245);
+  --primary-muted: oklch(0.53 0.17 245 / 10%);
+  --ring: oklch(0.53 0.17 245);
+
+  /* Semantic */
+  --success: oklch(0.52 0.15 155);
+  --success-muted: oklch(0.52 0.15 155 / 12%);
+  --warning: oklch(0.54 0.13 65);
+  --warning-muted: oklch(0.54 0.13 65 / 14%);
+  --danger: oklch(0.56 0.21 25);
+  --danger-muted: oklch(0.56 0.21 25 / 12%);
+  --info: oklch(0.53 0.13 235);
+  --info-muted: oklch(0.53 0.13 235 / 12%);
+
+  /* HTTP methods */
+  --method-get: oklch(0.52 0.14 155);
+  --method-post: oklch(0.55 0.14 65);
+  --method-put: oklch(0.52 0.16 250);
+  --method-patch: oklch(0.52 0.18 295);
+  --method-delete: oklch(0.54 0.2 25);
+  --method-options: oklch(0.52 0.1 200);
+  --method-head: oklch(0.5 0.01 265);
+
+  /* Elevation */
+  --shadow-popover:
+    0 8px 24px -6px oklch(0.25 0.02 265 / 12%), 0 2px 6px -2px oklch(0.25 0.02 265 / 8%);
+  --shadow-overlay:
+    0 24px 64px -12px oklch(0.25 0.02 265 / 22%), 0 8px 20px -8px oklch(0.25 0.02 265 / 12%);
+}
+
+.dark {
+  --background: oklch(0.145 0.006 265);
+  --surface: oklch(0.175 0.006 265);
+  --surface-raised: oklch(0.205 0.007 265);
+  --surface-hover: oklch(0.235 0.008 265);
+  --surface-selected: oklch(0.26 0.012 255);
+  --border: oklch(0.27 0.008 265);
+  --border-strong: oklch(0.36 0.01 265);
+
+  --foreground: oklch(0.96 0.003 265);
+  --muted-foreground: oklch(0.71 0.01 265);
+  --subtle-foreground: oklch(0.56 0.012 265);
+
+  --primary: oklch(0.72 0.15 237);
+  --primary-foreground: oklch(0.17 0.03 245);
+  --primary-muted: oklch(0.72 0.15 237 / 14%);
+  --ring: oklch(0.72 0.15 237);
+
+  --success: oklch(0.74 0.16 155);
+  --success-muted: oklch(0.74 0.16 155 / 14%);
+  --warning: oklch(0.81 0.15 80);
+  --warning-muted: oklch(0.81 0.15 80 / 14%);
+  --danger: oklch(0.68 0.2 25);
+  --danger-muted: oklch(0.68 0.2 25 / 14%);
+  --info: oklch(0.74 0.12 230);
+  --info-muted: oklch(0.74 0.12 230 / 14%);
+
+  --method-get: oklch(0.75 0.16 155);
+  --method-post: oklch(0.8 0.15 75);
+  --method-put: oklch(0.72 0.14 245);
+  --method-patch: oklch(0.72 0.15 295);
+  --method-delete: oklch(0.7 0.19 25);
+  --method-options: oklch(0.76 0.12 195);
+  --method-head: oklch(0.72 0.01 265);
+
+  --shadow-popover: 0 8px 24px -6px oklch(0 0 0 / 45%), 0 2px 6px -2px oklch(0 0 0 / 35%);
+  --shadow-overlay: 0 24px 64px -12px oklch(0 0 0 / 60%), 0 8px 20px -8px oklch(0 0 0 / 40%);
+}
+
+/* Accent presets (F-47) override only the four accent tokens. Ion is the default above. */
+
+:root[data-accent="iris"] {
+  --primary: oklch(0.53 0.2 285);
+  --primary-foreground: oklch(0.99 0.005 285);
+  --primary-muted: oklch(0.53 0.2 285 / 10%);
+  --ring: oklch(0.53 0.2 285);
+}
+
+:root[data-accent="iris"].dark {
+  --primary: oklch(0.74 0.14 285);
+  --primary-foreground: oklch(0.18 0.04 285);
+  --primary-muted: oklch(0.74 0.14 285 / 14%);
+  --ring: oklch(0.74 0.14 285);
+}
+
+:root[data-accent="ember"] {
+  --primary: oklch(0.56 0.18 45);
+  --primary-foreground: oklch(0.99 0.005 45);
+  --primary-muted: oklch(0.56 0.18 45 / 10%);
+  --ring: oklch(0.56 0.18 45);
+}
+
+:root[data-accent="ember"].dark {
+  --primary: oklch(0.76 0.15 55);
+  --primary-foreground: oklch(0.2 0.05 50);
+  --primary-muted: oklch(0.76 0.15 55 / 14%);
+  --ring: oklch(0.76 0.15 55);
+}
+
+:root[data-accent="moss"] {
+  --primary: oklch(0.52 0.13 150);
+  --primary-foreground: oklch(0.99 0.005 150);
+  --primary-muted: oklch(0.52 0.13 150 / 10%);
+  --ring: oklch(0.52 0.13 150);
+}
+
+:root[data-accent="moss"].dark {
+  --primary: oklch(0.76 0.15 150);
+  --primary-foreground: oklch(0.18 0.04 150);
+  --primary-muted: oklch(0.76 0.15 150 / 14%);
+  --ring: oklch(0.76 0.15 150);
+}
+
+:root[data-accent="graphite"] {
+  --primary: oklch(0.27 0.01 265);
+  --primary-foreground: oklch(0.98 0.002 265);
+  --primary-muted: oklch(0.27 0.01 265 / 8%);
+  --ring: oklch(0.27 0.01 265);
+}
+
+:root[data-accent="graphite"].dark {
+  --primary: oklch(0.92 0.005 265);
+  --primary-foreground: oklch(0.18 0.006 265);
+  --primary-muted: oklch(0.92 0.005 265 / 12%);
+  --ring: oklch(0.92 0.005 265);
+}

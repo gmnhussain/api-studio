@@ -25,6 +25,9 @@ catalog:
   turbo: 2.11.7
   vitest: 5.0.3
   "@vitest/coverage-v8": 5.0.3
+  # WCAG contrast maths for the design-token test.
+  culori: 4.0.2
+  "@types/culori": 4.0.1
   "@types/node": 24.19.1
 
   # Frontend

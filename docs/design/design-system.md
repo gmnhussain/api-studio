@@ -15,7 +15,7 @@
 
 ## Colour
 
-Tokens are OKLCH CSS variables in `apps/web/src/styles/tokens.css`, mapped to Tailwind utilities with `@theme inline` (`bg-surface`, `text-muted-foreground`, `text-method-post`). Contrast is checked by a token test (text tokens ≥ 4.5:1 on every surface they're used on, UI and borders ≥ 3:1 where they carry meaning).
+Tokens are OKLCH CSS variables in `apps/web/src/styles/tokens.css`, mapped to Tailwind utilities with `@theme inline` (`bg-surface`, `text-muted-foreground`, `text-method-post`). Contrast is checked by `src/styles/tokens.test.ts` for both themes and every accent preset: text tokens ≥ 4.5:1 on every surface they're used on, focus rings and hints ≥ 3:1.
 
 ### Neutrals and surfaces
 
@@ -40,10 +40,10 @@ A clear, electric blue that reads as precise and technical, distinct from the or
 
 | Token | Dark | Light |
 | --- | --- | --- |
-| `--primary` | `oklch(0.72 0.15 237)` | `oklch(0.55 0.17 245)` |
+| `--primary` | `oklch(0.72 0.15 237)` | `oklch(0.53 0.17 245)` |
 | `--primary-foreground` | `oklch(0.17 0.03 245)` | `oklch(0.99 0.005 245)` |
-| `--primary-muted` (tinted backgrounds) | `oklch(0.72 0.15 237 / 14%)` | `oklch(0.55 0.17 245 / 10%)` |
-| `--ring` | `oklch(0.72 0.15 237 / 55%)` | `oklch(0.55 0.17 245 / 45%)` |
+| `--primary-muted` (tinted backgrounds) | `oklch(0.72 0.15 237 / 14%)` | `oklch(0.53 0.17 245 / 10%)` |
+| `--ring` (opaque, so focus rings meet 3:1) | `oklch(0.72 0.15 237)` | `oklch(0.53 0.17 245)` |
 
 Accent presets (setting F-47) override only these four tokens: **Ion** (default), **Iris** (violet, hue 285), **Ember** (orange, hue 50), **Moss** (green, hue 150), **Graphite** (neutral, no hue).
 
@@ -51,10 +51,10 @@ Accent presets (setting F-47) override only these four tokens: **Ion** (default)
 
 | Token | Meaning | Dark | Light |
 | --- | --- | --- | --- |
-| `--success` | 2xx, saved, connected | `oklch(0.74 0.16 155)` | `oklch(0.55 0.15 155)` |
-| `--warning` | 4xx, unresolved variable, dirty | `oklch(0.81 0.15 80)` | `oklch(0.6 0.15 70)` |
+| `--success` | 2xx, saved, connected | `oklch(0.74 0.16 155)` | `oklch(0.52 0.15 155)` |
+| `--warning` | 4xx, unresolved variable, dirty | `oklch(0.81 0.15 80)` | `oklch(0.54 0.13 65)` |
 | `--danger` | 5xx, errors, destructive actions | `oklch(0.68 0.2 25)` | `oklch(0.56 0.21 25)` |
-| `--info` | 1xx / 3xx, notices | `oklch(0.74 0.12 230)` | `oklch(0.55 0.13 235)` |
+| `--info` | 1xx / 3xx, notices | `oklch(0.74 0.12 230)` | `oklch(0.53 0.13 235)` |
 
 Each has a `-muted` variant (same colour at 12–14% alpha) for badges and backgrounds.
 

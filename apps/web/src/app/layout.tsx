@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
 import type { ReactNode } from "react";
 
-import { cn } from "@/lib/utils";
+import { fontVariables } from "@/lib/fonts";
 
 import "@/styles/globals.css";
-
-const geistSans = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "API Studio",
@@ -21,7 +18,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const locale = await getLocale();
 
   return (
-    <html lang={locale} className={cn("font-sans", geistSans.variable)}>
+    <html lang={locale} className={fontVariables}>
       <body>
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>
