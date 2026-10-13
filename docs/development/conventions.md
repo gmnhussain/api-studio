@@ -57,7 +57,7 @@ How code is written in this repository. Lint rules enforce what they can; review
 
 ## Files and modules
 
-- One exported component or module per file; small private helpers used only by it may stay.
+- One exported component or module per file; small private helpers used only by it may stay. Exception: the parts of one compound component that are only used together may share a file (`Panel`, `PanelHeader`, `PanelBody`), as in the shadcn/ui primitives.
 - Components aim for **≤ 250 lines**; split by extracting subcomponents and hooks. Longer only with a stated reason in review.
 - Each feature exposes a public API in `index.ts`; nothing else in a feature may be imported from outside it.
 - No barrel files except a feature's or package's `index.ts`.
@@ -82,6 +82,8 @@ How code is written in this repository. Lint rules enforce what they can; review
 - Lists use stable ids as keys, never the index.
 - Heavy or rarely used UI (Monaco, previews, code generation dialog, import dialog, settings sections, onboarding) is loaded with `next/dynamic` or `React.lazy` behind `Suspense` with a skeleton.
 - Every route segment has `loading.tsx` and `error.tsx`.
+- Animations use `m.*` from `motion/react-m`, never `motion.*`: the app runs under `LazyMotion strict`, which throws on the full component so it cannot grow the bundle. Durations and easings come from the motion tokens.
+- Media queries come from `constants/breakpoints.ts` through `useMediaQuery`, which renders the wide layout on the server and corrects without a hydration mismatch.
 
 ## Styling
 
@@ -96,6 +98,8 @@ How code is written in this repository. Lint rules enforce what they can; review
 - State rules in [state-management.md](../architecture/state-management.md).
 - Forms: React Hook Form + `zodResolver` with the domain schema; errors shown under the field.
 - Validate at every trust boundary with Zod: imported files, persisted records on read, proxy request and response, environment variables.
+- Schemas that run in the browser import `zod/mini` (`import * as z from "zod/mini"`), which tree-shakes; the full `zod` API costs about 50 KB of initial JavaScript ([performance.md](./performance.md#strategies)). Server-only code (env validation, the runner) may use `zod`.
+- Values read from cookies and storage fall back field by field (`z.catch`), so one stale value never resets the rest.
 
 ## Configuration
 
