@@ -5,7 +5,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
   childrenOf,
+  createHttpRequestDefinition,
   createWorkspace,
+  withUrl,
   type Collection,
   type CollectionItem,
 } from "@api-studio/core";
@@ -209,6 +211,34 @@ describe("collection service", () => {
     expectOk(await service.deleteCollection(collection.id));
     expect(await repository.collections.getAll()).toEqual([]);
     expect(await repository.items.getAll()).toEqual([]);
+  });
+
+  it("saves a request's name and definition, and refuses folders and invalid names", async () => {
+    const { service, repository } = setUp();
+    await service.loadCollections(workspace.id);
+    const collection = expectOk(await service.createCollection("API"));
+    const placement = { collectionId: collection.id, parentId: null };
+    const folder = expectOk(
+      await service.createItem({ ...placement, name: "Auth", type: "folder" }),
+    );
+    const ping = expectOk(
+      await service.createItem({ ...placement, name: "Ping", type: "request" }),
+    );
+    const request = withUrl(createHttpRequestDefinition({ method: "POST" }), "/ping?x=1");
+
+    const saved = expectOk(await service.saveRequest(ping.id, { name: " Ping v2 ", request }));
+
+    expect(saved).toMatchObject({ name: "Ping v2", request });
+    expect(saved.updatedAt > ping.updatedAt).toBe(true);
+    expect(await repository.items.get(ping.id)).toEqual(saved);
+    expect(await service.saveRequest(folder.id, { name: "Auth", request })).toEqual({
+      ok: false,
+      error: "not_found",
+    });
+    expect(await service.saveRequest(ping.id, { name: " ", request })).toEqual({
+      ok: false,
+      error: "invalid_name",
+    });
   });
 
   it("rolls back a rename when the write fails", async () => {

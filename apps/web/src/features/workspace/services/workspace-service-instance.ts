@@ -1,6 +1,6 @@
 import { browserCookieKeyValueStorage } from "@/lib/cookies/browser-cookie-storage";
-import { createChangeFeed } from "@/lib/db/change-feed";
 import { getDatabase } from "@/lib/db/database";
+import { getSharedChangeFeed } from "@/lib/db/shared-change-feed";
 
 import { createWorkspaceService, type WorkspaceService } from "./workspace.service";
 import { createWorkspaceRepository } from "../repositories/workspace.repository";
@@ -15,7 +15,7 @@ let instance: WorkspaceService | undefined;
  */
 export function getWorkspaceService(): WorkspaceService {
   if (!instance) {
-    const changeFeed = createChangeFeed();
+    const changeFeed = getSharedChangeFeed();
     instance = createWorkspaceService({
       repository: createWorkspaceRepository(getDatabase(), { changeFeed }),
       store: useWorkspaceStore,

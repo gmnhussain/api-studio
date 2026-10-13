@@ -197,6 +197,21 @@ export function createCollectionService({
       return result.ok ? ok(renamed) : result;
     },
 
+    /** Saves a request's name and definition (F-25, explicit save from a tab). */
+    saveRequest: async (
+      itemId: CollectionItemId,
+      { name, request }: { name: string; request: HttpRequestDefinition },
+    ): Outcome<CollectionItem> => {
+      const previous = state().items[itemId];
+      if (!previous) return err("not_found");
+      if (previous.type !== "request") return err("not_found");
+      const validName = parseName(name);
+      if (validName === null) return err("invalid_name");
+      const saved = { ...previous, name: validName, request, updatedAt: now() };
+      const result = await writeItems([saved]);
+      return result.ok ? ok(saved) : result;
+    },
+
     /** Moves an item under `parentId` (`null` for the root) to position `index` among its siblings. */
     moveItem: async (
       itemId: CollectionItemId,
