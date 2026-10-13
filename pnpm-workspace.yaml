@@ -34,6 +34,8 @@ catalog:
   "@testing-library/dom": 10.4.2
   "@testing-library/user-event": 14.6.8
   "@testing-library/jest-dom": 7.0.1
+  # IndexedDB for repository tests in Node.
+  fake-indexeddb: 6.2.5
   # End-to-end tests in real browsers, with axe accessibility checks.
   "@playwright/test": 1.64.0
   "@axe-core/playwright": 4.13.0
@@ -53,6 +55,8 @@ catalog:
   zod: 4.6.5
   # Sibling order that a move rewrites in one record (data-model.md#conventions).
   fractional-indexing: 4.0.0
+  # Local-first persistence in IndexedDB (ADR-0002).
+  dexie: 4.4.6
   # UI text catalog (ADR-0010).
   next-intl: 4.14.9
 
