@@ -1,0 +1,8 @@
+export { createTabLayoutRepository } from "./repositories/tab-layout.repository";
+export type { TabLayoutRepository } from "./repositories/tab-layout.repository";
+export { createTabsService } from "./services/tabs.service";
+export type { TabsService } from "./services/tabs.service";
+export { getInitialTabsState, useTabsStore } from "./stores/tabs.store";
+export type { TabsActions, TabsLoadStatus, TabsState } from "./stores/tabs.store";
+export { tabViews } from "./tab-views";
+export type { TabView, TabViewProps } from "./tab-views";
