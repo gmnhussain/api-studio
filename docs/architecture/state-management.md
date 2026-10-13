@@ -9,7 +9,8 @@
 | Domain data (local source of truth) | Domain store, written through to IndexedDB by a service | Collections, environments |
 | Working copies | Request store | Drafts per tab |
 | Async lifecycles | TanStack Query | Running execution, lazily loaded history body |
-| UI layout and preferences | `persist` stores in `localStorage` (synchronous → no flash on load) | Panel sizes, sidebar section, theme |
+| UI layout and preferences | `persist` stores in cookies, readable before or during the server render (no flash, no layout shift) | Panel sizes, sidebar section, theme |
+| Small client-only lists | `persist` stores in `localStorage` | Tab order |
 | Ephemeral component state | `useState` / `useReducer` | An open dropdown, inline rename text |
 | Form state | React Hook Form | Settings forms, "new environment" dialog |
 | URL state | Next.js route | Active workspace, settings section |
@@ -24,8 +25,8 @@
 | Tabs | `features/tabs/stores/tabs.store.ts` | Tab order, active tab, pinned flags, recently closed | `localStorage` (tab restore) |
 | History | `features/history/stores/history.store.ts` | Entry summaries (bodies load lazily) | IndexedDB (service) |
 | Environment | `features/environments/stores/environment.store.ts` | Environments, active environment | IndexedDB (service) |
-| Settings | `features/settings/stores/settings.store.ts` | `Settings` | `localStorage` (needed before first paint) |
-| UI | `stores/ui.store.ts` | Sidebar section and collapsed state, panel sizes, console open, palette open | `localStorage` |
+| Settings | `features/settings/stores/settings.store.ts` | `Settings` (appearance first; editor and request settings join later) | Cookie, applied before first paint by a boot script ([ADR-0011](./adr/0011-cookie-backed-preferences-and-layout.md)) |
+| UI | `features/shell/stores/ui.store.ts` | Active sidebar section, panel layout (sizes and collapsed panels), palette open | Cookie, read by the studio layout on the server ([ADR-0011](./adr/0011-cookie-backed-preferences-and-layout.md)) |
 | Console | `features/console/stores/console.store.ts` | Ring buffer of console entries (max 1,000) | Memory only |
 
 The console store is an addition to the original eight: logs change at a different rate and lifetime from everything else, so they get their own store.
@@ -86,7 +87,7 @@ Query keys come from one factory per feature (`historyQueryKeys.body(id)`), neve
 
 ## Hydration and first paint
 
-1. `localStorage` stores (settings, UI, tabs) hydrate synchronously, so theme and panel sizes are right on the first frame. A tiny inline script applies the theme class before React loads.
+1. Appearance settings come from a cookie that an inline boot script applies to `<html>` before the first paint; the panel layout comes from a cookie the studio layout reads on the server. Both are right on the first frame ([ADR-0011](./adr/0011-cookie-backed-preferences-and-layout.md)). Cookie-backed stores are created per request through a provider, so server renders never share state; the rest are module-level stores.
 2. IndexedDB stores hydrate in the studio layout's client boundary; the shell renders immediately with skeletons in the sidebar and editor, which swap to content when hydration resolves (Suspense boundary per panel).
 3. Every persisted payload is parsed with its Zod schema; an invalid record is skipped and reported in the console instead of crashing the app.
 

@@ -151,7 +151,7 @@ Durations and easings are constants in `constants/motion.ts`, shared by CSS and 
 
 ## Theme architecture
 
-1. `next-themes` sets `class="dark"` (or none) on `<html>`; default `dark`, `system` supported; an inline script prevents a flash before hydration.
+1. The appearance settings (theme `dark | light | system`, accent, density, motion) persist in a cookie. An inline boot script in `<head>` applies them to `<html>` (`class="dark"`, `data-accent`, `data-density`, `data-motion`) before the first paint, so there is no flash ([ADR-0011](../architecture/adr/0011-cookie-backed-preferences-and-layout.md)). Default: dark.
 2. `tokens.css` defines light values on `:root` and dark values on `.dark`; `data-accent="ion|iris|ember|moss|graphite"` swaps the accent tokens; `data-density="compact"` tightens control heights and paddings.
 3. `globals.css` maps tokens into Tailwind with `@theme inline`; components use utilities only.
 4. Monaco themes are generated from the same tokens on theme change (`defineTheme`), so editor and app never drift.

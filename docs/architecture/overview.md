@@ -50,7 +50,8 @@ Why a server hop exists at all: browsers enforce CORS and forbid headers such as
 | Motion | Motion (`motion/react`, formerly Framer Motion) | Layout and presence animations, reduced-motion aware |
 | Icons | Lucide | One consistent stroke set |
 | Dates | date-fns | Tree-shakable, immutable |
-| Theme | `next-themes` | Class strategy, no flash on load |
+| Theme and preferences | Cookie-backed settings store + pre-paint boot script | No flash or layout shift, static root layout ([ADR-0011](./adr/0011-cookie-backed-preferences-and-layout.md)) |
+| UI text | next-intl (English first) | Typed message catalog from day one ([ADR-0010](./adr/0010-ui-text-in-message-catalog.md)) |
 | HTTP engine (server) | `undici` (Node's fetch) in `packages/runner` | Manual redirect handling, timing hooks, abort |
 | Lint / format | ESLint 9 flat config (`typescript-eslint` strict type-checked), Prettier | [ADR-0007](./adr/0007-eslint-prettier.md) |
 | Boundaries | dependency-cruiser | Enforces the import rules below in CI |
