@@ -6,12 +6,21 @@
 
 | Metric | Budget | Checked by |
 | --- | --- | --- |
-| Initial JS for `/workspaces/[id]` (gzip, excl. Monaco) | ≤ 200 KB | CI bundle size check |
-| Largest Contentful Paint (local, mid-range laptop) | ≤ 1.5 s | Lighthouse in CI on the built app |
-| Cumulative Layout Shift | < 0.02 | Lighthouse |
-| Interaction to Next Paint | < 100 ms | Manual profiling + Playwright traces |
-| Tab switch | < 50 ms | Performance mark in E2E |
-| Sidebar with 5,000 items | 60 fps scroll | Virtualized; profiled |
+| Initial JS for `/workspaces/[id]` (compressed, modern browsers) | ≤ 280 KB | `e2e/performance-budget.spec.ts` in CI |
+| Largest Contentful Paint (production build) | ≤ 1.5 s | `e2e/performance-budget.spec.ts` in CI |
+| Cumulative Layout Shift, including a restored layout | < 0.02 | `e2e/performance-budget.spec.ts`, `e2e/shell.spec.ts` in CI |
+| Interaction to Next Paint | < 100 ms | Playwright traces, automated with the request editor (M3) |
+| Tab switch | < 50 ms | Performance mark in E2E, with tabs (M3) |
+| Sidebar with 5,000 items | 60 fps scroll | Virtualized; profiled with the collection tree (M6) |
+
+### How the JavaScript budget is set
+
+The target user is a developer on a laptop or desktop, so the budget is set for that, not for the mobile web.
+
+- **Measured, not guessed.** The planning estimate of 200 KB did not survive measurement: React DOM and the Next.js runtime alone are about 120 KB compressed, a fixed cost of the stack. After the M1 trims (`zod/mini` in the browser, lazy Motion features, a lazy overlay sheet) the studio loads about 272 KB: ~120 KB framework, ~150 KB app.
+- **A ratchet.** The budget sits just above the measured size, so any new eager dependency fails CI. When the size drops, the budget is lowered to match; it is never raised to make a change pass. A change that needs more up front is a design discussion recorded in its pull request.
+- **What counts.** Scripts referenced by the server HTML, as a modern browser downloads them: `nomodule` legacy polyfills and chunks loaded on demand afterwards are excluded. Monaco and other heavy features must load on demand.
+- **Bytes are a proxy.** LCP, layout shift and, from M3, interaction latency are what users feel, and they are budgeted alongside.
 
 ## Strategies
 
@@ -29,9 +38,11 @@
 | Optimistic updates | Renames, moves, deletes and saves update the store first and roll back on failure ([state-management.md](../architecture/state-management.md#services-write-through-and-optimistic-updates)) |
 | Network | Proxy streams upstream bodies with a size cap; client cancels abort the upstream request |
 | Assets | SVG illustrations inline and tree-shaken; Lucide icons imported individually |
+| Browser dependencies | Schemas that run in the browser use `zod/mini` (the full Zod API costs ~50 KB); Motion renders `m.*` components under `LazyMotion strict` with its features in an async chunk; UI used only in some layouts (the overlay sidebar) loads with `next/dynamic` |
 
 ## Measuring
 
-- `@next/bundle-analyzer` behind `ANALYZE=true pnpm build`.
+- The budget test annotates each run with the measured size, so the Playwright report shows how far a change moved it.
+- To see what a chunk contains, build and inspect `apps/web/.next/static/chunks`; the scripts a page loads up front are the `<script src>` tags in its server HTML.
 - React Profiler and the Performance panel for interaction work; findings that change code get a short note in the PR.
 - `performance.mark` around send → render and tab switch, read by E2E tests.

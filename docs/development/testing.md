@@ -65,7 +65,7 @@ pnpm test:e2e           # Playwright (builds and starts the app)
 4. Unit, component and integration tests
 5. dependency-cruiser boundary rules
 6. Build
-7. E2E (Chromium on every PR; all browsers on `main` and `develop`)
-8. Bundle size budget check
+7. E2E with axe accessibility checks (Chromium on every PR; Chromium, Firefox and WebKit on `main` and `develop`)
+8. Performance budgets: initial JavaScript, LCP and layout shift ([performance.md](./performance.md#budgets))
 9. Dependency audit (`pnpm audit --prod`)
 10. Commit messages (commitlint)
