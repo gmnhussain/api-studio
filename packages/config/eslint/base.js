@@ -56,6 +56,7 @@ export function base(tsconfigRootDir) {
             pathGroups: [
               { pattern: "@api-studio/**", group: "internal", position: "before" },
               { pattern: "@/**", group: "internal" },
+              { pattern: "@test/**", group: "internal", position: "after" },
             ],
             pathGroupsExcludedImportTypes: ["builtin"],
             "newlines-between": "always",

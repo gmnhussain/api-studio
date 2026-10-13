@@ -9,6 +9,9 @@ const path = require("node:path");
  */
 module.exports = (env) => ({
   resolve: {
-    alias: { "@": path.join(__dirname, "apps", env.app, "src") },
+    alias: {
+      "@": path.join(__dirname, "apps", env.app, "src"),
+      "@test": path.join(__dirname, "apps", env.app, "test"),
+    },
   },
 });

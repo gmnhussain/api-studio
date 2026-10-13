@@ -32,6 +32,14 @@ module.exports = {
       from: { path: "^apps/web/src/(components|hooks|lib|stores|config|constants|types)/" },
       to: { path: "^apps/web/src/features/" },
     },
+    {
+      name: "test-helpers-only-in-tests",
+      severity: "error",
+      comment:
+        "Shared test helpers (@test/*) are for test files; production code never imports them.",
+      from: { path: "^apps/web/src/", pathNot: "\\.test\\.tsx?$" },
+      to: { path: "^apps/web/test/" },
+    },
   ],
   options: {
     webpackConfig: {
