@@ -5,6 +5,9 @@ import turbo from "eslint-plugin-turbo";
 
 import { base } from "./base.js";
 
+/** Files eslint-config-next lints (and registers its React and jsx-a11y plugins for). */
+const NEXT_SCRIPT_FILES = ["**/*.{js,jsx,mjs,ts,tsx,mts,cts}"];
+
 /** Files where Next.js requires a default export. */
 const NEXT_DEFAULT_EXPORT_FILES = [
   "src/app/**/{page,layout,template,loading,error,global-error,not-found,default}.tsx",
@@ -21,7 +24,9 @@ export function next(tsconfigRootDir) {
     ...nextVitals,
     ...base(tsconfigRootDir),
     {
-      // eslint-config-next registers jsx-a11y with a few rules; turn on the full recommended set.
+      // eslint-config-next registers jsx-a11y with a few rules; turn on the full recommended set
+      // for the same files it registers the plugin for.
+      files: NEXT_SCRIPT_FILES,
       rules: jsxA11y.flatConfigs.recommended.rules,
     },
     {
