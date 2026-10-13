@@ -157,3 +157,15 @@ export { getStatusClass } from "./http/status";
 export type { StatusClass } from "./http/status";
 export { joinUrl, splitUrl } from "./http/url-parts";
 export type { UrlParts } from "./http/url-parts";
+export {
+  ancestorsOf,
+  authChainOf,
+  childrenOf,
+  descendantIds,
+  sortKeyAfterLast,
+  sortKeyAtIndex,
+  validateMove,
+} from "./collections/collection-tree";
+export type { InvalidMoveReason } from "./collections/collection-tree";
+export { duplicateSubtree } from "./collections/duplicate-subtree";
+export type { DuplicateOptions } from "./collections/duplicate-subtree";
