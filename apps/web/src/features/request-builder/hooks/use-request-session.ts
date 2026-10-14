@@ -24,7 +24,6 @@ export function useRequestSession(): RequestService | null {
   const workspaceId = useWorkspaceStore((state) => state.activeWorkspaceId);
   const [service, setService] = useState<RequestService | null>(null);
   const autoSaveFailed = t("autoSaveFailed");
-  const restoreFailed = t("restoreFailed");
 
   useEffect(() => {
     let isMounted = true;
@@ -40,14 +39,13 @@ export function useRequestSession(): RequestService | null {
 
   useEffect(() => {
     if (!service || workspaceId === null) return;
-    void service.openWorkspace(workspaceId).then((result) => {
-      if (!result.ok) toast.error(restoreFailed);
-    });
+    // A failed restore is explained in the editor area itself (tabs status `failed`).
+    void service.openWorkspace(workspaceId);
     void loadEnvironmentService().then((environments) =>
       environments.loadEnvironments(workspaceId),
     );
     void loadExecutionService().then((execution) => execution.openWorkspace(workspaceId));
-  }, [service, workspaceId, restoreFailed]);
+  }, [service, workspaceId]);
 
   return service;
 }

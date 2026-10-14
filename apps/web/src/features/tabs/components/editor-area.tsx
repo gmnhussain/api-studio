@@ -19,6 +19,8 @@ export type EditorAreaProps = {
   emptyState: ReactNode;
   /** Shown while the tabs are being restored. */
   loadingState: ReactNode;
+  /** Shown when the tabs could not be restored. */
+  failedState: ReactNode;
 };
 
 /**
@@ -31,6 +33,7 @@ export function EditorArea({
   onReopenClosedTab,
   emptyState,
   loadingState,
+  failedState,
 }: EditorAreaProps) {
   const t = useTranslations("tabs");
   const status = useTabsStore((state) => state.status);
@@ -103,7 +106,9 @@ export function EditorArea({
     <div className="flex h-full min-h-0 flex-col bg-background">
       {status === "ready" ? <EditorTabs onNewTab={onNewTab} onRequestClose={requestClose} /> : null}
       <div className="min-h-0 flex-1">
-        {status !== "ready" ? (
+        {status === "failed" ? (
+          failedState
+        ) : status !== "ready" ? (
           loadingState
         ) : activeTab && Editor ? (
           <Editor key={activeTab.id} tab={activeTab} />

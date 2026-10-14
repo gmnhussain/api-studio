@@ -10,8 +10,11 @@ import {
 
 import { moveTab, nextActiveTabId, relativeTabId, setPinned } from "./tab-order";
 
-/** Where restoring the open workspace's tabs stands. */
-export type TabsLoadStatus = "idle" | "loading" | "ready";
+/**
+ * Where restoring the open workspace's tabs stands. `failed` keeps the stored layout untouched:
+ * nothing is saved until a restore succeeds.
+ */
+export type TabsLoadStatus = "idle" | "loading" | "ready" | "failed";
 
 export type TabsState = {
   /** The workspace whose tabs these are. */
@@ -28,6 +31,8 @@ export type TabsActions = {
   startLoading: (workspaceId: WorkspaceId) => void;
   /** Shows a restored layout; an active id that is not open falls back to the first tab. */
   setLoaded: (layout: Pick<TabLayout, "tabs" | "activeTabId" | "recentlyClosed">) => void;
+  /** Marks the restore as failed, so the editor explains it and nothing overwrites saved tabs. */
+  setFailed: () => void;
   /** Adds a tab at the end of the strip and activates it. */
   openTab: (tab: EditorTab) => void;
   activateTab: (tabId: TabId) => void;
@@ -70,6 +75,9 @@ export const useTabsStore = create<TabsState & TabsActions>()((set, get) => ({
       activeTabId: hasActive ? activeTabId : (tabs[0]?.id ?? null),
       recentlyClosed: [...recentlyClosed],
     });
+  },
+  setFailed: () => {
+    set({ status: "failed" });
   },
   openTab: (tab) => {
     set((state) => ({ tabs: [...state.tabs, tab], activeTabId: tab.id }));

@@ -361,8 +361,7 @@
     },
     "toasts": {
       "saved": "Saved “{name}”",
-      "autoSaveFailed": "Your open tabs could not be saved in this browser. Changes stay here until the next attempt.",
-      "restoreFailed": "Your open tabs could not be restored. Check that this browser allows site storage, then reload."
+      "autoSaveFailed": "Your open tabs could not be saved in this browser. Changes stay here until the next attempt."
     },
     "tabName": "{method} {name}{pinned, select, true {, pinned} other {}}{dirty, select, true {, unsaved changes} other {}}",
     "send": {
@@ -392,7 +391,10 @@
     },
     "announcements": {
       "moved": "{title} moved to position {position} of {total}."
-    }
+    },
+    "restoreFailedTitle": "Your tabs could not be restored",
+    "restoreFailedDescription": "This browser did not allow reading site storage. Your saved data is untouched; reload to try again.",
+    "reload": "Reload"
   },
   "console": {
     "logLabel": "Console entries",

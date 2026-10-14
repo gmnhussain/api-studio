@@ -3,6 +3,7 @@
 import { Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { EmptyState } from "@/components/common/empty-state";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -37,6 +38,23 @@ function StudioEditorArea() {
       onNewTab={newRequest}
       onReopenClosedTab={() => service?.reopenClosedTab()}
       loadingState={<EditorAreaSkeleton />}
+      failedState={
+        <EmptyState
+          className="h-full"
+          title={t("restoreFailedTitle")}
+          description={t("restoreFailedDescription")}
+          actions={
+            <Button
+              variant="outline"
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
+              {t("reload")}
+            </Button>
+          }
+        />
+      }
       emptyState={
         <EditorWelcome
           action={

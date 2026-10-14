@@ -209,7 +209,10 @@ export function createRequestService({
           draftRepository.findBy("workspaceId", workspaceId),
         ]);
         if (tabsStore.getState().workspaceId !== workspaceId) return ok(null);
-        if (!loaded.ok) return err("storage");
+        if (!loaded.ok) {
+          tabsStore.getState().setFailed();
+          return err("storage");
+        }
 
         const session = restoreSession({
           layout: layout ?? { tabs: [], activeTabId: null, recentlyClosed: [] },
@@ -222,6 +225,7 @@ export function createRequestService({
         await draftRepository.bulkDelete(session.orphanedDraftIds);
         return ok(null);
       } catch {
+        if (tabsStore.getState().workspaceId === workspaceId) tabsStore.getState().setFailed();
         return err("storage");
       }
     },

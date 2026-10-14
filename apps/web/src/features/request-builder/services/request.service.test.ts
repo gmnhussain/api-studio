@@ -1,7 +1,7 @@
 // @vitest-environment node
 import "fake-indexeddb/auto";
 
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
   createEditorTab,
@@ -41,8 +41,8 @@ function expectOk<Value>(result: Result<Value, string>): Value {
   return result.value;
 }
 
-/** A fresh app over the same database, as after a reload. */
-async function startApp() {
+/** A fresh app over the same database, as after a reload; `failRestore` breaks reading drafts. */
+async function startApp({ failRestore = false }: { failRestore?: boolean } = {}) {
   useTabsStore.setState(getInitialTabsState());
   useRequestStore.setState(getInitialRequestState());
   useCollectionStore.setState(getInitialCollectionState());
@@ -58,6 +58,9 @@ async function startApp() {
     store: useTabsStore,
   });
   const draftRepository = createDraftRepository(database);
+  if (failRestore) {
+    vi.spyOn(draftRepository, "findBy").mockRejectedValueOnce(new Error("SecurityError"));
+  }
   const service = createRequestService({
     draftRepository,
     requestStore: useRequestStore,
@@ -67,7 +70,8 @@ async function startApp() {
     collectionService,
   });
   stops.push(service.start(), tabsService.saveChanges());
-  expectOk(await service.openWorkspace(workspace.id));
+  const opened = await service.openWorkspace(workspace.id);
+  if (!failRestore) expectOk(opened);
   return { service, collectionService, collectionRepository, draftRepository };
 }
 
@@ -249,6 +253,20 @@ describe("request service", () => {
     expect(useTabsStore.getState().activeTabId).toBe(withoutDraft.id);
     expect(draftOf(withoutDraft.id)?.request.url).toBe("/saved");
     expect(await database.drafts.count()).toBe(1);
+  });
+
+  it("marks the restore as failed, and saves no tabs over the stored ones", async () => {
+    const first = await startApp();
+    const tabId = first.service.newRequest("Untitled request");
+    if (!tabId) throw new Error("expected a tab");
+    await first.service.flush();
+    stopApp();
+    const restored = await startApp({ failRestore: true });
+
+    expect(useTabsStore.getState().status).toBe("failed");
+    expect(restored.service.newRequest("Untitled request")).toBeNull();
+    await restored.service.flush();
+    expect((await database.tabLayouts.get(workspace.id))?.tabs).toHaveLength(1);
   });
 
   it("opens nothing before a workspace is loaded", () => {
