@@ -269,3 +269,5 @@ export {
   sanitizeFileName,
   suggestDownloadFileName,
 } from "./response/download-file-name";
+export { getTimelineSegments, TIMELINE_PHASES } from "./response/timeline";
+export type { TimelinePhase, TimelineSegment } from "./response/timeline";
