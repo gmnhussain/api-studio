@@ -244,3 +244,21 @@ export {
   PRETTY_PRINT_INDENT,
   prettyPrintBody,
 } from "./response/pretty-print";
+export {
+  describeJsonValue,
+  formatJsonPath,
+  formatJsonValueForCopy,
+  getJsonValueAt,
+  getJsonValueKind,
+  JSON_PREVIEW_MAX_LENGTH,
+  JSON_TREE_GROUP_BASE,
+  JSON_TREE_MAX_CHILDREN,
+  listJsonChildren,
+} from "./response/json-tree";
+export type {
+  JsonChildRange,
+  JsonPath,
+  JsonPathSegment,
+  JsonTreeEntry,
+  JsonValueKind,
+} from "./response/json-tree";
