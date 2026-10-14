@@ -26,7 +26,7 @@
 | **Activity rail** (48 px) | Sections: Collections, History, Environments, Variables; Settings at the bottom. Active section has a sliding indicator. Clicking the active section collapses the sidebar |
 | **Sidebar panel** | Resizable (220–480 px), collapsible (`Mod+B`); header with section title, search and "new" action |
 | **Top bar** | Workspace switcher, command palette trigger, environment selector, theme switcher |
-| **Tab strip** | Sortable (drag or `Mod+Shift+←/→`), pinned tabs first and icon-sized, dirty dot, middle-click closes, overflow scrolls with fade edges and a "all tabs" menu |
+| **Tab strip** | Sortable (drag or `Mod+Shift+←/→`, announced), pinned tabs first and icon-sized, dirty dot, middle-click closes, overflow scrolls with fade edges and an "all tabs" menu. Each tab is one button in the tab order; its close button is for the pointer, while the keyboard closes with `Alt+W` or the context menu. Closing tabs with unsaved changes asks first |
 | **Request editor** | URL row (method, URL, send split-button) + section tabs with counts + section content |
 | **Response panel** | Resizable split with the editor; orientation side-by-side or stacked (setting, and automatic below 1280 px); collapsible (`Mod+Alt+R`) |
 | **Console** | Bottom panel, resizable, collapsible (`Mod+J`); filter by level; click an entry to reveal its history item |

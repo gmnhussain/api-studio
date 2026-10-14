@@ -163,13 +163,22 @@ type EditorTab = {
 
 type RequestDraft = {
   tabId: TabId;
+  workspaceId: WorkspaceId;          // so deleting a workspace deletes its drafts
   baseUpdatedAt: IsoDateTime | null; // saved version the draft started from (conflict detection)
   request: RequestDefinition;
   name: string;
 };
+
+type TabLayout = {                   // one per workspace: what reopens after a reload (F-24)
+  workspaceId: WorkspaceId;
+  tabs: EditorTab[];                 // strip order, pinned first
+  activeTabId: TabId | null;
+  recentlyClosed: EditorTab[];       // newest first, at most 20; only tabs of saved requests
+  updatedAt: IsoDateTime;
+};
 ```
 
-`isDirty` is derived (draft differs from saved), never stored.
+`isDirty` is derived (draft differs from saved), never stored. On restore, every request tab is checked against its saved request: a missing draft starts from the saved request, a clean draft follows a version saved elsewhere, an edited one keeps its changes and shows a conflict notice, and a tab whose request was deleted becomes an unsaved request.
 
 ## Environments
 
@@ -280,7 +289,8 @@ The JSON is written with stable key order and 2-space indentation so exported co
 | `collections` | v1 (M2) | `id` | `workspaceId` |
 | `collectionItems` | v1 (M2) | `id` | `collectionId`, `[collectionId+parentId]` |
 | `environments` | v1 (M2) | `id` | `workspaceId` |
-| `drafts` | planned (M3) | `tabId` | — |
+| `drafts` | v2 (M3) | `tabId` | `workspaceId` |
+| `tabLayouts` | v2 (M3) | `workspaceId` | — |
 | `history` | planned (M4) | `id` | `[workspaceId+executedAt]` |
 | `responseBodies` | planned (M4) | `id` | — |
 | `cookieJars` | planned (M4) | `workspaceId` | — |

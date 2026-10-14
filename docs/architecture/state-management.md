@@ -21,8 +21,8 @@
 | --- | --- | --- | --- |
 | Workspace | `features/workspace/stores/workspace.store.ts` | Workspaces, `activeWorkspaceId` (from the route) | IndexedDB (service); the last opened workspace in a cookie, so `/` redirects on the server |
 | Collection | `features/collections/stores/collection.store.ts` | Collections + normalized items of the active workspace, expanded folders | IndexedDB (service); expanded state in `localStorage` |
-| Request | `features/request-builder/stores/request.store.ts` | Drafts by `tabId`, active editor section per tab | IndexedDB, debounced auto-save |
-| Tabs | `features/tabs/stores/tabs.store.ts` | Tab order, active tab, pinned flags, recently closed | `localStorage` (tab restore) |
+| Request | `features/request-builder/stores/request.store.ts` | Drafts by `tabId`, active editor section per tab | Drafts in IndexedDB, written 400 ms after edits stop, at once after an explicit save, and when the page is hidden; sections in memory |
+| Tabs | `features/tabs/stores/tabs.store.ts` | Tab order, active tab, pinned flags, recently closed | IndexedDB, one tab layout per workspace, written by the tabs service; deleted with the workspace |
 | History | `features/history/stores/history.store.ts` | Entry summaries (bodies load lazily) | IndexedDB (service) |
 | Environment | `features/environments/stores/environment.store.ts` | Environments, active environment | IndexedDB (service) |
 | Settings | `features/settings/stores/settings.store.ts` | `Settings` (appearance first; editor and request settings join later) | Cookie, applied before first paint by a boot script ([ADR-0011](./adr/0011-cookie-backed-preferences-and-layout.md)) |
@@ -36,19 +36,20 @@ The console store is an addition to the original eight: logs change at a differe
 Every store follows the same pattern so they read alike:
 
 ```ts
-type TabsState = { tabs: EditorTab[]; activeTabId: TabId | null };
+type TabsState = { workspaceId: WorkspaceId | null; status: TabsLoadStatus; tabs: EditorTab[];
+                   activeTabId: TabId | null; recentlyClosed: EditorTab[] };
 
 type TabsActions = {
-  openTab: (input: OpenTabInput) => TabId;
-  closeTab: (tabId: TabId) => void;
+  openTab: (tab: EditorTab) => void;
+  closeTabs: (tabIds: readonly TabId[]) => void;
   moveTab: (tabId: TabId, toIndex: number) => void;
-  togglePin: (tabId: TabId) => void;
+  setPinned: (tabId: TabId, isPinned: boolean) => void;
 };
 
-export const useTabsStore = create<TabsState & TabsActions>()(
-  persist(/* state + actions */, { name: STORAGE_KEYS.tabs, version: 1, migrate: migrateTabsState }),
-);
+export const useTabsStore = create<TabsState & TabsActions>()((set) => ({ /* state + actions */ }));
 ```
+
+Stores that IndexedDB fills carry a `status` and the `workspaceId` they hold. Services follow them with `subscribe` and ignore every change made while a workspace loads, so restoring a workspace never looks like the user closing tabs or editing drafts.
 
 Rules:
 
@@ -57,7 +58,7 @@ Rules:
 3. **Components read with selectors** (`useTabsStore((state) => state.activeTabId)`), and `useShallow` for derived objects. Never subscribe to a whole store.
 4. **Derived data is computed by selectors** in `<feature>.selectors.ts` (`selectCollectionTree`, `selectIsDraftDirty`), not stored.
 5. **Stores never import other stores.** Coordination across domains happens in a service or a hook that reads both.
-6. **Persisted stores have a `version` and a `migrate`** function, tested like any other migration.
+6. **Persisted state is versioned.** Cookie stores carry a `version` and a `migrate` function; IndexedDB data is versioned by the database (data-model.md#conventions). Both are tested like any migration.
 7. **Tests reset stores** through an exported `getInitialState()`; no test relies on another's state.
 
 ## Services: write-through and optimistic updates

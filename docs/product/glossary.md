@@ -30,6 +30,7 @@ One name per concept, used the same way in the UI, the docs and the code. If a w
 | Saved response | A response stored on a request as an example. | `SavedResponse` |
 | History entry | A record of one execution: the resolved request and a response summary. | `HistoryEntry` |
 | Tab | An open editor in the centre area. Shows a request, an environment, or a collection's settings. Can be pinned. | `EditorTab`, `TabKind` |
+| Tab layout | The open tabs of a workspace (order, pins, active and recently closed tabs), restored after a reload. | `TabLayout` |
 | Pinned tab | A tab that stays at the left and is not closed by "close others". | `isPinned` |
 | Console | The bottom panel listing execution logs and app events. | `ConsoleEntry` |
 | Command | A named action reachable from the command palette and optionally a shortcut. | `Command`, `commandId` |

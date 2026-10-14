@@ -54,6 +54,8 @@
 
 ## M3 — Request builder and tabs
 
+> **Done** (2026-10-14). Requests are composed in tabs with a colour-coded method picker, a URL bar that highlights `{{variables}}` and completes them, query and path tables in step with the URL, headers with name suggestions and the generated headers, cookies, six auth schemes, seven body types with Monaco for text bodies, and request settings. Drafts auto-save and restore exactly after a reload; the first save asks for a collection (the collection tree arrives in M6). The tab strip drags, pins, closes in every variant with a prompt for unsaved changes, reopens closed tabs and has keyboard shortcuts. The E2E suite covers it in Chromium, Firefox and WebKit. Initial JavaScript is 288 KB against the unchanged 290 KB budget. Sending arrives with M4, variable hover previews with the variables view in M6, and bulk-edit for tables in M8.
+
 - Tabs store and `EditorTabs` (dnd-kit reorder, pin, close variants, dirty dot, restore, overflow).
 - Request store with drafts and debounced auto-save; explicit save.
 - `RequestMethodSelect`, `VariableInput`-based URL bar with highlighting and `{{` autocomplete, section tabs with counts.
@@ -83,6 +85,7 @@
 - `CollectionTree`: virtualized, WAI-ARIA tree keyboard model, dnd-kit move / reorder, inline rename, context menus, duplicate, delete with undo.
 - History: recorded on execution, grouped by day, virtualized, open in a tab, save to collection, retention limit.
 - Environments editor, `EnvironmentSelector`, variables view across scopes, secret masking.
+- `VariableInput` hover preview of a variable's value and scope.
 - Sidebar filter and global search.
 
 **Exit:** 5,000 items scroll smoothly; every tree action works by keyboard only.
@@ -100,6 +103,7 @@
 - Settings sections for editor, requests, shortcuts and data (appearance and about shipped in M1), with React Hook Form + Zod.
 - Phone-width layout (< 768 px): rail as a bottom bar, request / response switch, console in a sheet.
 - Onboarding flow; recent requests; saved responses; accent presets.
+- `KeyValueTable` bulk-edit mode and arrow-key row navigation.
 - Motion pass (signature micro-interactions), empty-state illustrations, copywriting pass.
 - Accessibility audit (axe + NVDA / VoiceOver), performance audit against budgets.
 

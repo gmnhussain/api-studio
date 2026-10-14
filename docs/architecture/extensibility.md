@@ -17,13 +17,14 @@ interface Registry<TContribution extends { id: string }> {
 | Registry | Contribution | Built-ins in v1 |
 | --- | --- | --- |
 | Protocols | `ProtocolAdapter` | `http` |
-| Auth schemes | `AuthScheme` (schema, form component, `apply()`) | none, inherit, basic, bearer, API key, OAuth 2.0 (config only) |
-| Body types | `BodyType` (schema, editor component, `serialize()`) | JSON, text, XML, form data, URL-encoded, binary |
+| Auth schemes | `AuthSchemeView` (`create()`, form component); `applyAuth()` in core | none, inherit, basic, bearer, API key, OAuth 2.0 (config only) |
+| Body types | `BodyTypeView` (`convert()` from the previous body, editor component); `serializeBody()` in core | JSON, text, XML, form data, URL-encoded, binary |
 | Code generators | `CodeGenerator` | 8 targets |
 | Importers | `CollectionImporter` | native, Postman v2.1, cURL, OpenAPI (entry only) |
 | Response viewers | `ResponseViewer` (`canView(response)`, component, priority) | pretty, raw, JSON tree, image, HTML, Markdown |
 | Commands | `Command` (id, title, icon, `when`, `run`, default key binding) | every palette action |
 | Sidebar sections | `SidebarSection` | collections, history, environments, variables |
+| Tab views | `TabView` (label, editor, title, dirty check) | request; environment and collection tabs later |
 | Executors | `RequestExecutor` | proxy, browser |
 
 Framework-free contributions (generators, importers, auth `apply`) live in core; contributions with React components live in the owning web feature.

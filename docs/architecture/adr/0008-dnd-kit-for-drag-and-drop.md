@@ -20,3 +20,4 @@ Use **dnd-kit** (`@dnd-kit/core`, `@dnd-kit/sortable`) with keyboard sensors and
 
 - One library for tabs and the tree, with accessible defaults.
 - Tree drag and drop needs a custom collision strategy for "into folder" versus "between items".
+- The tab strip (M3) drags with the pointer sensor only. A keyboard sensor would take Space and Enter, which activate a tab; keyboard users move tabs with `Mod+Shift+←/→` instead, and each move is announced in a live region.

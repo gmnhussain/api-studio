@@ -13,7 +13,7 @@
 
 </div>
 
-> **Status:** the foundation (M0) and the design system and app shell (M1) are in place: tokens with a contrast test, light and dark themes, a resizable studio shell, settings, and E2E, accessibility and performance gates in CI. M2 added the domain engine (models, variables, URL and request building) and local-first persistence with workspaces that sync across tabs. The request builder and tabs (M3) are next. See the [milestone plan](./docs/planning/milestones.md).
+> **Status:** the foundation (M0) and the design system and app shell (M1) are in place: tokens with a contrast test, light and dark themes, a resizable studio shell, settings, and E2E, accessibility and performance gates in CI. M2 added the domain engine (models, variables, URL and request building) and local-first persistence with workspaces that sync across tabs. M3 added the request builder and tabs: compose any request with variables, auth and bodies, save it to a collection and get it back exactly after a reload. The execution engine and proxy (M4) are next. See the [milestone plan](./docs/planning/milestones.md).
 
 <!-- Screenshots and a short demo GIF are added in milestone M9. -->
 

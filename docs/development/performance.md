@@ -26,6 +26,7 @@ The target user is a developer on a laptop or desktop, so the budget is set for 
   | --- | --- | --- | --- |
   | M1 | 280 KB | 272 KB | First measured budget, after trimming Zod, Motion and the overlay sheet |
   | M2 | 290 KB | 283 KB | The workspace gate, its store and loader must run on every studio page (+11 KB). The switcher and its menu library load after hydration instead, which kept 32 KB out |
+  | M3 | 290 KB | 288 KB | Unchanged. Tabs, the request editor, Monaco and dnd-kit load in their own chunks after the shell paints; the global error page stopped bundling the whole message catalog, and `package.json` left the bundle (−4 KB) |
 
 - **Bytes are a proxy.** LCP, layout shift and, from M3, interaction latency are what users feel, and they are budgeted alongside.
 
@@ -38,7 +39,7 @@ The target user is a developer on a laptop or desktop, so the budget is set for 
 | Lists | TanStack Virtual for the collection tree (flattened visible nodes), history, JSON tree and tables over 100 rows |
 | Large responses | Bodies over 1 MB are parsed and formatted in a Web Worker; above 5 MB the pretty view is opt-in and raw view streams into Monaco; the JSON tree expands lazily |
 | Editor | One Monaco instance per visible editor; models are disposed when tabs close; inactive tabs keep only their text |
-| Persistence | Debounced auto-save (500 ms) of drafts; IndexedDB writes batched in transactions; history bodies stored separately and loaded lazily |
+| Persistence | Debounced auto-save of drafts (400 ms) and the tab layout (300 ms), flushed when the page is hidden; IndexedDB writes batched in transactions; history bodies stored separately and loaded lazily |
 | Startup | `localStorage` stores hydrate synchronously (no layout shift); IndexedDB hydrates behind skeletons; fonts via `next/font` with `display: swap` and preloading |
 | Transitions | `useTransition` / `useDeferredValue` for search filtering and large view switches |
 | Suspense | Each panel is its own Suspense and error boundary, so a slow or failed panel never blocks the shell |
