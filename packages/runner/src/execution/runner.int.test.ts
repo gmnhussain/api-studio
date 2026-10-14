@@ -173,6 +173,8 @@ describe("runner", () => {
     ]);
     expect((JSON.parse(response.body.data) as { method: string }).method).toBe("GET");
     expect(response.cookies.map((cookie) => cookie.name)).toContain("redirected");
+    const echoed = JSON.parse(response.body.data) as { headers: Record<string, string> };
+    expect(echoed.headers.cookie).toBe("redirected=1");
   });
 
   it("returns the redirect itself when redirects are off", async () => {

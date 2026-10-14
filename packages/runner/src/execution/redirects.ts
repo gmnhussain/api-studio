@@ -1,4 +1,11 @@
-import type { HeaderPair, ResolvedRequest } from "@api-studio/core";
+import {
+  cookiesForUrl,
+  formatCookieHeader,
+  updateCookieJar,
+  type HeaderPair,
+  type ResolvedRequest,
+  type ResponseCookie,
+} from "@api-studio/core";
 
 /** Statuses that redirect when they carry a `Location` (RFC 9110 §15.4). */
 const REDIRECT_STATUSES: ReadonlySet<number> = new Set([301, 302, 303, 307, 308]);
@@ -55,5 +62,41 @@ export function followRedirect(
     url: target.toString(),
     headers: request.headers.filter(keep),
     body: becomesGet ? { kind: "none" } : request.body,
+  };
+}
+
+/**
+ * Adds the cookies earlier hops of this execution set to the request of the next hop, as a
+ * browser would: a login that answers `302` with `Set-Cookie` reaches its target signed in. A
+ * received cookie replaces one of the same name in the `Cookie` header already there.
+ */
+export function withRedirectCookies(
+  request: ResolvedRequest,
+  received: readonly ResponseCookie[],
+  now: Date,
+): ResolvedRequest {
+  const matching = cookiesForUrl(updateCookieJar([], received, now), request.url, now);
+  if (matching.length === 0) return request;
+
+  const isCookie = (header: HeaderPair) => header.name.toLowerCase() === "cookie";
+  const pairs = new Map<string, string>();
+  for (const header of request.headers.filter(isCookie)) {
+    for (const part of header.value.split(";")) {
+      const separator = part.indexOf("=");
+      if (separator > 0)
+        pairs.set(part.slice(0, separator).trim(), part.slice(separator + 1).trim());
+    }
+  }
+  for (const cookie of matching) pairs.set(cookie.name, cookie.value);
+
+  return {
+    ...request,
+    headers: [
+      ...request.headers.filter((header) => !isCookie(header)),
+      {
+        name: "Cookie",
+        value: formatCookieHeader([...pairs].map(([name, value]) => ({ name, value }))),
+      },
+    ],
   };
 }

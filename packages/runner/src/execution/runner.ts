@@ -20,7 +20,7 @@ import {
 
 import { toExecutionError } from "./execution-errors";
 import { createExecutionSignal } from "./execution-signal";
-import { followRedirect, isRedirectStatus } from "./redirects";
+import { followRedirect, isRedirectStatus, withRedirectCookies } from "./redirects";
 import { decodeBody, readBody } from "./response-body";
 import { isPrivateAddress } from "../network/address-policy";
 import { createGuardedLookup } from "../network/guarded-lookup";
@@ -180,7 +180,7 @@ export function createRunner(config: RunnerConfig): Runner {
           const next = followRedirect(current, response.statusCode, location);
           if (next) {
             redirects.push({ status: response.statusCode, url: current.url, location });
-            current = next;
+            current = withRedirectCookies(next, cookies, startedAt);
             continue;
           }
         }

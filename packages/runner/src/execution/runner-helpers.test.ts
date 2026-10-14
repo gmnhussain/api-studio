@@ -2,10 +2,10 @@ import { brotliCompressSync, deflateSync, gzipSync } from "node:zlib";
 
 import { describe, expect, it } from "vitest";
 
-import type { ResolvedRequest } from "@api-studio/core";
+import { parseSetCookie, type ResolvedRequest } from "@api-studio/core";
 
 import { toExecutionError } from "./execution-errors";
-import { followRedirect, isRedirectStatus } from "./redirects";
+import { followRedirect, isRedirectStatus, withRedirectCookies } from "./redirects";
 import { decodeBody, readBody } from "./response-body";
 
 const post: ResolvedRequest = {
@@ -51,6 +51,36 @@ describe("followRedirect", () => {
     expect(next?.headers.map((header) => header.name)).toEqual(["Content-Type", "X-Trace"]);
     expect(followRedirect(post, 302, "ftp://files.example.com/")).toBeNull();
     expect(followRedirect(post, 302, "http://[bad")).toBeNull();
+  });
+});
+
+describe("withRedirectCookies", () => {
+  const now = new Date("2026-10-14T09:30:00.000Z");
+  const cookie = (header: string) => {
+    const parsed = parseSetCookie(header, "https://api.acme.dev/login", now);
+    if (!parsed) throw new Error("expected a cookie");
+    return parsed;
+  };
+  const home: ResolvedRequest = {
+    method: "GET",
+    url: "https://api.acme.dev/home",
+    headers: [{ name: "cookie", value: "theme=dark; session=old" }],
+    body: { kind: "none" },
+  };
+
+  it("sends cookies set on the way, replacing older values of the same name", () => {
+    const next = withRedirectCookies(home, [cookie("session=new; Path=/")], now);
+
+    expect(next.headers).toEqual([{ name: "Cookie", value: "theme=dark; session=new" }]);
+  });
+
+  it("leaves the request alone when no received cookie matches it", () => {
+    const other = withRedirectCookies(
+      { ...home, url: "https://cdn.example.com/" },
+      [cookie("session=new; Path=/")],
+      now,
+    );
+    expect(other.headers).toEqual(home.headers);
   });
 });
 
