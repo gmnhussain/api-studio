@@ -43,6 +43,10 @@ Executors never throw for expected failures; they return `{ outcome: "error", er
 
 The UI reads `capabilities` to disable what an executor can't do (e.g. the redirect chain tab shows "Not available in browser mode").
 
+### Choosing and running an executor
+
+Executors register in the executor registry (`features/execution/lib/executor-registry.ts`); the status bar picks one and the choice is remembered in this browser. The execution service sends with it, falling back to the proxy. Before anything is sent, `planRequest` refuses a request with unresolved variables (`UNRESOLVED_VARIABLES`, listing their names) or an invalid URL or header name (`INVALID_REQUEST`). The proxy executor reports an unreachable or failing proxy as `PROXY_UNAVAILABLE`, and gives up if the proxy has not answered five seconds after the request's own timeout.
+
 ## Proxy endpoint
 
 `POST /api/v1/executions` — Node runtime Route Handler, thin:
@@ -76,7 +80,7 @@ A proxy that fetches arbitrary URLs is a server-side request forgery (SSRF) risk
 | Request / response size | 50 MB cap | 10 MB cap |
 | Timeout ceiling | User setting | 30 s maximum |
 
-Configured by `PROXY_ALLOW_PRIVATE_NETWORKS`, `PROXY_MAX_RESPONSE_BYTES`, `PROXY_MAX_TIMEOUT_MS`, validated at startup. In the hosted demo, the UI suggests browser mode for `localhost` targets.
+Configured by `PROXY_ALLOW_PRIVATE_NETWORKS`, `PROXY_ALLOWED_PORTS`, `PROXY_MAX_RESPONSE_BYTES`, `PROXY_MAX_REQUEST_BYTES` and `PROXY_MAX_TIMEOUT_MS`, validated at startup by `instrumentation.ts` (`config/server-env.ts`). In the hosted demo, the UI suggests browser mode for `localhost` targets.
 
 Other rules:
 

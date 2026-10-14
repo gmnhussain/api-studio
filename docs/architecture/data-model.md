@@ -300,7 +300,7 @@ The JSON is written with stable key order and 2-space indentation so exported co
 | `tabLayouts` | v2 (M3) | `workspaceId` | — |
 | `history` | planned (M4) | `id` | `[workspaceId+executedAt]` |
 | `responseBodies` | planned (M4) | `id` | — |
-| `cookieJars` | planned (M4) | `workspaceId` | — |
+| `cookieJars` | v3 (M4) | `workspaceId` | — |
 | `savedResponses` | planned (M8) | `id` | `requestItemId` |
 
 Versions are declared in one list (`apps/web/src/lib/db/database.ts`); a released version is never edited. Each new version comes with its upgrade function and a test that opens data written by the previous version.

@@ -1,6 +1,6 @@
 # State Management
 
-**One Zustand store per domain, each small and owned by its feature. Stores hold in-memory state and synchronous actions; services handle persistence and side effects. TanStack Query owns async I/O lifecycles. There is no global "app store".**
+**One Zustand store per domain, each small and owned by its feature. Stores hold in-memory state and synchronous actions; services handle persistence, side effects and async lifecycles such as executions. There is no global "app store".**
 
 ## Where state lives
 
@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | Domain data (local source of truth) | Domain store, written through to IndexedDB by a service | Collections, environments |
 | Working copies | Request store | Drafts per tab |
-| Async lifecycles | TanStack Query | Running execution, lazily loaded history body |
+| Async lifecycles | A service, its store and an abort registry ([ADR-0012](./adr/0012-execution-lifecycle-in-a-service.md)) | Running execution, cancel, retry |
 | UI layout and preferences | `persist` stores in cookies, readable before or during the server render (no flash, no layout shift) | Panel sizes, sidebar section, theme |
 | Small client-only lists | `persist` stores in `localStorage` | Tab order |
 | Ephemeral component state | `useState` / `useReducer` | An open dropdown, inline rename text |
@@ -27,7 +27,10 @@
 | Environment | `features/environments/stores/environment.store.ts` | Environments, active environment | IndexedDB (service) |
 | Settings | `features/settings/stores/settings.store.ts` | `Settings` (appearance first; editor and request settings join later) | Cookie, applied before first paint by a boot script ([ADR-0011](./adr/0011-cookie-backed-preferences-and-layout.md)) |
 | UI | `features/shell/stores/ui.store.ts` | Active sidebar section, panel layout (sizes and collapsed panels), palette open | Cookie, read by the workspace route on the server ([ADR-0011](./adr/0011-cookie-backed-preferences-and-layout.md)) |
-| Console | `features/console/stores/console.store.ts` | Ring buffer of console entries (max 1,000) | Memory only |
+| Console | `features/console/stores/console.store.ts` | Ring buffer of console entries (max 1,000), level filter | Memory only |
+| Execution | `features/execution/stores/execution.store.ts` | Latest execution of each tab: status, request as sent, result | Memory only (history keeps past ones, M6) |
+| Cookie jar | `features/execution/stores/cookie-jar.store.ts` | The open workspace's cookies from responses | IndexedDB (`cookieJars`), written by the execution service |
+| Executor preference | `features/execution/stores/executor-preference.store.ts` | Proxy or browser | `localStorage`, read after mount |
 
 The console store is an addition to the original eight: logs change at a different rate and lifetime from everything else, so they get their own store.
 
@@ -75,16 +78,21 @@ renameItem(itemId, name)
 
 Delete is optimistic with an **Undo** toast: the item leaves the store at once; the repository delete runs when the toast expires or is dismissed.
 
-## TanStack Query
+## Executions
+
+The execution service plans a tab's draft, sends it through the chosen executor and records the result in the execution store ([ADR-0012](./adr/0012-execution-lifecycle-in-a-service.md)). Abort controllers live in a registry keyed by tab inside the service. Sending again aborts the tab's previous execution; a late result is ignored by its execution id; closing a tab cancels and forgets its execution. The service also updates the cookie jar and appends a console entry for every execution.
+
+## TanStack Query (when a feature needs it)
+
+Not installed yet. It arrives, behind a lazily loaded provider, with the first feature that needs caching or deduplication; likely candidates:
 
 | Use | Hook |
 | --- | --- |
-| Execute a request | `useExecuteRequest()` — `useMutation` with an `AbortSignal`, retry on demand, writes history and console on settle |
-| Load a history response body | `useQuery(["response-body", id])`, `staleTime: Infinity` (bodies are immutable) |
+| Load a history response body (M6) | `useQuery(["response-body", id])`, `staleTime: Infinity` (bodies are immutable) |
 | Import from a URL (OpenAPI later) | `useMutation` |
 | Future cloud sync | Queries over a remote repository |
 
-Query keys come from one factory per feature (`historyQueryKeys.body(id)`), never inline arrays.
+Query keys will come from one factory per feature (`historyQueryKeys.body(id)`), never inline arrays.
 
 ## Hydration and first paint
 

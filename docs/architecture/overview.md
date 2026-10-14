@@ -41,7 +41,7 @@ Why a server hop exists at all: browsers enforce CORS and forbid headers such as
 | Panels | `react-resizable-panels` (shadcn Resizable) | Accessible, keyboard-resizable, persisted layouts |
 | Drag and drop | `dnd-kit` | Accessible (keyboard + screen reader), works for both tab strip and tree ([ADR-0008](./adr/0008-dnd-kit-for-drag-and-drop.md)) |
 | Client state | Zustand, one store per domain | Small, selector-based, no providers ([ADR-0004](./adr/0004-state-management.md)) |
-| Async I/O state | TanStack Query | Execution lifecycle (pending, cancel, retry), lazy IndexedDB reads, future remote sync |
+| Async I/O state | Services with an abort registry; TanStack Query when caching is needed | Execution lifecycle in a service ([ADR-0012](./adr/0012-execution-lifecycle-in-a-service.md)); queries for lazy reads and remote sync later |
 | Persistence | IndexedDB through Dexie, behind repository interfaces | Large data (history, responses) off `localStorage`; swappable for sync later ([ADR-0002](./adr/0002-local-first-indexeddb-persistence.md)) |
 | Forms | React Hook Form + Zod (`@hookform/resolvers`) | Dialogs and settings; same schemas as the domain |
 | Validation | Zod 4 | Every trust boundary: imports, persisted data, proxy input/output, env |
@@ -137,7 +137,7 @@ Features: `workspace`, `shell`, `collections`, `request-builder`, `response-view
 | --- | --- | --- |
 | `app/` routes | features' public APIs | Holds state or logic |
 | Components | hooks, stores (via selectors), `components/*` | Calls a repository or executor directly |
-| Hooks | stores, services, TanStack Query | Renders UI |
+| Hooks | stores, services | Renders UI |
 | Services | stores, repositories, executors, `@api-studio/core` | Imports React components |
 | Repositories | Dexie tables, Zod schemas | Contains business rules |
 | `@api-studio/core` | nothing in the app | Imports React, Next.js, DOM or Node APIs |

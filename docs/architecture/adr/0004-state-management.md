@@ -1,6 +1,6 @@
 # ADR-0004: Zustand stores per domain, TanStack Query for async I/O
 
-- Status: Accepted
+- Status: Accepted; the TanStack Query decision is amended by [ADR-0012](./0012-execution-lifecycle-in-a-service.md)
 - Date: 2026-10-13
 
 ## Context
