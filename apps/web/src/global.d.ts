@@ -1,9 +1,9 @@
 import type { Locale } from "./i18n/i18n.constants";
-import type messages from "./i18n/messages/en.json";
+import type { englishMessages } from "./i18n/messages/english-messages";
 
 declare global {
   /** The shape of every message catalog; English is the source of truth. */
-  type AppMessages = typeof messages;
+  type AppMessages = typeof englishMessages;
 }
 
 declare module "next-intl" {

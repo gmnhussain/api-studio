@@ -6,6 +6,9 @@ export const MONACO_THEME_NAME = "api-studio";
 /** Alpha of the resting scrollbar, as a hex suffix (60%). */
 const SCROLLBAR_ALPHA = "99";
 
+/** Used only where a canvas is unavailable (never in a real browser), so the theme stays valid. */
+const FALLBACK_COLOR = "#000000";
+
 /** Hex digits per colour channel. */
 const HEX_CHANNEL_LENGTH = 2;
 
@@ -33,7 +36,7 @@ export function buildMonacoTheme(isDark: boolean): editor.IStandaloneThemeData {
   canvas.width = 1;
   canvas.height = 1;
   const context = canvas.getContext("2d", { willReadFrequently: true });
-  const color = (token: string) => (context ? resolveTokenColor(context, token) : "#000000");
+  const color = (token: string) => (context ? resolveTokenColor(context, token) : FALLBACK_COLOR);
   const syntax = (token: string) => color(token).slice(1);
 
   return {

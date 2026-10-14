@@ -11,7 +11,7 @@ API Studio is meant to become an open-source product, which usually means commun
 
 - All user-facing text goes through **next-intl** from day one, with English (`en`) as the only locale for now.
 - No locale in the URL: the locale is fixed in `src/i18n/request.ts` until a second language exists. Adding locale routing later is a configuration change, not a component change.
-- Messages live in `src/i18n/messages/en.json`, grouped by feature (`shell`, `settings`, …). Keys are typed through next-intl's `AppConfig`, so a missing or misspelled key fails `typecheck`.
+- Messages live in `src/i18n/messages/en.json`, grouped by feature (`shell`, `settings`, …); the `errors` namespace is in `en.errors.json`, because the global error page imports it on the client and must not bring the whole catalog into the initial JavaScript. `english-messages.ts` joins them. Keys are typed through next-intl's `AppConfig`, so a missing or misspelled key fails `typecheck`.
 - Numbers, sizes, durations and dates are formatted through next-intl's formatters or core formatters, never by string concatenation.
 
 ## Alternatives considered

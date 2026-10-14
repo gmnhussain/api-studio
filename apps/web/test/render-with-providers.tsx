@@ -3,12 +3,12 @@ import { NextIntlClientProvider } from "next-intl";
 import type { ReactElement, ReactNode } from "react";
 
 import { DEFAULT_LOCALE } from "@/i18n/i18n.constants";
-import messages from "@/i18n/messages/en.json";
+import { englishMessages } from "@/i18n/messages/english-messages";
 
 /** Wraps a component in the providers every feature expects: the message catalog for now. */
 function TestProviders({ children }: { children: ReactNode }) {
   return (
-    <NextIntlClientProvider locale={DEFAULT_LOCALE} messages={messages}>
+    <NextIntlClientProvider locale={DEFAULT_LOCALE} messages={englishMessages}>
       {children}
     </NextIntlClientProvider>
   );
