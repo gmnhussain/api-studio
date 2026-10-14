@@ -494,6 +494,20 @@
       "rawLabel": "Response body, as received",
       "formatting": "Formatting…"
     },
+    "tree": {
+      "label": "JSON tree",
+      "parsing": "Reading the JSON…",
+      "invalid": "This body is not valid JSON, so it has no tree. The pretty and raw views show it as received.",
+      "empty": "The document is empty.",
+      "keyCount": "{count, plural, one {# key} other {# keys}}",
+      "itemCount": "{count, plural, one {# item} other {# items}}",
+      "range": "[{first} … {last}]",
+      "copyValue": "Copy value",
+      "copyPath": "Copy path",
+      "copiedValue": "Value copied",
+      "copiedPath": "Path copied",
+      "copyFailed": "The browser did not allow copying."
+    },
     "summary": {
       "status": "Status",
       "time": "Time",

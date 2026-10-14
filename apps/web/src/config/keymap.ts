@@ -21,6 +21,7 @@ export const KEYMAP = {
   previousTab: "Alt+[",
   moveTabLeft: "Mod+Shift+ArrowLeft",
   moveTabRight: "Mod+Shift+ArrowRight",
+  copyTreeValue: "Mod+C",
 } as const satisfies Record<string, KeyBinding>;
 
 /** How many tabs have a "go to tab" shortcut. */
