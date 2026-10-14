@@ -489,6 +489,11 @@
     "emptyBody": "The response has no body.",
     "binaryBody": "A {type} body of {size}. Previews for images and other binary bodies arrive with the response viewers.",
     "unknownType": "binary",
+    "body": {
+      "prettyLabel": "Response body, formatted",
+      "rawLabel": "Response body, as received",
+      "formatting": "Formatting…"
+    },
     "summary": {
       "status": "Status",
       "time": "Time",
