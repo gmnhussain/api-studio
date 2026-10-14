@@ -39,7 +39,7 @@ export function ConsoleLog({ emptyState }: ConsoleLogProps) {
   );
 
   useEffect(() => {
-    const list = listRef.current?.parentElement;
+    const list = listRef.current?.parentElement?.parentElement;
     if (!list) return;
     const distanceFromEnd = list.scrollHeight - list.scrollTop - list.clientHeight;
     if (distanceFromEnd < FOLLOW_THRESHOLD_PIXELS) list.scrollTop = list.scrollHeight;
@@ -57,23 +57,28 @@ export function ConsoleLog({ emptyState }: ConsoleLogProps) {
   };
 
   return (
-    <ol ref={listRef} role="log" aria-label={t("logLabel")} className="font-mono text-xs">
-      {shown.map((entry) => {
-        const Icon = LEVEL_ICONS[entry.level];
-        return (
-          <li key={entry.id} className="flex items-start gap-2 border-b px-3 py-1 last:border-b-0">
-            <Icon
-              aria-hidden
-              className={cn("mt-0.5 size-3.5 shrink-0", LEVEL_CLASSES[entry.level])}
-            />
-            <span className="sr-only">{t(`levels.${entry.level}`)}</span>
-            <time dateTime={entry.at} className="shrink-0 text-muted-foreground tabular-nums">
-              {format.dateTime(new Date(entry.at), { timeStyle: "medium" })}
-            </time>
-            <span className="min-w-0 break-all">{describe(entry)}</span>
-          </li>
-        );
-      })}
-    </ol>
+    <div role="log" aria-label={t("logLabel")}>
+      <ol ref={listRef} className="font-mono text-xs">
+        {shown.map((entry) => {
+          const Icon = LEVEL_ICONS[entry.level];
+          return (
+            <li
+              key={entry.id}
+              className="flex items-start gap-2 border-b px-3 py-1 last:border-b-0"
+            >
+              <Icon
+                aria-hidden
+                className={cn("mt-0.5 size-3.5 shrink-0", LEVEL_CLASSES[entry.level])}
+              />
+              <span className="sr-only">{t(`levels.${entry.level}`)}</span>
+              <time dateTime={entry.at} className="shrink-0 text-muted-foreground tabular-nums">
+                {format.dateTime(new Date(entry.at), { timeStyle: "medium" })}
+              </time>
+              <span className="min-w-0 break-all">{describe(entry)}</span>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
   );
 }

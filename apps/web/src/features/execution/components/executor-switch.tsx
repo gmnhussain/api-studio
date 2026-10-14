@@ -8,6 +8,7 @@ import { EXECUTOR_IDS } from "@api-studio/core";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
@@ -35,20 +36,22 @@ export function ExecutorSwitch() {
         <ChevronUp aria-hidden className="size-3" />
       </DropdownMenuTrigger>
       <DropdownMenuContent side="top" align="start" className="w-44">
-        <DropdownMenuLabel>{t("executor")}</DropdownMenuLabel>
-        <DropdownMenuRadioGroup
-          value={executorId}
-          onValueChange={(value) => {
-            const next = EXECUTOR_IDS.find((id) => id === value);
-            if (next) setExecutorId(next);
-          }}
-        >
-          {EXECUTOR_IDS.map((id) => (
-            <DropdownMenuRadioItem key={id} value={id}>
-              {t(`executors.${id}`)}
-            </DropdownMenuRadioItem>
-          ))}
-        </DropdownMenuRadioGroup>
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>{t("executor")}</DropdownMenuLabel>
+          <DropdownMenuRadioGroup
+            value={executorId}
+            onValueChange={(value) => {
+              const next = EXECUTOR_IDS.find((id) => id === value);
+              if (next) setExecutorId(next);
+            }}
+          >
+            {EXECUTOR_IDS.map((id) => (
+              <DropdownMenuRadioItem key={id} value={id} closeOnClick>
+                {t(`executors.${id}`)}
+              </DropdownMenuRadioItem>
+            ))}
+          </DropdownMenuRadioGroup>
+        </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   );
