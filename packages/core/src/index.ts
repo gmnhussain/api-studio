@@ -232,3 +232,9 @@ export {
 export { encodeResponseBody, isTextualContentType } from "./http/response-body-encoding";
 export { cookieJarSchema } from "./models/cookie-jar.schema";
 export type { CookieJar } from "./models/cookie-jar.schema";
+export {
+  detectBodyFormat,
+  getMediaTypeEssence,
+  RESPONSE_BODY_FORMATS,
+} from "./response/body-format";
+export type { ResponseBodyFormat } from "./response/body-format";
