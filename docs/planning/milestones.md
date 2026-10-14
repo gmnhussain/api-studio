@@ -76,6 +76,8 @@
 
 ## M5 — Response viewer
 
+> **Done** (2026-10-14). Response bodies show through a viewer registry: pretty (JSON and XML formatted, every text format highlighted), a virtualized JSON tree with the WAI-ARIA keyboard model and copy value / JSONPath, raw, and image, HTML and Markdown previews; each tab keeps its section and view. Bodies over 1 MB are formatted and parsed in a Web Worker that keeps the document for the tree, which lists one level at a time and groups large containers into ranges; text over 2 MB skips the code editor for a row view whose scroll height is capped and scaled. With a 20 MB JSON body no main-thread task passes 96 ms in Chromium. HTML previews run in a sandbox whose content security policy loads nothing; Markdown never renders raw HTML or remote images; previews follow the theme. Headers and cookies are filterable tables, the timeline shows phases, sizes and the redirect chain, and copy / download use the name the response suggests. Initial JavaScript is 289 KB against the 290 KB budget.
+
 - Status bar (status, time, size), body views (pretty, raw, preview) through the response viewer registry.
 - `JsonTree` (virtualized, copy path / value), image, sandboxed HTML and Markdown previews; Web Worker formatting for large bodies.
 - Headers, cookies, timeline and redirect chain; copy and download.

@@ -28,6 +28,7 @@ The target user is a developer on a laptop or desktop, so the budget is set for 
   | M2 | 290 KB | 283 KB | The workspace gate, its store and loader must run on every studio page (+11 KB). The switcher and its menu library load after hydration instead, which kept 32 KB out |
   | M3 | 290 KB | 288 KB | Unchanged. Tabs, the request editor, Monaco and dnd-kit load in their own chunks after the shell paints; the global error page stopped bundling the whole message catalog, and `package.json` left the bundle (−4 KB) |
   | M4 | 290 KB | 289 KB | Unchanged. The executor switch, console and response view load after the shell paints behind the empty states the server renders; the runner never reaches the browser |
+  | M5 | 290 KB | 289 KB | Unchanged. The body views, the body worker, TanStack Virtual and react-markdown load with the response panel or later, when a view first appears |
 
 - **Bytes are a proxy.** LCP, layout shift and, from M3, interaction latency are what users feel, and they are budgeted alongside.
 
