@@ -238,3 +238,9 @@ export {
   RESPONSE_BODY_FORMATS,
 } from "./response/body-format";
 export type { ResponseBodyFormat } from "./response/body-format";
+export {
+  formatJsonText,
+  formatXmlText,
+  PRETTY_PRINT_INDENT,
+  prettyPrintBody,
+} from "./response/pretty-print";
