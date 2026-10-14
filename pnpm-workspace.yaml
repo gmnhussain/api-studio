@@ -81,6 +81,11 @@ catalog:
   # Code editor for bodies and responses, bundled and loaded on demand (ADR-0009).
   "@monaco-editor/react": 4.7.0
   monaco-editor: 0.57.0
+  # Accessible drag and drop for the tab strip and, later, the collection tree (ADR-0008).
+  "@dnd-kit/core": 6.3.1
+  "@dnd-kit/sortable": 10.0.0
+  "@dnd-kit/utilities": 3.2.2
+  "@dnd-kit/modifiers": 9.0.0
 
 # Packages allowed to run install scripts (pnpm 11 blocks them by default).
 # Prebuilt binaries cover all of these; esbuild's script only verifies its binary.

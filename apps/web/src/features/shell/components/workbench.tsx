@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import type { RefObject } from "react";
 import type { Layout, LayoutChangedMeta, PanelImperativeHandle } from "react-resizable-panels";
@@ -9,9 +10,14 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import { useUi } from "../hooks/use-ui";
 import { PANEL_SIZES, PANELS, SHELL_REGION_IDS, type PanelGroupId } from "../shell.constants";
 import { ConsolePanel } from "./console-panel";
-import { EditorWelcome } from "./editor-welcome";
 import { ResponsePanel } from "./response-panel";
 import { SidebarContent } from "./sidebar-content";
+
+/** Tabs and editors load after the shell has painted; the region stays empty meanwhile. */
+const StudioEditor = dynamic(
+  () => import("./studio-editor").then((module) => module.StudioEditor),
+  { ssr: false },
+);
 
 /** Props for {@link Workbench}. */
 export type WorkbenchProps = {
@@ -37,6 +43,7 @@ export function Workbench({
   responsePanelRef,
 }: WorkbenchProps) {
   const t = useTranslations("shell.actions");
+  const regionsT = useTranslations("shell.regions");
   const layouts = useUi((state) => state.layouts);
   const setLayout = useUi((state) => state.setLayout);
   const editorsGroup: PanelGroupId = isStacked ? "editors-vertical" : "editors-horizontal";
@@ -64,7 +71,9 @@ export function Workbench({
             id={PANELS.request}
             {...(isStacked ? PANEL_SIZES.stackedRequest : PANEL_SIZES.request)}
           >
-            <EditorWelcome />
+            <section aria-label={regionsT("editor")} className="h-full">
+              <StudioEditor />
+            </section>
           </ResizablePanel>
           <ResizableHandle aria-label={t("resizeResponse")} />
           <ResizablePanel

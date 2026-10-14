@@ -48,6 +48,12 @@ export function RequestBuilderProvider({ children }: { children: ReactNode }) {
     service,
     save: async (tabId) => {
       if (!service) return;
+      // Opened in the same event, not after an await: a dialog that mounts while the click or
+      // key press that asked for it is still being handled takes that event as an outside press.
+      if (service.needsLocation(tabId)) {
+        setSaveAsTabId(tabId);
+        return;
+      }
       const result = await service.save(tabId);
       if (result.ok) toast.success(t("toasts.saved", { name: result.value.name }));
       else if (result.error === "needs_location") setSaveAsTabId(tabId);

@@ -113,11 +113,12 @@
       "resizeResponse": "Resize response panel",
       "toggleSidebar": "Toggle sidebar",
       "toggleConsole": "Toggle console",
-      "toggleResponse": "Toggle response panel"
+      "toggleResponse": "Toggle response panel",
+      "newRequest": "New request"
     },
     "editor": {
       "emptyTitle": "No request open",
-      "emptyDescription": "Requests open here in tabs. Browse your collections and history from the sidebar.",
+      "emptyDescription": "Requests open here in tabs. Start a new one, or open one from your collections.",
       "shortcutsHeading": "Shortcuts"
     },
     "response": {
@@ -371,8 +372,6 @@
     "newTab": "New request",
     "allTabs": "All open tabs",
     "close": "Close {title}",
-    "pinned": "{title}, pinned",
-    "unsavedChanges": "{title}, unsaved changes",
     "menu": {
       "pin": "Pin tab",
       "unpin": "Unpin tab",
@@ -388,12 +387,10 @@
       "confirm": "Close without saving",
       "cancel": "Cancel"
     },
-    "dragInstructions": "To move a tab, press Space or Enter, use the arrow keys, then press Space or Enter again. Press Escape to cancel.",
     "announcements": {
-      "picked": "Picked up {title}.",
-      "moved": "{title} moved to position {position} of {total}.",
-      "dropped": "{title} dropped at position {position} of {total}.",
-      "cancelled": "Moving {title} cancelled."
-    }
+      "moved": "{title} moved to position {position} of {total}."
+    },
+    "pinnedSuffix": ", pinned",
+    "unsavedSuffix": ", unsaved changes"
   }
 }

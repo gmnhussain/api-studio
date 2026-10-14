@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
 
 import { EmptyState } from "@/components/common/empty-state";
 import { ShortcutHint } from "@/components/common/shortcut-hint";
@@ -9,29 +10,28 @@ import { KEYMAP } from "@/config/keymap";
 
 /** Shortcuts listed on the empty editor, with their labels in the `shell.actions` catalog. */
 const WELCOME_SHORTCUTS = [
+  { binding: KEYMAP.newRequestTab, labelKey: "newRequest" },
   { binding: KEYMAP.toggleSidebar, labelKey: "toggleSidebar" },
   { binding: KEYMAP.toggleConsole, labelKey: "toggleConsole" },
   { binding: KEYMAP.toggleResponsePanel, labelKey: "toggleResponse" },
   { binding: KEYMAP.openSettings, labelKey: "openSettings" },
 ] as const;
 
-/**
- * The editor area while no request is open: what goes here, and the shortcuts that work now.
- * Tabs replace it in milestone M3.
- */
-export function EditorWelcome() {
+/** Props for {@link EditorWelcome}. */
+export type EditorWelcomeProps = { action?: ReactNode };
+
+/** The editor area while no request is open: what goes here, how to start, and shortcuts. */
+export function EditorWelcome({ action }: EditorWelcomeProps) {
   const t = useTranslations("shell");
 
   return (
-    <section
-      aria-label={t("regions.editor")}
-      className="flex h-full flex-col items-center overflow-auto bg-background p-6"
-    >
+    <div className="flex h-full flex-col items-center overflow-auto bg-background p-6">
       <div className="my-auto flex w-full flex-col items-center">
         <EmptyState
           illustration={<RequestIllustration />}
           title={t("editor.emptyTitle")}
           description={t("editor.emptyDescription")}
+          actions={action}
         />
         <div className="w-full max-w-72">
           <h3 className="mb-2 text-xs font-medium text-muted-foreground">
@@ -49,6 +49,6 @@ export function EditorWelcome() {
           </dl>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

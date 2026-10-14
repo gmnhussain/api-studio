@@ -19,21 +19,15 @@ let registration: Disposable | undefined;
  * Registers what the request builder contributes (extensibility.md#registries): the `request` tab
  * view, the built-in auth schemes and the built-in body types. Calling it again while registered
  * returns the same registration.
- *
- * @param untitledName The title of a request whose draft is not loaded.
  */
-export function registerRequestBuilderContributions({
-  untitledName,
-}: {
-  untitledName: string;
-}): Disposable {
+export function registerRequestBuilderContributions(): Disposable {
   if (registration) return registration;
   const disposables = [
     tabViews.register({
       id: "request",
       Label: RequestTabLabel,
       Editor: RequestEditor,
-      getTitle: (tab) => useRequestStore.getState().drafts[tab.id]?.name ?? untitledName,
+      getTitle: (tab) => useRequestStore.getState().drafts[tab.id]?.name ?? "",
       isDirty: (tab) => {
         const draft = useRequestStore.getState().drafts[tab.id];
         const saved = savedRequestOf(tab, useCollectionStore.getState().items);

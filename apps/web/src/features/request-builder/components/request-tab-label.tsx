@@ -10,10 +10,11 @@ import { METHOD_TEXT_CLASSES } from "../lib/method-styles";
 
 /**
  * A request tab in the strip: its method, name and a dot while it has unsaved changes. Pinned
- * tabs show only the method; the strip names them for assistive technology.
+ * tabs show only the method; their name, like the unsaved state, is still read out.
  */
 export function RequestTabLabel({ tab }: TabViewProps) {
   const t = useTranslations("requestBuilder");
+  const tabsT = useTranslations("tabs");
   const draft = useDraft(tab.id);
   const { isDirty } = useDraftStatus(tab.id);
   const method = draft?.request.method ?? "GET";
@@ -23,7 +24,8 @@ export function RequestTabLabel({ tab }: TabViewProps) {
       <span className={cn("shrink-0 font-mono text-xs font-semibold", METHOD_TEXT_CLASSES[method])}>
         {t(`methods.${method}`)}
       </span>
-      {tab.isPinned ? null : <span className="truncate">{draft?.name ?? t("untitled")}</span>}
+      <span className={tab.isPinned ? "sr-only" : "truncate"}>{draft?.name ?? t("untitled")}</span>
+      {isDirty ? <span className="sr-only">{tabsT("unsavedSuffix")}</span> : null}
       {isDirty ? (
         <span
           aria-hidden

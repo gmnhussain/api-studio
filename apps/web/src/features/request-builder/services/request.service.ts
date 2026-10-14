@@ -266,6 +266,9 @@ export function createRequestService({
       return null;
     },
 
+    /** Whether a tab has never been saved, so saving it first needs a location. */
+    needsLocation: (tabId: TabId): boolean => findTab(tabId)?.entityId === null,
+
     /**
      * Saves a tab's draft to its request (`Mod+S`). A request never saved needs a location
      * first: the result is `needs_location`, and the caller asks for one and uses `saveAs`.

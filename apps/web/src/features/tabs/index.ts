@@ -1,3 +1,5 @@
+export { EditorArea } from "./components/editor-area";
+export type { EditorAreaProps } from "./components/editor-area";
 export { createTabLayoutRepository } from "./repositories/tab-layout.repository";
 export type { TabLayoutRepository } from "./repositories/tab-layout.repository";
 export { createTabsService } from "./services/tabs.service";
