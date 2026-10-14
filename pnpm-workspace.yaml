@@ -41,6 +41,9 @@ catalog:
   "@axe-core/playwright": 4.13.0
   "@types/node": 24.19.1
 
+  # HTTP engine of the runner: manual redirects, a guarded DNS lookup, streaming bodies.
+  undici: 8.11.2
+
   # Frontend
   next: 16.3.8
   react: 19.3.0

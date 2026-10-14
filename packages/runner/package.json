@@ -25,5 +25,9 @@
   },
   "engines": {
     "node": ">=24"
+  },
+  "dependencies": {
+    "@api-studio/core": "workspace:*",
+    "undici": "catalog:"
   }
 }

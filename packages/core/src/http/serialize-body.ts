@@ -51,7 +51,7 @@ export function serializeBody(body: RequestBody): SerializedBody {
       return {
         kind: "text",
         text: new URLSearchParams(
-          enabledEntries(body.entries).map((entry) => [entry.key, entry.value]),
+          enabledEntries(body.entries).map((entry): [string, string] => [entry.key, entry.value]),
         ).toString(),
       };
     case "form_data":
