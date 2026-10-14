@@ -45,7 +45,9 @@ export function encodeResponseBody(
 }
 
 /** The bytes of a body as it was packed by {@link encodeResponseBody}: for saving or previewing. */
-export function decodeResponseBody(body: Pick<ResponseBody, "encoding" | "data">): Uint8Array {
+export function decodeResponseBody(
+  body: Pick<ResponseBody, "encoding" | "data">,
+): Uint8Array<ArrayBuffer> {
   if (body.encoding === "text") return new TextEncoder().encode(body.data);
   return Uint8Array.from(atob(body.data), (character) => character.charCodeAt(0));
 }
