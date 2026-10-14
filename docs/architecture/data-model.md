@@ -210,25 +210,32 @@ type ResolvedRequest = {             // what is actually sent — no variables, 
 type ResponseSnapshot = {
   status: number;
   statusText: string;
+  url: string;                       // final URL, after redirects
   headers: HeaderPair[];
-  cookies: ResponseCookie[];
+  cookies: ResponseCookie[];         // parsed Set-Cookie: name, value, domain, hostOnly, path,
+                                     // expiresAt, secure, httpOnly, sameSite
   body: ResponseBody;                // { encoding: "text" | "base64"; data; contentType; truncated }
-  sizes: { requestBytes: number; responseHeadersBytes: number; responseBodyBytes: number };
-  timings: ExecutionTimings;         // startedAt, timeToFirstByteMs, downloadMs, totalMs
+  sizes: { requestBytes: number; responseHeadersBytes: number; responseBodyBytes: number;
+           decodedBodyBytes: number };
+  timings: ExecutionTimings;         // startedAt, timeToFirstByteMilliseconds, downloadMilliseconds
+                                     // (null when not measurable), totalMilliseconds
   redirects: RedirectHop[];          // { status, url, location }
   httpVersion: string;
 };
 
 type ExecutionError = {
   code: "TIMEOUT" | "ABORTED" | "NETWORK" | "DNS" | "TLS" | "BLOCKED_ADDRESS" |
-        "TOO_MANY_REDIRECTS" | "RESPONSE_TOO_LARGE" | "INVALID_REQUEST" | "UNRESOLVED_VARIABLES";
-  message: string;
+        "TOO_MANY_REDIRECTS" | "REQUEST_TOO_LARGE" | "INVALID_REQUEST" | "UNRESOLVED_VARIABLES" |
+        "PROXY_UNAVAILABLE";
+  message: string;                   // technical detail for the console; the UI explains the code
 };
 
 type ExecutionResult =
   | { outcome: "response"; request: ResolvedRequest; response: ResponseSnapshot }
   | { outcome: "error"; request: ResolvedRequest | null; error: ExecutionError };
 ```
+
+A response larger than the size cap is not an error: it arrives with `body.truncated` set. A request body over the cap is refused with `REQUEST_TOO_LARGE`; `PROXY_UNAVAILABLE` means the proxy itself could not be reached.
 
 ## History and saved responses
 

@@ -185,3 +185,47 @@ export {
 export type { InvalidMoveReason } from "./collections/collection-tree";
 export { duplicateSubtree } from "./collections/duplicate-subtree";
 export type { DuplicateOptions } from "./collections/duplicate-subtree";
+export {
+  BODY_ENCODINGS,
+  COOKIE_SAME_SITE_VALUES,
+  EXECUTION_ERROR_CODES,
+  executeOptionsSchema,
+  executionErrorSchema,
+  executionRequestSchema,
+  executionResultSchema,
+  executionSizesSchema,
+  executionTimingsSchema,
+  redirectHopSchema,
+  responseBodySchema,
+  responseCookieSchema,
+  responseSnapshotSchema,
+} from "./execution/execution-result.schema";
+export type {
+  ExecuteOptions,
+  ExecutionError,
+  ExecutionErrorCode,
+  ExecutionRequest,
+  ExecutionResult,
+  ExecutionSizes,
+  ExecutionTimings,
+  RedirectHop,
+  ResponseBody,
+  ResponseCookie,
+  ResponseSnapshot,
+} from "./execution/execution-result.schema";
+export { planRequest } from "./execution/plan-request";
+export type { PlanError, PlanInput, PlannedRequest } from "./execution/plan-request";
+export { EXECUTOR_IDS } from "./execution/request-executor";
+export type {
+  ExecutorCapabilities,
+  ExecutorId,
+  RequestExecutor,
+} from "./execution/request-executor";
+export {
+  cookieMatchesUrl,
+  cookiesForUrl,
+  formatCookieHeader,
+  isCookieExpired,
+  parseSetCookie,
+  updateCookieJar,
+} from "./http/cookies";
