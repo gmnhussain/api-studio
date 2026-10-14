@@ -262,3 +262,10 @@ export type {
   JsonTreeEntry,
   JsonValueKind,
 } from "./response/json-tree";
+export {
+  DEFAULT_DOWNLOAD_BASE_NAME,
+  extensionForContentType,
+  parseContentDispositionFileName,
+  sanitizeFileName,
+  suggestDownloadFileName,
+} from "./response/download-file-name";
