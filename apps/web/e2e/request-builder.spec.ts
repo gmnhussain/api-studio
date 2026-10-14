@@ -13,6 +13,10 @@ import { expectNoSeriousAccessibilityViolations, openStudio } from "./support/st
 const URL_WITH_VARIABLES = "{{baseUrl}}/users/:id?page=2";
 
 test.describe("request builder", () => {
+  // WebKit compiles the editor chunk (Monaco) far slower than the other engines; on a busy
+  // machine the longest journeys here pass the default timeout without anything being wrong.
+  test.slow(({ browserName }) => browserName === "webkit", "WebKit loads the code editor slowly");
+
   test("keeps the URL, query parameters and path variables in step", async ({ page }) => {
     await openStudio(page);
     await openNewRequest(page);
