@@ -1,3 +1,5 @@
+export { ExecutorSwitch } from "./components/executor-switch";
+export { useExecutionService } from "./hooks/use-execution-service";
 export { useExecutorPreference } from "./hooks/use-executor-preference";
 export { useTabExecution } from "./hooks/use-tab-execution";
 export { executors, registerBuiltInExecutors } from "./lib/executor-registry";

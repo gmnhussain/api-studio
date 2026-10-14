@@ -134,7 +134,13 @@
     "statusBar": {
       "online": "Online",
       "offline": "Offline",
-      "version": "Version {version}"
+      "version": "Version {version}",
+      "executor": "Send through",
+      "executors": {
+        "proxy": "Proxy",
+        "browser": "Browser"
+      },
+      "executorLabel": "Send through: {executor}"
     }
   },
   "workspace": {
@@ -358,7 +364,11 @@
       "autoSaveFailed": "Your open tabs could not be saved in this browser. Changes stay here until the next attempt.",
       "restoreFailed": "Your open tabs could not be restored. Check that this browser allows site storage, then reload."
     },
-    "tabName": "{method} {name}{pinned, select, true {, pinned} other {}}{dirty, select, true {, unsaved changes} other {}}"
+    "tabName": "{method} {name}{pinned, select, true {, pinned} other {}}{dirty, select, true {, unsaved changes} other {}}",
+    "send": {
+      "send": "Send",
+      "cancel": "Cancel"
+    }
   },
   "tabs": {
     "stripLabel": "Open requests",
@@ -465,6 +475,30 @@
       "title": "The proxy did not answer",
       "description": "API Studio's server could not be reached or failed.",
       "action": "Check that the app's server is running, or switch to browser mode."
+    }
+  },
+  "responseViewer": {
+    "sending": "Sending…",
+    "sectionsLabel": "Response sections",
+    "sections": {
+      "body": "Body",
+      "headers": "Headers"
+    },
+    "emptyBody": "The response has no body.",
+    "binaryBody": "A {type} body of {size}. Previews for images and other binary bodies arrive with the response viewers.",
+    "unknownType": "binary",
+    "summary": {
+      "status": "Status",
+      "time": "Time",
+      "size": "Size",
+      "note": "Note",
+      "truncated": "Body cut at the size limit"
+    },
+    "error": {
+      "retry": "Retry",
+      "useBrowser": "Use browser mode",
+      "useProxy": "Use proxy mode",
+      "details": "Technical details"
     }
   }
 }

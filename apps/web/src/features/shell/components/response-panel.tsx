@@ -1,6 +1,7 @@
 "use client";
 
 import { PanelRightClose } from "lucide-react";
+import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 
 import { EmptyState } from "@/components/common/empty-state";
@@ -13,10 +14,32 @@ import { PanelToggleButton } from "./panel-toggle-button";
 
 const RESPONSE_TITLE_ID = "studio-response-title";
 
+/** What the response region shows before anything is sent. */
+function ResponseEmptyState() {
+  const t = useTranslations("shell.response");
+  return (
+    <EmptyState
+      className="my-auto"
+      illustration={<ResponseIllustration />}
+      title={t("emptyTitle")}
+      description={t("emptyDescription")}
+    />
+  );
+}
+
+/**
+ * The response view loads after the shell paints. Its empty state is also the server HTML and
+ * the loading state, so the region does not change when the view arrives.
+ */
+const ResponseView = dynamic(
+  () => import("@/features/response-viewer").then((module) => module.ResponseView),
+  { ssr: false, loading: ResponseEmptyState },
+);
+
 /** Props for {@link ResponsePanel}. */
 export type ResponsePanelProps = { onHide: () => void };
 
-/** The response region. Shows its empty state until requests can be sent (milestone M4). */
+/** The response region: the active tab's response, or its empty state before anything is sent. */
 export function ResponsePanel({ onHide }: ResponsePanelProps) {
   const t = useTranslations("shell");
 
@@ -37,12 +60,7 @@ export function ResponsePanel({ onHide }: ResponsePanelProps) {
         }
       />
       <PanelBody className="flex flex-col">
-        <EmptyState
-          className="my-auto"
-          illustration={<ResponseIllustration />}
-          title={t("response.emptyTitle")}
-          description={t("response.emptyDescription")}
-        />
+        <ResponseView emptyState={<ResponseEmptyState />} />
       </PanelBody>
     </Panel>
   );

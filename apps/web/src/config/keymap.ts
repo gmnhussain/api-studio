@@ -11,6 +11,8 @@ export const KEYMAP = {
   toggleResponsePanel: "Mod+Alt+R",
   openSettings: "Mod+,",
   saveRequest: "Mod+S",
+  sendRequest: "Mod+Enter",
+  cancelRequest: "Escape",
   focusUrl: "Mod+L",
   newRequestTab: "Alt+N",
   closeTab: "Alt+W",

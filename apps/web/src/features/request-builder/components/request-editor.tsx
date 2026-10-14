@@ -7,6 +7,7 @@ import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { KEYMAP } from "@/config/keymap";
+import { useExecutionService } from "@/features/execution";
 import type { TabViewProps } from "@/features/tabs";
 import { useAriaKeyShortcuts } from "@/hooks/use-aria-key-shortcuts";
 import { useHotkey } from "@/hooks/use-hotkey";
@@ -23,14 +24,15 @@ import { ParamsSection } from "./params-section";
 import { useRequestBuilder } from "./request-builder-provider";
 import { RequestSections } from "./request-sections";
 import { RequestUrlBar } from "./request-url-bar";
+import { SendButton } from "./send-button";
 import { SettingsSection } from "./settings-section";
 import { useDraft, useDraftEditor, useDraftStatus } from "../hooks/use-draft";
 import { useRequestStore } from "../stores/request.store";
 
 /**
  * The editor of a request tab (layout-and-interaction.md#shell): the URL row, the section tabs
- * and the active section. Every edit goes to the tab's draft, which auto-saves; `Mod+S` saves it
- * to its collection and `Mod+L` focuses the URL.
+ * and the active section. Every edit goes to the tab's draft, which auto-saves; `Mod+Enter`
+ * sends it, `Mod+S` saves it to its collection and `Mod+L` focuses the URL.
  */
 export function RequestEditor({ tab }: TabViewProps) {
   const t = useTranslations("requestBuilder");
@@ -43,6 +45,7 @@ export function RequestEditor({ tab }: TabViewProps) {
   const section = useRequestStore((state) => state.sections[tab.id] ?? DEFAULT_REQUEST_SECTION);
   const setSection = useRequestStore((state) => state.setSection);
   const urlInputRef = useRef<HTMLInputElement>(null);
+  const executionService = useExecutionService();
 
   const saveShortcut = useAriaKeyShortcuts(KEYMAP.saveRequest);
 
@@ -83,6 +86,16 @@ export function RequestEditor({ tab }: TabViewProps) {
           onUrlChange={editor.setUrl}
           variables={variables}
           urlInputRef={urlInputRef}
+        />
+        <SendButton
+          tabId={tab.id}
+          onSend={() => {
+            void executionService?.send(tab.id, {
+              request,
+              variables,
+              inheritedAuth: inherited.auth,
+            });
+          }}
         />
         <Button
           variant="outline"
