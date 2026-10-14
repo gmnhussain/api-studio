@@ -65,6 +65,8 @@
 
 ## M4 — Execution engine and proxy
 
+> **Done** (2026-10-14). Requests plan in core (variables, path variables, auth, body, cookies) and are refused before sending when a variable has no value. The runner sends them with undici: manual redirects with RFC 9110 method rules, decoding, a size cap, timings, error mapping and an SSRF guard that checks every connected address; integration tests run it against a local server. `POST /api/v1/executions` validates its input and passes the caller's cancel through; its limits come from validated `PROXY_*` variables. The proxy and browser executors share one contract; the status bar switches between them. Send (`Mod+Enter`) turns into Cancel (`Esc`); each tab keeps its latest result, retries the exact request, and cookies from responses go into the workspace's jar. Every error code is explained in the response panel and logged in the new console. The lifecycle runs in a service instead of TanStack Query ([ADR-0012](../architecture/adr/0012-execution-lifecycle-in-a-service.md)). E2E tests run against a local test API in Chromium, Firefox and WebKit. Initial JavaScript is 289 KB against the 290 KB budget. The response viewers (pretty, tree, previews, timeline) are M5.
+
 - `RequestExecutor` contract and the execution pipeline in core.
 - `packages/runner`: undici execution, manual redirects, timeouts, cancel, size cap, timings, error mapping, SSRF guard; integration tests against a local server.
 - `POST /api/v1/executions`, env validation, `ProxyExecutor`, `BrowserExecutor`.
