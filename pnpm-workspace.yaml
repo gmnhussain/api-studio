@@ -10,16 +10,16 @@ catalog:
   # ESLint stays on 9.x: eslint-config-next's plugins (react, import, jsx-a11y) do not support ESLint 10 yet.
   eslint: 9.39.5
   "@eslint/js": 9.39.5
-  typescript-eslint: 8.71.0
-  eslint-config-next: 16.3.8
+  typescript-eslint: 8.71.1
+  eslint-config-next: 16.4.0
   eslint-config-prettier: 10.1.8
   eslint-plugin-import-x: 4.17.1
   eslint-plugin-jsx-a11y: 6.10.2
   eslint-plugin-turbo: 2.11.7
   globals: 17.13.0
-  prettier: 3.9.9
+  prettier: 3.9.10
   prettier-plugin-tailwindcss: 0.8.1
-  dependency-cruiser: 18.5.0
+  dependency-cruiser: 18.6.0
   "@commitlint/cli": 21.2.3
   "@commitlint/config-conventional": 21.2.3
   turbo: 2.11.7
@@ -39,13 +39,13 @@ catalog:
   # End-to-end tests in real browsers, with axe accessibility checks.
   "@playwright/test": 1.64.0
   "@axe-core/playwright": 4.13.0
-  "@types/node": 24.19.1
+  "@types/node": 24.19.2
 
   # HTTP engine of the runner: manual redirects, a guarded DNS lookup, streaming bodies.
   undici: 8.11.2
 
   # Frontend
-  next: 16.3.8
+  next: 16.4.0
   react: 19.3.0
   react-dom: 19.3.0
   "@types/react": 19.3.0
@@ -55,7 +55,7 @@ catalog:
   "@tailwindcss/postcss": 4.3.3
   # Client state (ADR-0004) and validation at trust boundaries.
   zustand: 5.0.15
-  zod: 4.6.5
+  zod: 4.6.6
   # Sibling order that a move rewrites in one record (data-model.md#conventions).
   fractional-indexing: 4.0.0
   # Local-first persistence in IndexedDB (ADR-0002).
@@ -90,7 +90,7 @@ catalog:
   "@dnd-kit/utilities": 3.2.2
   "@dnd-kit/modifiers": 9.0.0
   # Virtualized lists: the JSON tree, later the collection tree and history (performance.md#strategies).
-  "@tanstack/react-virtual": 3.14.13
+  "@tanstack/react-virtual": 3.14.15
   # Markdown response preview, rendered as React elements without raw HTML (request-execution.md#security).
   react-markdown: 10.1.0
   remark-gfm: 4.0.1
