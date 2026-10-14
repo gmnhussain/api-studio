@@ -1,5 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
+import { TEST_API_PORT } from "./e2e/support/test-api";
+
 /** Port of the production server the suite runs against. */
 const E2E_PORT = 3200;
 const isContinuousIntegration = Boolean(process.env.CI);
@@ -40,11 +42,18 @@ export default defineConfig({
         ]
       : []),
   ],
-  webServer: {
-    // Turborepo builds the app before test:e2e (turbo.json); this only starts it.
-    command: `pnpm exec next start --port ${String(E2E_PORT)}`,
-    url: `http://localhost:${String(E2E_PORT)}/settings/about`,
-    reuseExistingServer: !isContinuousIntegration,
-    timeout: 120_000,
-  },
+  webServer: [
+    {
+      // Turborepo builds the app before test:e2e (turbo.json); this only starts it.
+      command: `pnpm exec next start --port ${String(E2E_PORT)}`,
+      url: `http://localhost:${String(E2E_PORT)}/settings/about`,
+      reuseExistingServer: !isContinuousIntegration,
+      timeout: 120_000,
+    },
+    {
+      command: `node e2e/support/test-api-server.ts ${String(TEST_API_PORT)}`,
+      url: `http://127.0.0.1:${String(TEST_API_PORT)}/health`,
+      reuseExistingServer: !isContinuousIntegration,
+    },
+  ],
 });
