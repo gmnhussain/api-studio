@@ -144,7 +144,7 @@ describe("execution service", () => {
     expect(result).toMatchObject({
       outcome: "error",
       request: null,
-      error: { code: "UNRESOLVED_VARIABLES", message: "missing" },
+      error: { code: "UNRESOLVED_VARIABLES", message: "missing", variables: ["missing"] },
     });
     expect(executor.execute).not.toHaveBeenCalled();
     expect(logged[0]).toMatchObject({

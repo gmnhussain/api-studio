@@ -159,7 +159,11 @@ export function createExecutionService({
           request: null,
           error:
             planned.error.code === "UNRESOLVED_VARIABLES"
-              ? { code: "UNRESOLVED_VARIABLES", message: planned.error.names.join(", ") }
+              ? {
+                  code: "UNRESOLVED_VARIABLES",
+                  message: planned.error.names.join(", "),
+                  variables: planned.error.names,
+                }
               : {
                   code: "INVALID_REQUEST",
                   message: `${planned.error.reason}: ${planned.error.detail}`,

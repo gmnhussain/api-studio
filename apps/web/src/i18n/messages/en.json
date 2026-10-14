@@ -498,7 +498,8 @@
       "retry": "Retry",
       "useBrowser": "Use browser mode",
       "useProxy": "Use proxy mode",
-      "details": "Technical details"
+      "details": "Technical details",
+      "missingVariables": "Variables without a value"
     }
   }
 }

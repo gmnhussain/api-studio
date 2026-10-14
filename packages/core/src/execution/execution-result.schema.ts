@@ -116,6 +116,8 @@ export type ExecutionErrorCode = (typeof EXECUTION_ERROR_CODES)[number];
 export const executionErrorSchema = z.object({
   code: z.enum(EXECUTION_ERROR_CODES),
   message: z.string(),
+  /** For `UNRESOLVED_VARIABLES`: the names without a value, so the UI can list them. */
+  variables: z.optional(z.array(z.string())),
 });
 
 export type ExecutionError = z.infer<typeof executionErrorSchema>;

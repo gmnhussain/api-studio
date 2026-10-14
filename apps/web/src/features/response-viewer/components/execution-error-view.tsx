@@ -45,6 +45,18 @@ export function ExecutionErrorView({
         <div className="flex flex-col gap-1">
           <p className="font-medium text-foreground">{t(`${error.code}.title`)}</p>
           <p className="text-muted-foreground">{t(`${error.code}.description`)}</p>
+          {error.variables && error.variables.length > 0 ? (
+            <ul aria-label={viewerT("missingVariables")} className="flex flex-wrap gap-1.5 py-1">
+              {error.variables.map((name) => (
+                <li
+                  key={name}
+                  className="rounded-sm bg-warning-muted px-1.5 font-mono text-xs text-warning"
+                >
+                  {`{{${name}}}`}
+                </li>
+              ))}
+            </ul>
+          ) : null}
           {action === "" ? null : <p className="text-muted-foreground">{action}</p>}
         </div>
       </div>

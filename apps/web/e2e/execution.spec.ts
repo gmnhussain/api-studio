@@ -77,6 +77,9 @@ test.describe("sending requests", () => {
 
     await send(page, "{{missing}}/users");
     await expect(responseRegion(page).getByText("Some variables have no value")).toBeVisible();
+    await expect(
+      responseRegion(page).getByRole("list", { name: "Variables without a value" }),
+    ).toHaveText("{{missing}}");
 
     await send(page, "http://127.0.0.1:1/");
     await expect(responseRegion(page).getByText("Could not connect")).toBeVisible();
