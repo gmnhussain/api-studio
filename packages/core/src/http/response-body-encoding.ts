@@ -43,3 +43,9 @@ export function encodeResponseBody(
   }
   return { encoding: "base64", data: toBase64(bytes), contentType, truncated };
 }
+
+/** The bytes of a body as it was packed by {@link encodeResponseBody}: for saving or previewing. */
+export function decodeResponseBody(body: Pick<ResponseBody, "encoding" | "data">): Uint8Array {
+  if (body.encoding === "text") return new TextEncoder().encode(body.data);
+  return Uint8Array.from(atob(body.data), (character) => character.charCodeAt(0));
+}

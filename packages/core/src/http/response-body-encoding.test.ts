@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { encodeResponseBody, isTextualContentType } from "./response-body-encoding";
+import {
+  decodeResponseBody,
+  encodeResponseBody,
+  isTextualContentType,
+} from "./response-body-encoding";
 
 const encoder = new TextEncoder();
 const bytes = (text: string) => encoder.encode(text);
@@ -40,5 +44,13 @@ describe("encodeResponseBody", () => {
     expect(atob(encodeResponseBody(large, "application/octet-stream", false).data)).toHaveLength(
       100_000,
     );
+  });
+});
+
+describe("decodeResponseBody", () => {
+  it("gives back the bytes of text and base64 bodies", () => {
+    const image = new Uint8Array([0, 1, 127, 128, 255]);
+    expect(decodeResponseBody(encodeResponseBody(image, "image/png", false))).toEqual(image);
+    expect(decodeResponseBody({ encoding: "text", data: "naïve" })).toEqual(bytes("naïve"));
   });
 });
