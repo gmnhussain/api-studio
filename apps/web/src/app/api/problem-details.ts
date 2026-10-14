@@ -2,6 +2,12 @@ import "server-only";
 
 /** The request could not be understood: unreadable JSON or an invalid shape. */
 export const HTTP_BAD_REQUEST = 400;
+/** The caller may not use this endpoint (a cross-site call). */
+export const HTTP_FORBIDDEN = 403;
+/** The body is larger than the endpoint accepts. */
+export const HTTP_PAYLOAD_TOO_LARGE = 413;
+/** The body is not in the media type the endpoint accepts. */
+export const HTTP_UNSUPPORTED_MEDIA_TYPE = 415;
 
 /** Media type of an error body (RFC 9457). */
 const PROBLEM_JSON = "application/problem+json";

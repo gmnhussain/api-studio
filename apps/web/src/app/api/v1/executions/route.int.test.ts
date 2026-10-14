@@ -9,14 +9,19 @@ import { executionResultSchema } from "@api-studio/core";
 import { POST } from "./route";
 
 vi.mock("server-only", () => ({}));
+vi.hoisted(() => {
+  // A small request limit, so the size guard can be tested with a modest body.
+  process.env.PROXY_MAX_REQUEST_BYTES = "1000";
+});
 
 let server: Server;
 let target = "";
 
-function post(body: unknown): Promise<Response> {
+function post(body: unknown, headers: Record<string, string> = {}): Promise<Response> {
   return POST(
     new Request("http://localhost/api/v1/executions", {
       method: "POST",
+      headers: { "Content-Type": "application/json", Host: "localhost", ...headers },
       body: typeof body === "string" ? body : JSON.stringify(body),
     }),
   );
@@ -65,5 +70,28 @@ describe("POST /api/v1/executions", () => {
     expect(response.status).toBe(400);
     const problem = (await response.json()) as { errors: string[] };
     expect(problem.errors.some((error) => error.startsWith("request.method"))).toBe(true);
+  });
+
+  it("refuses calls from other sites, so a web page cannot drive the proxy", async () => {
+    const crossSite: Record<string, string>[] = [
+      { "Sec-Fetch-Site": "cross-site" },
+      { Origin: "https://evil.example" },
+    ];
+    for (const headers of crossSite) {
+      const response = await post({}, headers);
+      expect(response.status).toBe(403);
+    }
+    expect(
+      (await post({}, { "Sec-Fetch-Site": "same-origin", Origin: "http://localhost" })).status,
+    ).toBe(400);
+  });
+
+  it("accepts only JSON, which a cross-site page cannot send without a preflight", async () => {
+    expect((await post({}, { "Content-Type": "text/plain" })).status).toBe(415);
+  });
+
+  it("refuses bodies over the limit without reading them whole", async () => {
+    const response = await post("x".repeat(2 * 1024 * 1024));
+    expect(response.status).toBe(413);
   });
 });

@@ -84,6 +84,8 @@ Configured by `PROXY_ALLOW_PRIVATE_NETWORKS`, `PROXY_ALLOWED_PORTS`, `PROXY_MAX_
 
 Other rules:
 
+- Only the app's own pages may call the proxy: it accepts `application/json` bodies only (so a cross-site call needs a CORS preflight, which is never granted) and refuses requests whose `Sec-Fetch-Site` or `Origin` shows another site. Otherwise any web page the user visits could make a local proxy send requests to services on their network.
+- The proxy reads at most twice the request body limit plus 1 MB of JSON before validating, and answers `413` beyond that.
 - The proxy never logs request bodies, headers or URLs with query strings.
 - HTML previews render in an `iframe` with `sandbox=""` (no scripts, no same-origin) and a strict CSP.
 - Secret variables are redacted in history (`••••`) and emptied in exports.
