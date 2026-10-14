@@ -16,7 +16,7 @@ export type ResponseViewProps = { emptyState: ReactNode };
 
 /**
  * The response of the active tab (F-11): nothing yet, sending, an explained error, or the
- * response with its summary, body and headers.
+ * response with its summary and sections (F-11–F-16, F-41).
  */
 export function ResponseView({ emptyState }: ResponseViewProps) {
   const t = useTranslations("responseViewer");
@@ -24,9 +24,10 @@ export function ResponseView({ emptyState }: ResponseViewProps) {
   const execution = useTabExecution(activeTabId);
   const service = useExecutionService();
   const [, setExecutorId] = useExecutorPreference();
+  const isSending = execution?.status === "sending";
 
   if (!execution || activeTabId === null) return emptyState;
-  if (execution.status === "sending") {
+  if (isSending) {
     return (
       <div
         role="status"
@@ -61,7 +62,13 @@ export function ResponseView({ emptyState }: ResponseViewProps) {
       <div className="shrink-0 border-b px-3 py-2">
         <ResponseSummary response={result.response} />
       </div>
-      <ResponseContent response={result.response} />
+      {/* A new response starts its views afresh: filters, opt-ins and tree state. */}
+      <ResponseContent
+        key={execution.executionId}
+        tabId={activeTabId}
+        response={result.response}
+        method={result.request.method}
+      />
     </div>
   );
 }

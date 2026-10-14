@@ -2,25 +2,9 @@
 
 import { useTranslations } from "next-intl";
 
-import {
-  formatBytes,
-  formatDuration,
-  getStatusClass,
-  type ResponseSnapshot,
-  type StatusClass,
-} from "@api-studio/core";
+import { formatBytes, formatDuration, type ResponseSnapshot } from "@api-studio/core";
 
-import { cn } from "@/lib/utils";
-
-/** Status colours by class (design-system.md#semantic); the code is always written out too. */
-const STATUS_CLASSES: Readonly<Record<StatusClass, string>> = {
-  informational: "bg-info-muted text-info",
-  success: "bg-success-muted text-success",
-  redirection: "bg-info-muted text-info",
-  client_error: "bg-warning-muted text-warning",
-  server_error: "bg-danger-muted text-danger",
-  unknown: "bg-surface-hover text-muted-foreground",
-};
+import { StatusBadge } from "./status-badge";
 
 /**
  * The status the browser reports for a redirect it was told not to follow: an opaque response
@@ -40,15 +24,15 @@ export function ResponseSummary({ response }: ResponseSummaryProps) {
     <dl className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
       <div className="flex items-center gap-1.5">
         <dt className="sr-only">{t("status")}</dt>
-        <dd
-          className={cn(
-            "rounded-sm px-1.5 py-0.5 font-mono font-semibold",
-            STATUS_CLASSES[getStatusClass(status)],
-          )}
-        >
-          {status === HIDDEN_REDIRECT_STATUS
-            ? t("hiddenRedirect")
-            : `${String(status)} ${statusText}`}
+        <dd>
+          <StatusBadge
+            status={status}
+            label={
+              status === HIDDEN_REDIRECT_STATUS
+                ? t("hiddenRedirect")
+                : `${String(status)} ${statusText}`
+            }
+          />
         </dd>
       </div>
       <div className="flex items-center gap-1">

@@ -1,63 +1,97 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
 
-import { formatBytes, type ResponseSnapshot } from "@api-studio/core";
+import type { HttpMethod, ResponseSnapshot, TabId } from "@api-studio/core";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import { ResponseBody } from "./response-body";
+import { ResponseCookies } from "./response-cookies";
+import { ResponseHeaders } from "./response-headers";
+import { ResponseTimeline } from "./response-timeline";
+import {
+  DEFAULT_TAB_RESPONSE_VIEW,
+  RESPONSE_SECTIONS,
+  useResponseViewerStore,
+  type ResponseSection,
+} from "../stores/response-viewer.store";
+
+function isResponseSection(value: unknown): value is ResponseSection {
+  return RESPONSE_SECTIONS.some((section) => section === value);
+}
+
+/** A section tab with an optional count, e.g. "Headers 12". */
+function SectionTrigger({
+  value,
+  count,
+  children,
+}: {
+  value: ResponseSection;
+  count?: number;
+  children: ReactNode;
+}) {
+  return (
+    <TabsTrigger value={value} className="flex-none px-2 text-xs">
+      {children}
+      {count === undefined ? null : (
+        <span className="rounded-sm bg-surface-hover px-1 font-mono text-xs text-muted-foreground">
+          {count}
+        </span>
+      )}
+    </TabsTrigger>
+  );
+}
+
 /** Props for {@link ResponseContent}. */
-export type ResponseContentProps = { response: ResponseSnapshot };
+export type ResponseContentProps = {
+  tabId: TabId;
+  response: ResponseSnapshot;
+  /** The method the request was sent with. */
+  method: HttpMethod;
+};
 
 /**
- * The response body and headers. Text bodies show as received; pretty printing, the JSON tree and
- * previews arrive with the response viewers (M5).
+ * The response's sections (F-12–F-15, F-41): body, headers, cookies and timeline. Each tab
+ * keeps the section it shows.
  */
-export function ResponseContent({ response }: ResponseContentProps) {
+export function ResponseContent({ tabId, response, method }: ResponseContentProps) {
   const t = useTranslations("responseViewer");
-  const { body, headers } = response;
+  const section = useResponseViewerStore(
+    (state) => state.views[tabId]?.section ?? DEFAULT_TAB_RESPONSE_VIEW.section,
+  );
+  const setSection = useResponseViewerStore((state) => state.setSection);
 
   return (
-    <Tabs defaultValue="body" className="flex min-h-0 flex-1 flex-col gap-0">
+    <Tabs
+      value={section}
+      onValueChange={(value) => {
+        if (isResponseSection(value)) setSection(tabId, value);
+      }}
+      className="flex min-h-0 flex-1 flex-col gap-0"
+    >
       <TabsList variant="line" aria-label={t("sectionsLabel")} className="shrink-0 border-b px-3">
-        <TabsTrigger value="body" className="flex-none px-2 text-xs">
-          {t("sections.body")}
-        </TabsTrigger>
-        <TabsTrigger value="headers" className="flex-none px-2 text-xs">
+        <SectionTrigger value="body">{t("sections.body")}</SectionTrigger>
+        <SectionTrigger value="headers" count={response.headers.length}>
           {t("sections.headers")}
-          <span className="rounded-sm bg-surface-hover px-1 font-mono text-xs text-muted-foreground">
-            {headers.length}
-          </span>
-        </TabsTrigger>
+        </SectionTrigger>
+        <SectionTrigger value="cookies" count={response.cookies.length}>
+          {t("sections.cookies")}
+        </SectionTrigger>
+        <SectionTrigger value="timeline">{t("sections.timeline")}</SectionTrigger>
       </TabsList>
-      <TabsContent value="body" className="min-h-0 flex-1 overflow-auto">
-        {body.encoding === "text" ? (
-          body.data === "" ? (
-            <p className="p-3 text-sm text-muted-foreground">{t("emptyBody")}</p>
-          ) : (
-            <pre className="p-3 font-mono text-xs break-all whitespace-pre-wrap">{body.data}</pre>
-          )
-        ) : (
-          <p className="p-3 text-sm text-muted-foreground">
-            {t("binaryBody", {
-              type: body.contentType ?? t("unknownType"),
-              size: formatBytes(response.sizes.decodedBodyBytes),
-            })}
-          </p>
-        )}
+      <TabsContent value="body" className="flex min-h-0 flex-1 flex-col">
+        <ResponseBody tabId={tabId} response={response} />
       </TabsContent>
-      <TabsContent value="headers" className="min-h-0 flex-1 overflow-auto">
-        <dl className="divide-y font-mono text-xs">
-          {headers.map((header, index) => (
-            <div
-              key={`${header.name}-${String(index)}`}
-              className="grid grid-cols-[minmax(8rem,1fr)_2fr] gap-3 px-3 py-1.5"
-            >
-              <dt className="break-all text-muted-foreground">{header.name}</dt>
-              <dd className="break-all">{header.value}</dd>
-            </div>
-          ))}
-        </dl>
+      <TabsContent value="headers" className="flex min-h-0 flex-1 flex-col">
+        <ResponseHeaders headers={response.headers} />
+      </TabsContent>
+      <TabsContent value="cookies" className="flex min-h-0 flex-1 flex-col">
+        <ResponseCookies cookies={response.cookies} />
+      </TabsContent>
+      <TabsContent value="timeline" className="min-h-0 flex-1">
+        <ResponseTimeline response={response} method={method} />
       </TabsContent>
     </Tabs>
   );

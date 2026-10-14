@@ -484,12 +484,26 @@
     "sectionsLabel": "Response sections",
     "sections": {
       "body": "Body",
-      "headers": "Headers"
+      "headers": "Headers",
+      "cookies": "Cookies",
+      "timeline": "Timeline"
     },
     "emptyBody": "The response has no body.",
-    "binaryBody": "A {type} body of {size}. Previews for images and other binary bodies arrive with the response viewers.",
+    "binaryBody": "A {type} body of {size}. It has no preview here; download it to open it in another app.",
     "unknownType": "binary",
+    "clearFilter": "Clear filter",
+    "viewers": {
+      "pretty": "Pretty",
+      "tree": "Tree",
+      "raw": "Raw",
+      "preview": "Preview"
+    },
     "body": {
+      "viewLabel": "Body view",
+      "copy": "Copy body",
+      "copied": "Body copied",
+      "copyFailed": "The browser did not allow copying. Select the text and copy it instead.",
+      "download": "Download",
       "prettyLabel": "Response body, formatted",
       "rawLabel": "Response body, as received",
       "formatting": "Formatting…"
@@ -515,6 +529,47 @@
       "htmlTitle": "HTML preview of the response",
       "markdownLabel": "Markdown preview of the response",
       "remoteImage": "Image: {name}"
+    },
+    "headers": {
+      "none": "The response has no headers.",
+      "filter": "Filter headers",
+      "shown": "{shown} of {total}",
+      "noMatches": "No header matches the filter.",
+      "name": "Name",
+      "value": "Value"
+    },
+    "cookies": {
+      "none": "The response set no cookies.",
+      "filter": "Filter cookies",
+      "shown": "{shown} of {total}",
+      "noMatches": "No cookie matches the filter.",
+      "session": "Session",
+      "columns": {
+        "name": "Name",
+        "value": "Value",
+        "domain": "Domain",
+        "path": "Path",
+        "expires": "Expires",
+        "attributes": "Attributes"
+      }
+    },
+    "timeline": {
+      "phases": "Phases",
+      "notMeasured": "Browser mode cannot measure the phases of a request; only the total time is known.",
+      "phase": {
+        "waiting": "Waiting (TTFB)",
+        "download": "Download"
+      },
+      "total": "Total",
+      "details": "Details",
+      "startedAt": "Started",
+      "httpVersion": "HTTP version",
+      "requestSize": "Request size",
+      "headersSize": "Response headers",
+      "bodySize": "Response body",
+      "compressedSize": "{transferred} transferred, {decoded} decoded",
+      "redirects": "{count, plural, =0 {No redirects} one {# redirect} other {# redirects}}",
+      "redirectsTo": "redirects to"
     },
     "summary": {
       "status": "Status",

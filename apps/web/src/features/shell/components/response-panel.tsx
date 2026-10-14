@@ -28,11 +28,16 @@ function ResponseEmptyState() {
 }
 
 /**
- * The response view loads after the shell paints. Its empty state is also the server HTML and
- * the loading state, so the region does not change when the view arrives.
+ * The response view loads after the shell paints, with the body views it registers. Its empty
+ * state is also the server HTML and the loading state, so the region does not change when the
+ * view arrives.
  */
 const ResponseView = dynamic(
-  () => import("@/features/response-viewer").then((module) => module.ResponseView),
+  () =>
+    import("@/features/response-viewer").then((module) => {
+      module.registerResponseViewerContributions();
+      return module.ResponseView;
+    }),
   { ssr: false, loading: ResponseEmptyState },
 );
 
