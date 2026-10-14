@@ -76,6 +76,17 @@ describe("matchesKeyBinding", () => {
       ),
     ).toBe(true);
   });
+
+  it("falls back to the physical key for bracket bindings", () => {
+    const nextTab = parseKeyBinding("Alt+]");
+
+    expect(
+      matchesKeyBinding(keyEvent({ key: "‘", code: "BracketRight", altKey: true }), nextTab, true),
+    ).toBe(true);
+    expect(
+      matchesKeyBinding(keyEvent({ key: "‘", code: "BracketLeft", altKey: true }), nextTab, true),
+    ).toBe(false);
+  });
 });
 
 describe("formatKeyBinding", () => {

@@ -189,9 +189,211 @@
     }
   },
   "requestBuilder": {
+    "untitled": "Untitled request",
+    "editor": {
+      "label": "Request {name}",
+      "save": "Save"
+    },
+    "urlBar": {
+      "label": "Request URL",
+      "placeholder": "Enter a request URL",
+      "method": "Method: {method}"
+    },
+    "methods": {
+      "GET": "GET",
+      "POST": "POST",
+      "PUT": "PUT",
+      "PATCH": "PATCH",
+      "DELETE": "DEL",
+      "OPTIONS": "OPT",
+      "HEAD": "HEAD"
+    },
+    "sections": {
+      "label": "Request sections",
+      "params": "Params",
+      "auth": "Auth",
+      "headers": "Headers",
+      "body": "Body",
+      "cookies": "Cookies",
+      "settings": "Settings",
+      "count": "{count, plural, one {# entry} other {# entries}}"
+    },
+    "params": {
+      "queryTitle": "Query parameters",
+      "queryDescription": "Kept in step with the URL: edit either one.",
+      "pathTitle": "Path variables",
+      "pathDescription": "Write :name in the URL path to add one."
+    },
+    "headers": {
+      "title": "Headers",
+      "generatedTitle": "Added on send",
+      "generatedDescription": "API Studio adds these unless you write a header with the same name.",
+      "fromBody": "From the body type",
+      "fromAuth": "From auth"
+    },
+    "cookies": {
+      "title": "Cookies",
+      "description": "Sent in a Cookie header with this request."
+    },
+    "table": {
+      "key": "Key",
+      "value": "Value",
+      "description": "Description",
+      "enabled": "Send",
+      "actions": "Actions",
+      "keyPlaceholder": "Add a key",
+      "valuePlaceholder": "Value",
+      "descriptionPlaceholder": "Description",
+      "newKey": "New key",
+      "newValue": "New value",
+      "newDescription": "New description",
+      "untitledRow": "untitled row",
+      "enableRow": "Send {row}",
+      "keyOf": "Key of {row}",
+      "valueOf": "Value of {row}",
+      "descriptionOf": "Description of {row}",
+      "removeRow": "Remove {row}"
+    },
+    "variables": {
+      "secret": "Secret",
+      "scopes": {
+        "global": "Global",
+        "collection": "Collection",
+        "environment": "Environment"
+      }
+    },
+    "auth": {
+      "typeLabel": "Auth type",
+      "types": {
+        "none": "No auth",
+        "inherit": "Inherit",
+        "basic": "Basic",
+        "bearer": "Bearer token",
+        "api_key": "API key",
+        "oauth2": "OAuth 2.0"
+      },
+      "descriptions": {
+        "none": "This request sends no credentials.",
+        "inherit": "Uses the auth of the nearest folder or collection that sets one.",
+        "basic": "Sends a username and password in the Authorization header.",
+        "bearer": "Sends a token in the Authorization header.",
+        "api_key": "Sends a key and value in a header or the query string.",
+        "oauth2": "Paste an access token to send it as a bearer token. Token requests arrive in a later version."
+      },
+      "inheritedFrom": "Inherited from {source}: {type}",
+      "inheritedNothing": "Nothing to inherit: no folder or collection above this request sets auth.",
+      "username": "Username",
+      "password": "Password",
+      "token": "Token",
+      "prefix": "Prefix",
+      "key": "Key",
+      "value": "Value",
+      "placement": "Add to",
+      "placements": {
+        "header": "Header",
+        "query": "Query string"
+      },
+      "grantType": "Grant type",
+      "grantTypes": {
+        "authorization_code": "Authorization code",
+        "client_credentials": "Client credentials",
+        "password": "Password"
+      },
+      "accessTokenUrl": "Access token URL",
+      "clientId": "Client ID",
+      "clientSecret": "Client secret",
+      "scope": "Scope",
+      "accessToken": "Access token",
+      "show": "Show {field}",
+      "hide": "Hide {field}"
+    },
+    "body": {
+      "typeLabel": "Body type",
+      "types": {
+        "none": "None",
+        "json": "JSON",
+        "text": "Text",
+        "xml": "XML",
+        "form_data": "Form data",
+        "url_encoded": "URL-encoded",
+        "binary": "Binary"
+      },
+      "noneTitle": "This request has no body",
+      "noneDescription": "Pick a body type to send JSON, text, XML or a form.",
+      "binaryTitle": "File bodies arrive in a later version",
+      "binaryDescription": "Until then, send the content as text or as form data.",
+      "editorLabel": "{type} body",
+      "format": "Format",
+      "formatFailed": "The body is not valid JSON, so it was left as it is.",
+      "formTitle": "Form fields"
+    },
+    "settings": {
+      "timeout": "Timeout",
+      "timeoutDescription": "How long to wait for a response, in milliseconds.",
+      "followRedirects": "Follow redirects",
+      "followRedirectsDescription": "Follow 3xx responses to their Location.",
+      "maxRedirects": "Maximum redirects",
+      "maxRedirectsDescription": "Stop after this many redirects.",
+      "outOfRange": "Enter a whole number from {min} to {max}."
+    },
+    "conflict": {
+      "title": "This request was changed elsewhere",
+      "description": "It was saved in another tab or window after you started editing.",
+      "reload": "Load saved version",
+      "keep": "Keep my changes"
+    },
+    "saveDialog": {
+      "title": "Save request",
+      "description": "Pick where the request goes. You can move it later.",
+      "nameLabel": "Name",
+      "locationLabel": "Save to",
+      "newCollectionLabel": "New collection",
+      "newCollectionDescription": "You have no collections yet, so one is created.",
+      "newCollectionDefault": "My collection",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close"
+    },
+    "errors": {
+      "not_found": "This request no longer exists.",
+      "needs_location": "Pick where to save this request.",
+      "invalid_name": "Enter a name of 1 to {max} characters.",
+      "storage": "The request could not be saved. Check that this browser allows site storage, then try again."
+    },
     "toasts": {
+      "saved": "Saved “{name}”",
       "autoSaveFailed": "Your open tabs could not be saved in this browser. Changes stay here until the next attempt.",
       "restoreFailed": "Your open tabs could not be restored. Check that this browser allows site storage, then reload."
+    }
+  },
+  "tabs": {
+    "stripLabel": "Open requests",
+    "newTab": "New request",
+    "allTabs": "All open tabs",
+    "close": "Close {title}",
+    "pinned": "{title}, pinned",
+    "unsavedChanges": "{title}, unsaved changes",
+    "menu": {
+      "pin": "Pin tab",
+      "unpin": "Unpin tab",
+      "close": "Close",
+      "closeOthers": "Close others",
+      "closeToTheRight": "Close to the right",
+      "closeSaved": "Close saved",
+      "closeAll": "Close all"
+    },
+    "closeDialog": {
+      "title": "{count, plural, one {Close “{title}” without saving?} other {Close # tabs without saving?}}",
+      "description": "{count, plural, one {Its changes are lost.} other {Their changes are lost.}}",
+      "confirm": "Close without saving",
+      "cancel": "Cancel"
+    },
+    "dragInstructions": "To move a tab, press Space or Enter, use the arrow keys, then press Space or Enter again. Press Escape to cancel.",
+    "announcements": {
+      "picked": "Picked up {title}.",
+      "moved": "{title} moved to position {position} of {total}.",
+      "dropped": "{title} dropped at position {position} of {total}.",
+      "cancelled": "Moving {title} cancelled."
     }
   }
 }

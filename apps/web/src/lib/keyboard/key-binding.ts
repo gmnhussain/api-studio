@@ -68,11 +68,22 @@ export function matchesKeyBinding(
   return wanted.length === 1 && event.code.toLowerCase() === codeForCharacter(wanted);
 }
 
-/** `KeyboardEvent.code` for a single letter or digit (`"b"` → `"keyb"`, `"1"` → `"digit1"`). */
+/** Physical keys of punctuation used in bindings, lower-cased like the comparison. */
+const PUNCTUATION_CODES: Readonly<Record<string, string>> = {
+  "[": "bracketleft",
+  "]": "bracketright",
+  ",": "comma",
+  "/": "slash",
+};
+
+/**
+ * `KeyboardEvent.code` for a single letter, digit or bound punctuation mark (`"b"` → `"keyb"`,
+ * `"1"` → `"digit1"`, `"]"` → `"bracketright"`), lower-cased.
+ */
 function codeForCharacter(character: string): string | undefined {
   if (/^[a-z]$/.test(character)) return `key${character}`;
   if (/^[0-9]$/.test(character)) return `digit${character}`;
-  return undefined;
+  return PUNCTUATION_CODES[character];
 }
 
 /**

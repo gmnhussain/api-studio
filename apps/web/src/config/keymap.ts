@@ -10,7 +10,25 @@ export const KEYMAP = {
   toggleConsole: "Mod+J",
   toggleResponsePanel: "Mod+Alt+R",
   openSettings: "Mod+,",
+  saveRequest: "Mod+S",
+  focusUrl: "Mod+L",
+  newRequestTab: "Alt+N",
+  closeTab: "Alt+W",
+  reopenClosedTab: "Alt+Shift+T",
+  nextTab: "Alt+]",
+  previousTab: "Alt+[",
+  moveTabLeft: "Mod+Shift+ArrowLeft",
+  moveTabRight: "Mod+Shift+ArrowRight",
 } as const satisfies Record<string, KeyBinding>;
+
+/** How many tabs have a "go to tab" shortcut. */
+const GO_TO_TAB_COUNT = 9;
+
+/** `Alt+1` … `Alt+9` go to the tab at that position. */
+export const GO_TO_TAB_BINDINGS: readonly KeyBinding[] = Array.from(
+  { length: GO_TO_TAB_COUNT },
+  (_, index) => `Alt+${String(index + 1)}`,
+);
 
 /** A named shortcut from {@link KEYMAP}. */
 export type KeymapCommand = keyof typeof KEYMAP;
