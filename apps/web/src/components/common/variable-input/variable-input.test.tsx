@@ -64,6 +64,17 @@ describe("VariableInput", () => {
     expect(await screen.findByRole("option", { name: "Accept" })).toBeInTheDocument();
   });
 
+  it("keeps the value when Escape is pressed with the list closed", async () => {
+    const user = userEvent.setup();
+    render(<ControlledInput initialValue="https://api.dev" />);
+    const input = screen.getByRole("combobox", { name: "URL" });
+
+    await user.click(input);
+    await user.keyboard("{Escape}{Escape}");
+
+    expect(input).toHaveValue("https://api.dev");
+  });
+
   it("masks secret values without highlighting them", () => {
     const { container } = render(
       <VariableInput

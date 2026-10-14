@@ -74,6 +74,8 @@ export function VariableInput({
   };
 
   const handleValueChange = (next: string, reason: string) => {
+    // Base UI clears a combobox on Escape when its list is closed; here Escape only closes it.
+    if (reason === "escape-key") return;
     const picked = options.find((option) => option.nextValue === next);
     onValueChange(next);
     if (reason === "item-press" && picked) {
