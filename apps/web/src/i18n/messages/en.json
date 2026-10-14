@@ -492,7 +492,8 @@
       "time": "Time",
       "size": "Size",
       "note": "Note",
-      "truncated": "Body cut at the size limit"
+      "truncated": "Body cut at the size limit",
+      "hiddenRedirect": "Redirect hidden by the browser. Turn on Follow redirects, or use proxy mode to see it."
     },
     "error": {
       "retry": "Retry",

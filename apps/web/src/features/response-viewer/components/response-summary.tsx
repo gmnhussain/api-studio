@@ -22,6 +22,12 @@ const STATUS_CLASSES: Readonly<Record<StatusClass, string>> = {
   unknown: "bg-surface-hover text-muted-foreground",
 };
 
+/**
+ * The status the browser reports for a redirect it was told not to follow: an opaque response
+ * that hides the real status and location.
+ */
+const HIDDEN_REDIRECT_STATUS = 0;
+
 /** Props for {@link ResponseSummary}. */
 export type ResponseSummaryProps = { response: ResponseSnapshot };
 
@@ -40,7 +46,9 @@ export function ResponseSummary({ response }: ResponseSummaryProps) {
             STATUS_CLASSES[getStatusClass(status)],
           )}
         >
-          {status} {statusText}
+          {status === HIDDEN_REDIRECT_STATUS
+            ? t("hiddenRedirect")
+            : `${String(status)} ${statusText}`}
         </dd>
       </div>
       <div className="flex items-center gap-1">
