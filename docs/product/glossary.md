@@ -27,6 +27,8 @@ One name per concept, used the same way in the UI, the docs and the code. If a w
 | Response | What came back: status, headers, cookies, body, sizes, timings, redirect chain. | `ResponseSnapshot` |
 | Timing | Phases of an execution (time to first byte, download, total). | `ExecutionTimings` |
 | Redirect hop | One redirect followed during an execution. | `RedirectHop` |
+| Body format | What a response body holds for viewing it: JSON, XML, HTML, Markdown, JavaScript, CSS, image, text or binary. | `ResponseBodyFormat`, `detectBodyFormat()` |
+| Body view | One way to show a response body: pretty, tree, raw, or a preview. Each tab keeps the one picked for it. | `ResponseViewer`, `viewerId` |
 | Saved response | A response stored on a request as an example. | `SavedResponse` |
 | History entry | A record of one execution: the resolved request and a response summary. | `HistoryEntry` |
 | Tab | An open editor in the centre area. Shows a request, an environment, or a collection's settings. Can be pinned. | `EditorTab`, `TabKind` |

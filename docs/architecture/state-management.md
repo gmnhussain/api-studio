@@ -31,6 +31,7 @@
 | Execution | `features/execution/stores/execution.store.ts` | Latest execution of each tab: status, request as sent, result | Memory only (history keeps past ones, M6) |
 | Cookie jar | `features/execution/stores/cookie-jar.store.ts` | The open workspace's cookies from responses | IndexedDB (`cookieJars`), written by the execution service |
 | Executor preference | `features/execution/stores/executor-preference.store.ts` | Proxy or browser | `localStorage`, read after mount |
+| Response viewer | `features/response-viewer/stores/response-viewer.store.ts` | The response section and body view picked in each tab | Memory only; forgotten when the tab closes |
 
 The console store is an addition to the original eight: logs change at a different rate and lifetime from everything else, so they get their own store.
 

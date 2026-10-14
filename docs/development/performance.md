@@ -37,8 +37,8 @@ The target user is a developer on a laptop or desktop, so the budget is set for 
 | --- | --- |
 | Code splitting | Monaco, previews (HTML, Markdown, image), code generation, import dialog, settings sections and onboarding are separate chunks loaded on demand; code generators are lazy per target |
 | Rendering | React Compiler for automatic memoisation; components subscribe to narrow store slices; per-tab state keyed by `tabId` so typing in one tab never re-renders another |
-| Lists | TanStack Virtual for the collection tree (flattened visible nodes), history, JSON tree and tables over 100 rows |
-| Large responses | Bodies over 1 MB are parsed and formatted in a Web Worker; above 5 MB the pretty view is opt-in and raw view streams into Monaco; the JSON tree expands lazily |
+| Lists | TanStack Virtual for the collection tree (flattened visible nodes), history, the JSON tree and tables over 100 rows |
+| Large responses | Bodies over 1 MB are parsed and formatted in a Web Worker, which also keeps the parsed JSON for the tree; the tree lists one level at a time and groups containers of more than 500 children into ranges, as browser devtools do. Text over 2 MB skips Monaco (which wraps and models the whole text up front) for a view that cuts lines at the columns that fit and renders only the rows in sight, highlighting JSON row by row; its scroll height is capped and scaled, so the end of any body stays reachable. A 20 MB JSON body keeps every main-thread task under 200 ms in the E2E suite |
 | Editor | One Monaco instance per visible editor; models are disposed when tabs close; inactive tabs keep only their text |
 | Persistence | Debounced auto-save of drafts (400 ms) and the tab layout (300 ms), flushed when the page is hidden; IndexedDB writes batched in transactions; history bodies stored separately and loaded lazily |
 | Startup | `localStorage` stores hydrate synchronously (no layout shift); IndexedDB hydrates behind skeletons; fonts via `next/font` with `display: swap` and preloading |

@@ -177,7 +177,7 @@ Button, Input, Textarea, Label, Select, Checkbox, Switch, Toggle Group, Tabs, To
 | `CopyButton` | Copy with confirmation micro-interaction |
 | `InlineRename` | Label that turns into an input (F2 / double-click), commits on Enter, cancels on Esc |
 | `ConfirmDialog` | Destructive confirmation naming the item |
-| `SearchInput` | Input with icon, clear button and shortcut hint (with sidebar search, M6) |
+| `SearchInput` | Filter input with an icon and a clear button; `Esc` clears it (the shortcut hint joins with sidebar search, M6) |
 | `VirtualList` | TanStack Virtual wrapper with keyboard navigation |
 | `SegmentedControl` | Compact exclusive switch (Pretty / Raw / Preview) |
 | `AppLogo` | The product mark, drawn in the accent colour |
@@ -192,7 +192,7 @@ Button, Input, Textarea, Label, Select, Checkbox, Switch, Toggle Group, Tabs, To
 | `CollectionTree`, `CollectionTreeItem` | `collections` |
 | `EditorTabs`, `EditorTab` | `tabs` |
 | `RequestMethodSelect`, `RequestUrlBar`, `RequestSections`, `HeaderTable`, `AuthEditor`, `BodyEditor` | `request-builder` |
-| `ResponseViewer`, `ResponseStatusBar`, `JsonTree`, `ResponseTimeline`, `ResponsePreview` | `response-viewer` |
+| `ResponseView`, `ResponseSummary`, `JsonTree`, `LargeTextView`, `ResponseTimeline`, `HtmlPreview`, `ImagePreview`, `MarkdownPreview` | `response-viewer` |
 | `EnvironmentSelector`, `EnvironmentEditor` | `environments` |
 | `HistoryList` | `history` |
 | `ConsolePanel` | `console` (empty state lives in `shell` until M4) |

@@ -64,6 +64,7 @@ Panel sizes and collapsed states persist per workspace (UI store).
 | Toggle sidebar / console / response | `Mod+B` / `Mod+J` / `Mod+Alt+R` |
 | Rename / duplicate / delete item | `F2` / `Mod+D` / `Delete` |
 | Format body | `Shift+Alt+F` |
+| Copy value (JSON tree) | `Mod+C` |
 | Copy as cURL | `Mod+Alt+C` |
 | Settings | `Mod+,` |
 | Shortcut cheat sheet | `Mod+/` |

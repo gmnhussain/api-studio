@@ -87,7 +87,9 @@ Other rules:
 - Only the app's own pages may call the proxy: it accepts `application/json` bodies only (so a cross-site call needs a CORS preflight, which is never granted) and refuses requests whose `Sec-Fetch-Site` or `Origin` shows another site. Otherwise any web page the user visits could make a local proxy send requests to services on their network.
 - The proxy reads at most twice the request body limit plus 1 MB of JSON before validating, and answers `413` beyond that.
 - The proxy never logs request bodies, headers or URLs with query strings.
-- HTML previews render in an `iframe` with `sandbox=""` (no scripts, no same-origin) and a strict CSP.
+- HTML previews render in an `iframe` with `sandbox=""` (no scripts, forms, popups or same-origin access). A content security policy placed first in the document (`default-src 'none'`, inline styles and `data:` media only) keeps the preview from loading anything over the network, so a response cannot track the user or send requests on their behalf; links open nothing.
+- Markdown previews render React elements, never raw HTML (HTML in Markdown shows as text); unsafe link protocols are dropped and remote images become links instead of loading.
+- Image previews show the body itself as a `data:` URL in an `<img>`, where SVG scripts and references never run.
 - Secret variables are redacted in history (`••••`) and emptied in exports.
 - No credentials are ever stored server-side; the proxy is stateless.
 

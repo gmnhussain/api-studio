@@ -21,7 +21,7 @@ interface Registry<TContribution extends { id: string }> {
 | Body types | `BodyTypeView` (`convert()` from the previous body, editor component); `serializeBody()` in core | JSON, text, XML, form data, URL-encoded, binary |
 | Code generators | `CodeGenerator` | 8 targets |
 | Importers | `CollectionImporter` | native, Postman v2.1, cURL, OpenAPI (entry only) |
-| Response viewers | `ResponseViewer` (`canView(response)`, component, priority) | pretty, raw, JSON tree, image, HTML, Markdown |
+| Response viewers | `ResponseViewer` (`canView(format, response)`, `View`, `priority`, label) | pretty, tree, raw; image, HTML and Markdown previews |
 | Commands | `Command` (id, title, icon, `when`, `run`, default key binding) | every palette action |
 | Sidebar sections | `SidebarSection` | collections, history, environments, variables |
 | Tab views | `TabView` (label, editor, title, dirty check) | request; environment and collection tabs later |
