@@ -5,6 +5,7 @@ import { performance } from "node:perf_hooks";
 import { Agent, FormData, request as sendRequest } from "undici";
 
 import {
+  encodeResponseBody,
   measureBodyBytes,
   measureRequestBytes,
   parseSetCookie,
@@ -20,7 +21,7 @@ import {
 import { toExecutionError } from "./execution-errors";
 import { createExecutionSignal } from "./execution-signal";
 import { followRedirect, isRedirectStatus } from "./redirects";
-import { decodeBody, encodeBody, readBody } from "./response-body";
+import { decodeBody, readBody } from "./response-body";
 import { isPrivateAddress } from "../network/address-policy";
 import { createGuardedLookup } from "../network/guarded-lookup";
 
@@ -197,7 +198,11 @@ export function createRunner(config: RunnerConfig): Runner {
             url: current.url,
             headers,
             cookies,
-            body: encodeBody(decoded, headerValue(headers, "content-type"), received.truncated),
+            body: encodeResponseBody(
+              decoded,
+              headerValue(headers, "content-type"),
+              received.truncated,
+            ),
             sizes: {
               requestBytes: measureRequestBytes(current),
               responseHeadersBytes: measureResponseHeaders(

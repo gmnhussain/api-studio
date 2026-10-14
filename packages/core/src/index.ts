@@ -229,3 +229,4 @@ export {
   parseSetCookie,
   updateCookieJar,
 } from "./http/cookies";
+export { encodeResponseBody, isTextualContentType } from "./http/response-body-encoding";

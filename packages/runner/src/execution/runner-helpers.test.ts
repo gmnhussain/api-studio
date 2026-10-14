@@ -6,7 +6,7 @@ import type { ResolvedRequest } from "@api-studio/core";
 
 import { toExecutionError } from "./execution-errors";
 import { followRedirect, isRedirectStatus } from "./redirects";
-import { decodeBody, encodeBody, readBody } from "./response-body";
+import { decodeBody, readBody } from "./response-body";
 
 const post: ResolvedRequest = {
   method: "POST",
@@ -143,26 +143,5 @@ describe("response bodies", () => {
     const partial = compressed.subarray(0, Math.floor(compressed.length / 2));
 
     expect(decodeBody(partial, "gzip").length).toBeGreaterThan(0);
-  });
-
-  it("sends text bodies as text and binary ones as base64", () => {
-    expect(encodeBody(Buffer.from("hi"), "application/json", false)).toEqual({
-      encoding: "text",
-      data: "hi",
-      contentType: "application/json",
-      truncated: false,
-    });
-    expect(encodeBody(Buffer.from("hi"), "application/problem+json", false).encoding).toBe("text");
-    expect(encodeBody(Buffer.from("hi"), null, false).encoding).toBe("text");
-    expect(encodeBody(Buffer.from([0xff, 0xfe]), "text/plain", false).encoding).toBe("base64");
-    expect(encodeBody(Buffer.from([1, 2, 3]), "image/png", false)).toMatchObject({
-      encoding: "base64",
-      data: "AQID",
-    });
-  });
-
-  it("keeps a truncated text body whose last character was cut", () => {
-    const cut = Buffer.from("héllo").subarray(0, 2);
-    expect(encodeBody(cut, "text/plain", true)).toMatchObject({ encoding: "text", data: "h" });
   });
 });
