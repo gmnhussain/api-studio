@@ -275,3 +275,7 @@ export {
 } from "./response/download-file-name";
 export { getTimelineSegments, TIMELINE_PHASES } from "./response/timeline";
 export type { TimelinePhase, TimelineSegment } from "./response/timeline";
+export { tokenizeJsonLine } from "./response/json-highlight";
+export type { JsonToken, JsonTokenKind } from "./response/json-highlight";
+export { getTextRow, indexTextRows, TEXT_ROW_MAX_LENGTH } from "./response/text-rows";
+export type { TextRows } from "./response/text-rows";
