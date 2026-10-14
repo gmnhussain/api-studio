@@ -227,6 +227,9 @@ importers:
       '@api-studio/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@api-studio/runner':
+        specifier: workspace:*
+        version: link:../../packages/runner
       '@base-ui/react':
         specifier: 'catalog:'
         version: 1.9.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)

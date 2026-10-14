@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@api-studio/core": "workspace:*",
+    "@api-studio/runner": "workspace:*",
     "@base-ui/react": "catalog:",
     "@dnd-kit/core": "catalog:",
     "@dnd-kit/modifiers": "catalog:",

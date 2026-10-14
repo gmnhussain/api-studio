@@ -3,6 +3,7 @@
   "ui": "tui",
   "agentGuidance": false,
   "globalEnv": ["NODE_ENV"],
+  "globalPassThroughEnv": ["NEXT_RUNTIME"],
   "tasks": {
     "typegen": {
       "outputs": [".next/types/**", ".next/dev/types/**", "next-env.d.ts"]

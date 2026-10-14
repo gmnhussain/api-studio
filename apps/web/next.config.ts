@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
   // The default bottom-left position covers the activity rail's Settings button.
   devIndicators: { position: "bottom-right" },
   // Workspace packages ship TypeScript source; Next.js compiles them with the app.
-  transpilePackages: ["@api-studio/core"],
+  transpilePackages: ["@api-studio/core", "@api-studio/runner"],
   // Only the version reaches the browser; importing package.json there would ship all of it.
   env: { NEXT_PUBLIC_APP_VERSION: packageManifest.version },
 };
