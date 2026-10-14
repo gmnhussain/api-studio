@@ -1,12 +1,9 @@
 import { expect, test, type Page } from "@playwright/test";
 
 import { openNewRequest, openSection, urlInput } from "./support/request-editor";
+import { expectResponseBodyText, responseRegion } from "./support/response";
 import { expectNoSeriousAccessibilityViolations, openStudio } from "./support/studio";
 import { testApiUrl } from "./support/test-api";
-
-function responseRegion(page: Page) {
-  return page.getByRole("region", { name: "Response" });
-}
 
 function consoleRegion(page: Page) {
   return page.getByRole("region", { name: "Console" });
@@ -18,6 +15,9 @@ async function send(page: Page, url: string): Promise<void> {
 }
 
 test.describe("sending requests", () => {
+  // WebKit compiles the code editor chunk far slower than the other engines (request-builder).
+  test.slow(({ browserName }) => browserName === "webkit", "WebKit loads the code editor slowly");
+
   test("sends through the proxy and shows status, body, headers and a console entry", async ({
     page,
   }) => {
@@ -28,7 +28,7 @@ test.describe("sending requests", () => {
 
     const response = responseRegion(page);
     await expect(response.getByText("200 OK")).toBeVisible();
-    await expect(response.getByText('"name":"Ada Lovelace"')).toBeVisible();
+    await expectResponseBodyText(page, '"name": "Ada Lovelace"');
     await response.getByRole("tab", { name: /Headers/ }).click();
     await expect(response.getByText("content-type")).toBeVisible();
     await expect(
@@ -44,7 +44,7 @@ test.describe("sending requests", () => {
     await expect(responseRegion(page).getByText("200 OK")).toBeVisible();
     await send(page, testApiUrl("/me"));
 
-    await expect(responseRegion(page).getByText('"cookie":"session=e2e-session"')).toBeVisible();
+    await expectResponseBodyText(page, '"cookie": "session=e2e-session"');
   });
 
   test("follows redirects to the final response", async ({ page }) => {
@@ -53,7 +53,7 @@ test.describe("sending requests", () => {
 
     await send(page, testApiUrl("/redirect"));
 
-    await expect(responseRegion(page).getByText('"id":1')).toBeVisible();
+    await expectResponseBodyText(page, '"id": 1');
   });
 
   test("cancels a slow request with Esc, and times out", async ({ page }) => {
@@ -101,6 +101,8 @@ test.describe("sending requests", () => {
   });
 
   test("the response and console have no serious WCAG 2.2 AA violations", async ({ page }) => {
+    // Two axe scans over a page holding the code editor take a while outside Chromium.
+    test.slow();
     await openStudio(page);
     await openNewRequest(page);
     await send(page, testApiUrl("/users/1"));
