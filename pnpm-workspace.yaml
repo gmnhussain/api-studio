@@ -78,6 +78,9 @@ catalog:
   server-only: 0.0.1
   # Resizable studio panels (shadcn Resizable).
   react-resizable-panels: 4.14.4
+  # Code editor for bodies and responses, bundled and loaded on demand (ADR-0009).
+  "@monaco-editor/react": 4.7.0
+  monaco-editor: 0.57.0
 
 # Packages allowed to run install scripts (pnpm 11 blocks them by default).
 # Prebuilt binaries cover all of these; esbuild's script only verifies its binary.
