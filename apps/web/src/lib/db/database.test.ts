@@ -25,6 +25,7 @@ describe("database", () => {
       [
         "collectionItems",
         "collections",
+        "cookieJars",
         "drafts",
         "environments",
         "tabLayouts",

@@ -11,8 +11,9 @@ import {
 /** Persistence for workspaces. */
 export type WorkspaceRepository = TableRepository<Workspace> & {
   /**
-   * Deletes a workspace with everything in it (collections, their items, environments, open tabs
-   * and their drafts) in one transaction, so a failure never leaves orphaned records.
+   * Deletes a workspace with everything in it (collections, their items, environments, open tabs,
+   * their drafts and the cookie jar) in one transaction, so a failure never leaves orphaned
+   * records.
    */
   deleteWithContents: (workspaceId: WorkspaceId) => Promise<void>;
 };
@@ -47,6 +48,7 @@ export function createWorkspaceRepository(
         database.environments,
         database.drafts,
         database.tabLayouts,
+        database.cookieJars,
       ];
       await database.transaction("rw", tables, async () => {
         const collectionIds = await database.collections
@@ -58,6 +60,7 @@ export function createWorkspaceRepository(
         await database.environments.where("workspaceId").equals(workspaceId).delete();
         await database.drafts.where("workspaceId").equals(workspaceId).delete();
         await database.tabLayouts.delete(workspaceId);
+        await database.cookieJars.delete(workspaceId);
         await database.workspaces.delete(workspaceId);
       });
       changeFeed?.publish({ table: "workspaces", ids: [workspaceId] });

@@ -3,6 +3,7 @@ import { Dexie, type Table } from "dexie";
 import type {
   Collection,
   CollectionItem,
+  CookieJar,
   Environment,
   RequestDraft,
   TabLayout,
@@ -36,6 +37,13 @@ export const DATABASE_VERSIONS = [
       tabLayouts: "workspaceId",
     },
   },
+  {
+    // M4: each workspace's cookie jar (F-06). A new table only, so no upgrade function.
+    version: 3,
+    stores: {
+      cookieJars: "workspaceId",
+    },
+  },
 ] as const;
 
 /**
@@ -49,6 +57,7 @@ export type DatabaseTables = {
   environments: Table<Environment, Environment["id"]>;
   drafts: Table<RequestDraft, RequestDraft["tabId"]>;
   tabLayouts: Table<TabLayout, TabLayout["workspaceId"]>;
+  cookieJars: Table<CookieJar, CookieJar["workspaceId"]>;
 };
 
 /** A table name, used by repositories and the change feed. */

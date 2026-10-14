@@ -383,5 +383,88 @@
     "announcements": {
       "moved": "{title} moved to position {position} of {total}."
     }
+  },
+  "console": {
+    "logLabel": "Console entries",
+    "levels": {
+      "info": "Info",
+      "warning": "Warning",
+      "error": "Error"
+    },
+    "filterLabel": "Show",
+    "filters": {
+      "info": "All levels",
+      "warning": "Warnings and errors",
+      "error": "Errors only"
+    },
+    "clear": "Clear console"
+  },
+  "executionErrors": {
+    "TIMEOUT": {
+      "label": "Timed out",
+      "title": "The request timed out",
+      "description": "No complete response arrived within the request's timeout.",
+      "action": "Raise the timeout in the request's Settings, or check that the server answers."
+    },
+    "ABORTED": {
+      "label": "Cancelled",
+      "title": "Request cancelled",
+      "description": "You cancelled the request before a response arrived.",
+      "action": ""
+    },
+    "NETWORK": {
+      "label": "Network error",
+      "title": "Could not connect",
+      "description": "The connection failed or was closed before a response arrived.",
+      "action": "Check that the server is running and the URL and port are right. In browser mode, the API must allow CORS."
+    },
+    "DNS": {
+      "label": "Host not found",
+      "title": "The host name did not resolve",
+      "description": "No address was found for the host in the URL.",
+      "action": "Check the host name for typos, and that your network can resolve it."
+    },
+    "TLS": {
+      "label": "TLS error",
+      "title": "The secure connection failed",
+      "description": "The server's certificate was not accepted, or the TLS handshake failed.",
+      "action": "Check the certificate, or use http:// for a local server without one."
+    },
+    "BLOCKED_ADDRESS": {
+      "label": "Blocked",
+      "title": "This address is not allowed",
+      "description": "This proxy does not reach private or local addresses, or that port.",
+      "action": "Switch to browser mode to reach localhost from here."
+    },
+    "TOO_MANY_REDIRECTS": {
+      "label": "Too many redirects",
+      "title": "Too many redirects",
+      "description": "The server kept redirecting past the request's limit.",
+      "action": "Raise the redirect limit in the request's Settings, or turn off following redirects to see the first one."
+    },
+    "REQUEST_TOO_LARGE": {
+      "label": "Request too large",
+      "title": "The request body is too large",
+      "description": "The body is larger than the proxy accepts.",
+      "action": "Send a smaller body."
+    },
+    "INVALID_REQUEST": {
+      "label": "Invalid request",
+      "title": "The request is not valid",
+      "description": "Check the URL and header names.",
+      "action": ""
+    },
+    "UNRESOLVED_VARIABLES": {
+      "label": "Unresolved variables",
+      "title": "Some variables have no value",
+      "description": "Define them in an environment or the workspace, or remove them from the request.",
+      "action": ""
+    },
+    "PROXY_UNAVAILABLE": {
+      "label": "Proxy unavailable",
+      "title": "The proxy did not answer",
+      "description": "API Studio's server could not be reached or failed.",
+      "action": "Check that the app's server is running, or switch to browser mode."
+    }
   }
 }

@@ -230,3 +230,5 @@ export {
   updateCookieJar,
 } from "./http/cookies";
 export { encodeResponseBody, isTextualContentType } from "./http/response-body-encoding";
+export { cookieJarSchema } from "./models/cookie-jar.schema";
+export type { CookieJar } from "./models/cookie-jar.schema";
