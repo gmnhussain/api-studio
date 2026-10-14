@@ -116,7 +116,7 @@ describe("request service", () => {
   });
 
   it("asks for a location the first time, then saves in place", async () => {
-    const { service, collectionRepository } = await startApp();
+    const { service, collectionRepository, draftRepository } = await startApp();
     const tabId = service.newRequest("Untitled request");
     if (!tabId) throw new Error("expected a tab");
     edit(tabId, "/users");
@@ -126,6 +126,11 @@ describe("request service", () => {
 
     const saved = await saveNew(service, tabId);
     expect(useTabsStore.getState().tabs[0]?.entityId).toBe(saved.id);
+    // Written at once, without waiting for auto-save, so a reload right away shows the save.
+    expect(await draftRepository.get(tabId)).toMatchObject({
+      name: saved.name,
+      baseUpdatedAt: saved.updatedAt,
+    });
     expect(service.isDirty(tabId)).toBe(false);
 
     edit(tabId, "/users?active=true");

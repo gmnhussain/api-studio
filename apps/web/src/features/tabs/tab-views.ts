@@ -12,7 +12,10 @@ export type TabViewProps = { tab: EditorTab };
  */
 export type TabView = {
   readonly id: TabKind;
-  /** The tab's title (with its icon or badge) inside the strip; the strip adds close and pin. */
+  /**
+   * The tab's title (with its icon or badge) inside the strip; the strip adds the close button.
+   * It is the tab's accessible name, so it also says when the tab is pinned or unsaved.
+   */
   Label: ComponentType<TabViewProps>;
   /** The tab's content in the editor area. */
   Editor: ComponentType<TabViewProps>;

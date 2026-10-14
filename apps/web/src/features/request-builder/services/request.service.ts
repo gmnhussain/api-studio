@@ -165,12 +165,24 @@ export function createRequestService({
       }
     });
 
-  /** Points a draft at the version just saved, keeping edits made while the save ran. */
-  const markSaved = (tabId: TabId, saved: RequestItem, savedName: string) => {
+  /** Writes pending tab and draft changes now. */
+  const flushAll = async (): Promise<void> => {
+    await Promise.all([persistence.flush(), tabsService.flush()]);
+  };
+
+  /**
+   * Points a draft at the version just saved, keeping edits made while the save ran, and writes
+   * the tab and draft at once, so a reload right after saving shows the saved state.
+   *
+   * @param nameAtSave The draft's name when the save started.
+   */
+  const markSaved = async (tabId: TabId, saved: RequestItem, nameAtSave: string) => {
     const current = findDraft(tabId);
-    if (!current) return;
-    const name = current.name === savedName ? saved.name : current.name;
-    requestStore.getState().upsertDraft({ ...current, name, baseUpdatedAt: saved.updatedAt });
+    if (current) {
+      const name = current.name === nameAtSave ? saved.name : current.name;
+      requestStore.getState().upsertDraft({ ...current, name, baseUpdatedAt: saved.updatedAt });
+    }
+    await flushAll();
   };
 
   return {
@@ -183,13 +195,11 @@ export function createRequestService({
     },
 
     /** Writes pending tab and draft changes now (before the page is hidden or a reload). */
-    flush: async (): Promise<void> => {
-      await Promise.all([persistence.flush(), tabsService.flush()]);
-    },
+    flush: flushAll,
 
     /** Restores a workspace's tabs and drafts, checked against its saved requests. */
     openWorkspace: async (workspaceId: WorkspaceId): Outcome<null> => {
-      await Promise.all([persistence.flush(), tabsService.flush()]);
+      await flushAll();
       tabsStore.getState().startLoading(workspaceId);
       requestStore.getState().startLoading(workspaceId);
       try {
@@ -272,6 +282,7 @@ export function createRequestService({
     /**
      * Saves a tab's draft to its request (`Mod+S`). A request never saved needs a location
      * first: the result is `needs_location`, and the caller asks for one and uses `saveAs`.
+     * The tab and its draft are written at once afterwards, so a reload shows the saved state.
      */
     save: async (tabId: TabId): Outcome<RequestItem> => {
       const tab = findTab(tabId);
@@ -287,7 +298,7 @@ export function createRequestService({
         if (!result.ok) return err(fromCollectionError(result.error));
         const saved = asRequestItem(result.value);
         if (!saved) return err("not_found");
-        markSaved(tabId, saved, draft.name);
+        await markSaved(tabId, saved, draft.name);
         return ok(saved);
       } finally {
         savingTabIds.delete(tabId);
@@ -322,11 +333,7 @@ export function createRequestService({
         const saved = asRequestItem(created.value);
         if (!saved) return err("not_found");
         tabsStore.getState().setTabEntity(tabId, saved.id);
-        const current = findDraft(tabId);
-        if (current)
-          requestStore
-            .getState()
-            .upsertDraft({ ...current, name: saved.name, baseUpdatedAt: saved.updatedAt });
+        await markSaved(tabId, saved, draft.name);
         return ok(saved);
       } finally {
         savingTabIds.delete(tabId);

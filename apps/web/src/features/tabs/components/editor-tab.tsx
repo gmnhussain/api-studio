@@ -76,6 +76,7 @@ export function EditorTab({ tab, view, isActive, actions }: EditorTabProps) {
           render={
             <button
               type="button"
+              data-slot="editor-tab"
               aria-current={isActive ? "true" : undefined}
               onClick={actions.activate}
               onAuxClick={(event) => {
@@ -91,7 +92,6 @@ export function EditorTab({ tab, view, isActive, actions }: EditorTabProps) {
         >
           {tab.isPinned ? <Pin aria-hidden className="size-3 shrink-0" /> : null}
           {TabLabel ? <TabLabel tab={tab} /> : null}
-          {tab.isPinned ? <span className="sr-only">{t("pinnedSuffix")}</span> : null}
         </ContextMenuTrigger>
         <ContextMenuContent>
           <ContextMenuItem onClick={actions.togglePin}>

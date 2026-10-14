@@ -357,7 +357,8 @@
       "saved": "Saved “{name}”",
       "autoSaveFailed": "Your open tabs could not be saved in this browser. Changes stay here until the next attempt.",
       "restoreFailed": "Your open tabs could not be restored. Check that this browser allows site storage, then reload."
-    }
+    },
+    "tabName": "{method} {name}{pinned, select, true {, pinned} other {}}{dirty, select, true {, unsaved changes} other {}}"
   },
   "tabs": {
     "stripLabel": "Open requests",
@@ -381,8 +382,6 @@
     },
     "announcements": {
       "moved": "{title} moved to position {position} of {total}."
-    },
-    "pinnedSuffix": ", pinned",
-    "unsavedSuffix": ", unsaved changes"
+    }
   }
 }
