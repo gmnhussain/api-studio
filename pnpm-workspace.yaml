@@ -89,6 +89,11 @@ catalog:
   "@dnd-kit/sortable": 10.0.0
   "@dnd-kit/utilities": 3.2.2
   "@dnd-kit/modifiers": 9.0.0
+  # Virtualized lists: the JSON tree, later the collection tree and history (performance.md#strategies).
+  "@tanstack/react-virtual": 3.14.13
+  # Markdown response preview, rendered as React elements without raw HTML (request-execution.md#security).
+  react-markdown: 10.1.0
+  remark-gfm: 4.0.1
 
 # Packages allowed to run install scripts (pnpm 11 blocks them by default).
 # Prebuilt binaries cover all of these; esbuild's script only verifies its binary.
