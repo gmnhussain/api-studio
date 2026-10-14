@@ -508,6 +508,14 @@
       "copiedPath": "Path copied",
       "copyFailed": "The browser did not allow copying."
     },
+    "preview": {
+      "imageAlt": "The response image",
+      "imageFailed": "This image cannot be shown. Download it to open it in another app.",
+      "dimensions": "{width} × {height}",
+      "htmlTitle": "HTML preview of the response",
+      "markdownLabel": "Markdown preview of the response",
+      "remoteImage": "Image: {name}"
+    },
     "summary": {
       "status": "Status",
       "time": "Time",
