@@ -10,44 +10,44 @@ catalog:
   # ESLint stays on 9.x: eslint-config-next's plugins (react, import, jsx-a11y) do not support ESLint 10 yet.
   eslint: 9.39.5
   "@eslint/js": 9.39.5
-  typescript-eslint: 8.71.0
-  eslint-config-next: 16.3.8
+  typescript-eslint: 8.71.2
+  eslint-config-next: 16.4.2
   eslint-config-prettier: 10.1.8
   eslint-plugin-import-x: 4.17.1
   eslint-plugin-jsx-a11y: 6.10.2
-  eslint-plugin-turbo: 2.11.7
+  eslint-plugin-turbo: 2.11.9
   globals: 17.13.0
-  prettier: 3.9.9
+  prettier: 3.9.10
   prettier-plugin-tailwindcss: 0.8.1
-  dependency-cruiser: 18.5.0
+  dependency-cruiser: 18.6.0
   "@commitlint/cli": 21.2.3
   "@commitlint/config-conventional": 21.2.3
-  turbo: 2.11.7
-  vitest: 5.0.3
-  "@vitest/coverage-v8": 5.0.3
+  turbo: 2.11.9
+  vitest: 5.0.5
+  "@vitest/coverage-v8": 5.0.5
   # WCAG contrast maths for the design-token test.
   culori: 4.0.2
   "@types/culori": 4.0.1
   # Component tests (docs/development/testing.md).
-  jsdom: 30.1.2
+  jsdom: 30.1.3
   "@testing-library/react": 16.3.3
   "@testing-library/dom": 10.4.2
   "@testing-library/user-event": 14.6.8
   "@testing-library/jest-dom": 7.0.1
   # IndexedDB for repository tests in Node.
-  fake-indexeddb: 6.2.5
+  fake-indexeddb: 6.2.6
   # End-to-end tests in real browsers, with axe accessibility checks.
-  "@playwright/test": 1.64.0
-  "@axe-core/playwright": 4.13.0
-  "@types/node": 24.19.1
+  "@playwright/test": 1.64.1
+  "@axe-core/playwright": 4.14.0
+  "@types/node": 24.19.2
 
   # HTTP engine of the runner: manual redirects, a guarded DNS lookup, streaming bodies.
-  undici: 8.11.2
+  undici: 8.12.2
 
   # Frontend
-  next: 16.3.8
-  react: 19.3.0
-  react-dom: 19.3.0
+  next: 16.4.2
+  react: 19.3.1
+  react-dom: 19.3.1
   "@types/react": 19.3.0
   "@types/react-dom": 19.3.0
   babel-plugin-react-compiler: 1.0.0
@@ -55,7 +55,7 @@ catalog:
   "@tailwindcss/postcss": 4.3.3
   # Client state (ADR-0004) and validation at trust boundaries.
   zustand: 5.0.15
-  zod: 4.6.5
+  zod: 4.6.7
   # Sibling order that a move rewrites in one record (data-model.md#conventions).
   fractional-indexing: 4.0.0
   # Local-first persistence in IndexedDB (ADR-0002).
@@ -65,22 +65,22 @@ catalog:
 
   # UI (shadcn/ui, base-nova style on Base UI primitives).
   # The CLI is a pinned dev dependency (`pnpm shadcn add …`): `pnpm dlx shadcn` fails under pnpm 11.
-  shadcn: 4.21.4
+  shadcn: 4.22.0
   "@base-ui/react": 1.9.0
   class-variance-authority: 0.7.1
-  cn: 0.4.0
-  lucide-react: 1.55.0
+  cn: 0.5.0
+  lucide-react: 1.59.0
   tw-animate-css: 1.4.0
   # Toasts (shadcn Sonner) and forms (conventions.md#state-forms-and-validation).
   sonner: 2.0.8
   react-hook-form: 7.90.0
-  "@hookform/resolvers": 5.9.1
+  "@hookform/resolvers": 5.9.2
   # Layout and presence animations (design-system.md#motion).
-  motion: 14.2.0
+  motion: 14.3.0
   # Fails the build when a server-only module (cookie readers) reaches the browser.
   server-only: 0.0.1
   # Resizable studio panels (shadcn Resizable).
-  react-resizable-panels: 4.14.4
+  react-resizable-panels: 4.14.5
   # Code editor for bodies and responses, bundled and loaded on demand (ADR-0009).
   "@monaco-editor/react": 4.7.0
   monaco-editor: 0.57.0
@@ -90,7 +90,7 @@ catalog:
   "@dnd-kit/utilities": 3.2.2
   "@dnd-kit/modifiers": 9.0.0
   # Virtualized lists: the JSON tree, later the collection tree and history (performance.md#strategies).
-  "@tanstack/react-virtual": 3.14.13
+  "@tanstack/react-virtual": 3.14.21
   # Markdown response preview, rendered as React elements without raw HTML (request-execution.md#security).
   react-markdown: 10.1.0
   remark-gfm: 4.0.1
